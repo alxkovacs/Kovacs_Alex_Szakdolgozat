@@ -1,1 +1,1 @@
-# Kovacs_Alex_Szakdolgozat
+# Szakdolgozat
