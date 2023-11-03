@@ -1,4 +1,5 @@
 import 'package:application/utils/styles/styles.dart';
+import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view_model/start_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -32,15 +33,11 @@ class StartScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 300),
-                ElevatedButton(
+                CustomElevatedButton(
                   onPressed: () {
                     viewModel.goToNextScreen(context);
                   },
-                  style: Styles.startScreenButtonStyle,
-                  child: Text(
-                    'Kezdjünk neki',
-                    style: Styles.startScreenButtonTextStyle,
-                  ),
+                  text: 'Kezdjünk neki',
                 ),
                 const SizedBox(height: 50)
               ],

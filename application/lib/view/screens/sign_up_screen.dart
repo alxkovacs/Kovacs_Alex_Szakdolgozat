@@ -1,5 +1,7 @@
 import 'package:application/utils/styles/styles.dart';
+import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view_model/sign_up_view_model.dart';
+import 'package:application/view/widgets/auth_input_decoration.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -85,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.all(32),
+                  padding: const EdgeInsets.all(32),
                   child: Form(
                     key: _form,
                     child: Column(
@@ -96,87 +98,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             'Regisztráció',
                             style: TextStyle(
-                              fontSize: 32,
+                              fontSize: 36,
                               fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: const Color.fromRGBO(67, 153, 182, 0.5),
-                            labelText: 'Keresztnév', // A címke szövege
-                            labelStyle: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.black),
-                            suffixIcon: const Icon(
-                              Icons.person_2_outlined,
-                              color: Colors.black,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 20), // Az űrlapmező belső margója
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10), // Az űrlapmező sarkainak lekerekítése
-                              borderSide: const BorderSide(
-                                color: Color.fromRGBO(67, 153, 182, 1.0),
-                              ), // Az űrlapmező keretének színe
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                color: Color.fromRGBO(67, 153, 182, 1.0),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10), // Az űrlapmező sarkainak lekerekítése, amikor fókuszban van
-                              borderSide: const BorderSide(
-                                color: Color.fromRGBO(67, 153, 182, 1.0),
-                              ), // Az űrlapmező keretének színe, amikor fókuszban van
                             ),
                           ),
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: const Color.fromRGBO(67, 153, 182, 0.5),
-                            labelText: 'E-mail', // A címke szövege
-                            labelStyle: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.black),
-                            suffixIcon: const Icon(
-                              Icons.email_outlined,
-                              color: Colors.black,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 20), // Az űrlapmező belső margója
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10), // Az űrlapmező sarkainak lekerekítése
-                              borderSide: const BorderSide(
-                                color: Color.fromRGBO(67, 153, 182, 1.0),
-                              ), // Az űrlapmező keretének színe
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                color: Color.fromRGBO(67, 153, 182, 1.0),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10), // Az űrlapmező sarkainak lekerekítése, amikor fókuszban van
-                              borderSide: const BorderSide(
-                                color: Color.fromRGBO(67, 153, 182, 1.0),
-                              ), // Az űrlapmező keretének színe, amikor fókuszban van
-                            ),
+                          decoration: AuthInputDecoration(
+                            labelText: 'Keresztnév',
+                            iconData: Icons.person_2_outlined,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          decoration: AuthInputDecoration(
+                            labelText: 'E-mail',
+                            iconData: Icons.email_outlined,
                           ),
                           keyboardType: TextInputType.emailAddress,
                           autocorrect: false,
@@ -196,41 +134,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: const Color.fromRGBO(67, 153, 182, 0.5),
-                            labelText: 'Jelszó', // A címke szövege
-                            labelStyle: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.black),
-                            suffixIcon: const Icon(
-                              Icons.lock,
-                              color: Colors.black,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 15,
-                                vertical: 20), // Az űrlapmező belső margója
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10), // Az űrlapmező sarkainak lekerekítése
-                              borderSide: const BorderSide(
-                                color: Color.fromRGBO(67, 153, 182, 1.0),
-                              ), // Az űrlapmező keretének színe
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                color: Color.fromRGBO(67, 153, 182, 1.0),
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10), // Az űrlapmező sarkainak lekerekítése, amikor fókuszban van
-                              borderSide: const BorderSide(
-                                color: Color.fromRGBO(67, 153, 182, 1.0),
-                              ), // Az űrlapmező keretének színe, amikor fókuszban van
-                            ),
+                          decoration: AuthInputDecoration(
+                            labelText: 'Jelszó',
+                            iconData: Icons.lock_outline,
                           ),
                           obscureText: true,
                           validator: (value) {
@@ -244,18 +150,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             _enteredPassword = value!;
                           },
                         ),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
+                        const SizedBox(height: 30),
+                        CustomElevatedButton(
                           onPressed: _submit,
-                          style: Styles.startScreenButtonStyle,
-                          child: const Text(
-                            'Regisztráció',
-                            style: TextStyle(
-                              color: Colors.white, // A gomb szövegének színe
-                              fontSize: 16, // A gomb szövegének mérete
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          text: 'Regisztráció',
+                          // ... és így tovább, bármilyen más paraméterrel, amelyet át szeretne adni
                         ),
                         TextButton(
                           onPressed: () {
@@ -263,7 +162,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             viewModel.goToNextScreen(context);
                           },
                           child: const Text(
-                              'Ha már regisztráltál, akkor jelentkezz be itt'),
+                            'Ha már regisztráltál, akkor jelentkezz be itt',
+                          ),
                         ),
                       ],
                     ),
