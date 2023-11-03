@@ -1,3 +1,8 @@
+import 'package:application/view/screens/home_screen.dart';
+import 'package:application/view/screens/loading_screen.dart';
+import 'package:application/view/screens/login_screen.dart';
+import 'package:application/view/screens/sign_up_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -23,12 +28,40 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         useMaterial3: true,
         primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          color: Colors.black,
-          elevation: 0.0,
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor:
+                Colors.black.withOpacity(0.75), // A gomb szövegének színe
+            textStyle: const TextStyle(
+                fontWeight: FontWeight.bold), // A gomb szövegének stílusa
+          ),
         ),
+        appBarTheme: const AppBarTheme(
+            //color: Colors.black,
+            // elevation: 1.0,
+            ),
       ),
-      home: const StartScreen(),
+      routes: {
+        'start': (context) => const StartScreen(),
+        'home': (context) => const HomeScreen(),
+        'signup': (context) => const SignUpScreen(),
+        'login': (context) => const LogInScreen(),
+      },
+      // initialRoute: 'start',
+      // home: const StartScreen(),
+      home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (ctx, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const LoadingScreen();
+            }
+
+            if (snapshot.hasData) {
+              return const HomeScreen();
+            }
+
+            return const StartScreen();
+          }),
     );
   }
 }

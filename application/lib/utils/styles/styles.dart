@@ -23,7 +23,7 @@ class Styles {
   static final startScreenButtonStyle = ElevatedButton.styleFrom(
     foregroundColor: Colors.white,
     backgroundColor:
-        Color.fromRGBO(67, 153, 182, 1.0), // Gombon lévő szöveg színe
+        const Color.fromRGBO(67, 153, 182, 1.0), // Gombon lévő szöveg színe
     shadowColor: Colors.blue[200], // Árnyék színe
     elevation: 5, // Árnyék mélysége
     padding: const EdgeInsets.symmetric(

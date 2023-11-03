@@ -1,5 +1,5 @@
 import 'package:application/utils/styles/styles.dart';
-import 'package:application/view_model/start_screen_view_model.dart';
+import 'package:application/view_model/start_view_model.dart';
 import 'package:flutter/material.dart';
 
 class StartScreen extends StatelessWidget {
@@ -7,7 +7,7 @@ class StartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    StartScreenViewModel viewModel = StartScreenViewModel();
+    StartViewModel viewModel = StartViewModel();
 
     return Scaffold(
       backgroundColor: Colors.white,
