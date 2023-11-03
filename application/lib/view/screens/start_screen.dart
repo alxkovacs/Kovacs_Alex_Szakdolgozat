@@ -13,8 +13,11 @@ class StartScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          Image.asset(
-            'assets/images/start_screen_image.png',
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/start_screen_image.png',
+              fit: BoxFit.cover,
+            ),
           ),
           Center(
             child: Column(
@@ -31,7 +34,7 @@ class StartScreen extends StatelessWidget {
                 const SizedBox(height: 300),
                 ElevatedButton(
                   onPressed: () {
-                    viewModel.goToNextScreen();
+                    viewModel.goToNextScreen(context);
                   },
                   style: Styles.startScreenButtonStyle,
                   child: Text(
