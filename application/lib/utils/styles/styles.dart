@@ -26,16 +26,17 @@ class Styles {
         const Color.fromRGBO(67, 153, 182, 1.0), // Gombon lévő szöveg színe
     shadowColor: Colors.blue[200], // Árnyék színe
     elevation: 5, // Árnyék mélysége
-    padding: const EdgeInsets.symmetric(
-        horizontal: 100, vertical: 15), // Padding a gomb körül
+    minimumSize: const Size(double.infinity, 50),
+    // padding: const EdgeInsets.symmetric(
+    //     horizontal: 115, vertical: 15), // Padding a gomb körül
     shape: RoundedRectangleBorder(
       // Kerekített szélű gomb
-      borderRadius: BorderRadius.circular(30), // Szögletek kerekítése
+      borderRadius: BorderRadius.circular(10), // Szögletek kerekítése
     ),
   );
 
   static final startScreenButtonTextStyle = const TextStyle(
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
   );
 }

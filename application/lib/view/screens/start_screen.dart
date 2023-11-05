@@ -25,7 +25,7 @@ class StartScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 const Text(
-                  'Valami izgi név.',
+                  'CleanIT',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 48,
@@ -33,13 +33,16 @@ class StartScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 300),
-                CustomElevatedButton(
-                  onPressed: () {
-                    viewModel.goToNextScreen(context);
-                  },
-                  text: 'Kezdjünk neki',
+                Padding(
+                  padding: const EdgeInsets.all(28.0),
+                  child: CustomElevatedButton(
+                    onPressed: () {
+                      viewModel.goToNextScreen(context);
+                    },
+                    text: 'Tovább',
+                  ),
                 ),
-                const SizedBox(height: 50)
+                const SizedBox(height: 20)
               ],
             ),
           ),

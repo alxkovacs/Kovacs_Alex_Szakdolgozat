@@ -1,11 +1,10 @@
-import 'package:application/utils/styles/styles.dart';
+import 'package:application/utils/colors.dart';
+import 'package:application/view/screens/home_screen.dart';
+import 'package:application/view/widgets/auth_image_widget.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view_model/sign_up_view_model.dart';
 import 'package:application/view/widgets/auth_input_decoration.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-final _firebase = FirebaseAuth.instance;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -20,48 +19,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   SignUpViewModel viewModel = SignUpViewModel();
   final _form = GlobalKey<FormState>();
 
+  bool _isLoading = false;
+
+  var _enteredFirstName = '';
   var _enteredEmail = '';
   var _enteredPassword = '';
-
-  void _submit() async {
-    final isValid = _form.currentState!.validate();
-
-    if (!isValid) {
-      return;
-    }
-
-    _form.currentState!.save();
-
-    //Todo
-    try {
-      final userCredentials = await _firebase.createUserWithEmailAndPassword(
-          email: _enteredEmail, password: _enteredEmail);
-      if (context.mounted) {
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
-      }
-    } on FirebaseAuthException catch (err) {
-      if (err.code == 'email-already-in-use') {
-        // ...
-      }
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(err.message ?? 'Sikertelen regisztráció!'),
-          ),
-        );
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: const Text("Regisztráció"),
-        // foregroundColor: Colors.white,
-        // backgroundColor: const Color.fromRGBO(57, 255, 20, 1),
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pushNamedAndRemoveUntil(
@@ -71,108 +38,170 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 30,
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                ),
-                width: 400,
-                child: Image.asset('assets/images/sign_up_screen_image.png'),
-              ),
-              SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: Form(
-                    key: _form,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Regisztráció',
-                            style: TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration: AuthInputDecoration(
-                            labelText: 'Keresztnév',
-                            iconData: Icons.person_2_outlined,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration: AuthInputDecoration(
-                            labelText: 'E-mail',
-                            iconData: Icons.email_outlined,
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          autocorrect: false,
-                          textCapitalization: TextCapitalization.none,
-                          validator: (value) {
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                !value.contains('@')) {
-                              return 'Kérlek egy létező e-mail címet adj meg';
-                            }
-
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _enteredEmail = value!;
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration: AuthInputDecoration(
-                            labelText: 'Jelszó',
-                            iconData: Icons.lock_outline,
-                          ),
-                          obscureText: true,
-                          validator: (value) {
-                            if (value == null || value.trim().length < 6) {
-                              return 'A jelszónak legalább 6 karakter hosszúnak kell lennie.';
-                            }
-
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _enteredPassword = value!;
-                          },
-                        ),
-                        const SizedBox(height: 30),
-                        CustomElevatedButton(
-                          onPressed: _submit,
-                          text: 'Regisztráció',
-                          // ... és így tovább, bármilyen más paraméterrel, amelyet át szeretne adni
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            // Handle navigation to sign in screen.
-                            viewModel.goToNextScreen(context);
-                          },
-                          child: const Text(
-                            'Ha már regisztráltál, akkor jelentkezz be itt',
-                          ),
-                        ),
-                      ],
+        child: _isLoading
+            ? const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(AppColor.mainColor),
+              ) // Töltés ikon megjelenítése
+            : SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const AuthImageWidget(
+                      imagePath: 'assets/images/sign_up_screen_image.png',
                     ),
-                  ),
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Form(
+                          key: _form,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  'Regisztráció',
+                                  style: TextStyle(
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextFormField(
+                                decoration: AuthInputDecoration(
+                                  labelText: 'Keresztnév',
+                                  iconData: Icons.person_2_outlined,
+                                ),
+                                // textCapitalization: TextCapitalization.,
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().length < 3) {
+                                    return 'A névnek legalább 3 karakter hosszúnak kell lennie.';
+                                  }
+
+                                  return null;
+                                },
+                                onSaved: (value) {
+                                  _enteredFirstName = value!;
+                                },
+                              ),
+                              const SizedBox(height: 10),
+                              TextFormField(
+                                decoration: AuthInputDecoration(
+                                  labelText: 'E-mail',
+                                  iconData: Icons.email_outlined,
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                autocorrect: false,
+                                textCapitalization: TextCapitalization.none,
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().isEmpty ||
+                                      !value.contains('@')) {
+                                    return 'Kérlek egy létező e-mail címet adj meg';
+                                  }
+
+                                  return null;
+                                },
+                                onSaved: (value) {
+                                  _enteredEmail = value!;
+                                },
+                              ),
+                              const SizedBox(height: 10),
+                              TextFormField(
+                                decoration: AuthInputDecoration(
+                                  labelText: 'Jelszó',
+                                  iconData: Icons.lock_outline,
+                                ),
+                                obscureText: true,
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.trim().length < 6) {
+                                    return 'A jelszónak legalább 6 karakter hosszúnak kell lennie.';
+                                  }
+
+                                  return null;
+                                },
+                                onSaved: (value) {
+                                  _enteredPassword = value!;
+                                },
+                              ),
+                              const SizedBox(height: 20),
+                              CustomElevatedButton(
+                                onPressed: () async {
+                                  if (_form.currentState!.validate()) {
+                                    setState(() => _isLoading = true);
+                                    _form.currentState!.save();
+                                    bool success = await viewModel.submitSignUp(
+                                      _enteredFirstName,
+                                      _enteredEmail,
+                                      _enteredPassword,
+                                    );
+                                    // await Future.delayed(
+                                    //     const Duration(milliseconds: 100));
+                                    // setState(() => _isLoading = false);
+
+                                    if (success) {
+                                      if (mounted) {
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation1,
+                                                    animation2) =>
+                                                const HomeScreen(),
+                                            transitionDuration: Duration.zero,
+                                          ),
+                                          (Route<dynamic> route) => false,
+                                        );
+                                        Navigator.of(context).pushReplacement(
+                                          PageRouteBuilder(
+                                            pageBuilder: (context, animation1,
+                                                    animation2) =>
+                                                const HomeScreen(),
+                                            transitionDuration:
+                                                const Duration(seconds: 0),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      if (mounted) {
+                                        ScaffoldMessenger.of(context)
+                                            .clearSnackBars();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                'Sikertelen regisztráció!'),
+                                          ),
+                                        );
+                                      }
+                                    }
+                                    await Future.delayed(
+                                      const Duration(milliseconds: 100),
+                                    );
+                                    setState(() => _isLoading = false);
+                                  }
+                                },
+                                text: 'Regisztráció',
+                              ),
+                              const SizedBox(height: 5),
+                              TextButton(
+                                onPressed: () {
+                                  viewModel.goToNextScreen(context);
+                                },
+                                child: const Text(
+                                  'Ha már regisztráltál, akkor jelentkezz be itt',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }
