@@ -1,3 +1,4 @@
+import 'package:application/view/screens/base_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/screens/loading_screen.dart';
 import 'package:application/view/screens/login_screen.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         'start': (context) => const StartScreen(),
+        'base': (context) => const BaseScreen(),
         'home': (context) => const HomeScreen(),
         'signup': (context) => const SignUpScreen(),
         'login': (context) => const LogInScreen(),
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
             }
 
             if (snapshot.hasData) {
-              return const HomeScreen();
+              return const BaseScreen();
             }
 
             return const StartScreen();

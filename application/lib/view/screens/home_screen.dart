@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Főoldal'),
+        title: const Text('Hello, Alex'),
         actions: [
           IconButton(
               onPressed: () {

@@ -34,7 +34,7 @@ class StartScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 300),
                 Padding(
-                  padding: const EdgeInsets.all(28.0),
+                  padding: const EdgeInsets.all(30),
                   child: CustomElevatedButton(
                     onPressed: () {
                       viewModel.goToNextScreen(context);

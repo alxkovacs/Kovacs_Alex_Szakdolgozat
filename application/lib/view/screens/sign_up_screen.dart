@@ -51,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(30), // 24 volt
                         child: Form(
                           key: _form,
                           child: Column(
@@ -180,7 +180,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     await Future.delayed(
                                       const Duration(milliseconds: 100),
                                     );
-                                    setState(() => _isLoading = false);
+                                    if (mounted) {
+                                      setState(() => _isLoading = false);
+                                    }
                                   }
                                 },
                                 text: 'Regisztráció',

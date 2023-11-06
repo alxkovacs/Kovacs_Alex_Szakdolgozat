@@ -11,7 +11,7 @@ class AuthInputDecoration extends InputDecoration {
     // A színek és a text style paraméterekként kerülnek átadásra.
     // required TextStyle labelStyle,
     Color fillColor = const Color.fromRGBO(67, 153, 182, 0.05),
-    Color borderColor = const Color.fromRGBO(67, 153, 182, 1.0),
+    Color borderColor = const Color.fromRGBO(67, 153, 182, 1.00),
   }) : super(
           filled: true,
           fillColor: fillColor,

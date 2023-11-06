@@ -31,11 +31,11 @@ class _LogInScreenState extends State<LogInScreen> {
 
     try {
       final userCredentials = await _firebase.signInWithEmailAndPassword(
-          email: _enteredEmail, password: _enteredEmail);
+          email: _enteredEmail, password: _enteredPassword);
       if (context.mounted) {
         // Navigator.pushNamed(context, 'start');
         Navigator.of(context)
-            .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
+            .pushNamedAndRemoveUntil('base', (Route<dynamic> route) => false);
       }
     } on FirebaseAuthException catch (err) {
       if (err.code == 'email-already-in-use') {
