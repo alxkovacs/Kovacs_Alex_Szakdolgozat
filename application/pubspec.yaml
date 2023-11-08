@@ -64,6 +64,7 @@ flutter:
   assets:
     - assets/images/start_screen_image.png
     - assets/images/sign_up_screen_image.png
+    - assets/images/login_screen_image.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

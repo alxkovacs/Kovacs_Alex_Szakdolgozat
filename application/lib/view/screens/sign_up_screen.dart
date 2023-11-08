@@ -62,7 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: Text(
                                   'Regisztráció',
                                   style: TextStyle(
-                                    fontSize: 36,
+                                    fontSize: 38,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -193,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   viewModel.goToNextScreen(context);
                                 },
                                 child: const Text(
-                                  'Ha már regisztráltál, akkor jelentkezz be itt',
+                                  'Ha már van fiókja, jelentkezzen be itt.',
                                 ),
                               ),
                             ],
