@@ -37,10 +37,10 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold), // A gomb szövegének stílusa
           ),
         ),
-        appBarTheme: const AppBarTheme(
-            //color: Colors.black,
-            // elevation: 1.0,
-            ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.white, // Az AppBar hátterének színe
+          elevation: 0, // Az AppBar elevációjának eltávolítása
+        ),
       ),
       routes: {
         'start': (context) => const StartScreen(),
