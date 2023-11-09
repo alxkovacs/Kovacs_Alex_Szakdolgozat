@@ -5,6 +5,7 @@ import 'package:application/view/screens/loading_screen.dart';
 import 'package:application/view/screens/login_screen.dart';
 import 'package:application/view/screens/offers_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
+import 'package:application/view/screens/settings_screen.dart';
 import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
             }
 
             if (snapshot.hasData) {
-              // return OffersScreen();
+              // return SettingsScreen();
               return const BaseScreen();
             }
 

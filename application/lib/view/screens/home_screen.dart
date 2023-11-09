@@ -19,15 +19,6 @@ class HomeScreen extends StatelessWidget {
           'Hello, Alex',
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 28),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                _firebase.signOut();
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    'start', (Route<dynamic> route) => false);
-              },
-              icon: const Icon(Icons.exit_to_app))
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

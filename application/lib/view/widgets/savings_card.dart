@@ -8,6 +8,7 @@ class SavingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: const Color.fromRGBO(67, 153, 182, 0.25),
         border: Border.all(
           color: const Color.fromRGBO(67, 153, 182, 1), // Keret színe
           width: 2.5, // Keret vastagsága
@@ -16,8 +17,8 @@ class SavingsCard extends StatelessWidget {
             15), // Keret kerekítése, eznek meg kell egyeznie a Card borderRadius-ával
       ),
       child: Card(
-        // color: const Color.fromRGBO(67, 153, 182, 0.10),
-        color: Colors.white,
+        color: Colors.transparent,
+        // color: Colors.white,
         elevation: 0.0, // Árnyékolás mértéke
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15), // Kerekített sarkok

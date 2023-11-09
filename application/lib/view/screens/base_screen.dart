@@ -4,6 +4,7 @@ import 'package:application/view/screens/add_store_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/screens/offers_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
+import 'package:application/view/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _BaseScreenState extends State<BaseScreen> {
     ProductsScreen(),
     Container(), // Ezt az indexet tartjuk fenn az "Hozzáadás" gomb számára
     OffersScreen(),
-    // SettingsScreen(),
+    SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
