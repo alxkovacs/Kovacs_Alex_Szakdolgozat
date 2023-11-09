@@ -5,8 +5,8 @@ import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view_model/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 
-class AddStoreScreen extends StatelessWidget {
-  const AddStoreScreen({super.key});
+class AddProductScreen extends StatelessWidget {
+  const AddProductScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,8 @@ class AddStoreScreen extends StatelessWidget {
                             const SizedBox(height: 20),
                             TextFormField(
                               decoration: AuthInputDecoration(
-                                labelText: 'Üzletnév',
-                                iconData: Icons.trolley,
+                                labelText: 'Terméknév',
+                                iconData: Icons.qr_code_2,
                               ),
                               autocorrect: true,
                               textCapitalization: TextCapitalization.sentences,
@@ -61,8 +61,8 @@ class AddStoreScreen extends StatelessWidget {
                             const SizedBox(height: 15),
                             TextFormField(
                               decoration: AuthInputDecoration(
-                                labelText: 'Irányítószám',
-                                iconData: Icons.local_post_office_rounded,
+                                labelText: 'Gyártó',
+                                iconData: Icons.precision_manufacturing,
                               ),
                               autocorrect: true,
                               textCapitalization: TextCapitalization.sentences,
@@ -80,8 +80,8 @@ class AddStoreScreen extends StatelessWidget {
                             const SizedBox(height: 15),
                             TextFormField(
                               decoration: AuthInputDecoration(
-                                labelText: 'Város',
-                                iconData: Icons.location_city,
+                                labelText: 'Üzlet',
+                                iconData: Icons.shopping_cart,
                               ),
                               autocorrect: true,
                               textCapitalization: TextCapitalization.sentences,
@@ -99,34 +99,13 @@ class AddStoreScreen extends StatelessWidget {
                             const SizedBox(height: 15),
                             TextFormField(
                               decoration: AuthInputDecoration(
-                                labelText: 'Cím',
-                                iconData: Icons.location_on,
+                                labelText: 'Ár',
+                                iconData: Icons.attach_money,
                               ),
-                              autocorrect: true,
-                              textCapitalization: TextCapitalization.sentences,
+                              keyboardType: TextInputType.number,
                               validator: (value) {
-                                if (value == null || value.trim().length < 3) {
-                                  return 'A névnek legalább 3 karakter hosszúnak kell lennie.';
-                                }
-
-                                return null;
-                              },
-                              onSaved: (value) {
-                                // _enteredFirstName = value!;
-                              },
-                            ),
-                            const SizedBox(height: 15),
-                            TextFormField(
-                              decoration: AuthInputDecoration(
-                                labelText: 'Nyitvatartás',
-                                iconData: Icons.access_time_rounded,
-                              ),
-                              keyboardType: TextInputType.datetime,
-                              validator: (value) {
-                                if (value == null ||
-                                    value.trim().isEmpty ||
-                                    !value.contains('@')) {
-                                  return 'Kérlek egy létező e-mail címet adj meg';
+                                if (value == null || value.trim().isEmpty) {
+                                  return 'Kérlek valós összeget adj meg.';
                                 }
 
                                 return null;

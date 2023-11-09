@@ -1,4 +1,5 @@
 import 'package:application/utils/colors.dart';
+import 'package:application/view/screens/add_product_screen.dart';
 import 'package:application/view/screens/add_store_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
@@ -70,8 +71,8 @@ class _BaseScreenState extends State<BaseScreen> {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       unselectedLabelColor: Theme.of(context).disabledColor,
                       tabs: [
-                        Tab(text: 'Áruház hozzáadása'),
                         Tab(text: 'Termék hozzáadása'),
+                        Tab(text: 'Áruház hozzáadása'),
                       ],
                     ),
                   ),
@@ -79,8 +80,8 @@ class _BaseScreenState extends State<BaseScreen> {
                     // A TabBarView használata az egyes fülek tartalmának megjelenítésére.
                     child: TabBarView(
                       children: [
+                        AddProductScreen(),
                         AddStoreScreen(),
-                        Center(child: Text('Termék hozzáadása oldal')),
                       ],
                     ),
                   ),
