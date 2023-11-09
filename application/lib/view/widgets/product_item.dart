@@ -16,55 +16,59 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 300.0, // Állítsd be a kívánt szélességet
-      child: Card(
-        color: const Color.fromRGBO(67, 153, 182, 0.15),
-        // shadowColor: const Color.fromRGBO(67, 153, 182, 0.25),
-        elevation: 0.0,
-        child: Padding(
-          padding: const EdgeInsets.only(
-              top: 8.0, bottom: 8.0), // A belső térköz beállítása
-          child: Row(
-            children: <Widget>[
-              Image.asset(
-                imageName,
-                height: 70.0, // A kép magasságának beállítása
-                width: 70.0, // A kép szélességének beállítása
-                // fit: BoxFit.cover, // Ha szeretnéd, hogy a kép kitöltse a rendelkezésre álló helyet
-              ),
-              // SizedBox(width: 4.0), // Elválasztó tér a kép és a szöveg között
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  '${number + 1}',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+    return Card(
+      color: const Color.fromRGBO(67, 153, 182, 0.05),
+      elevation: 0.0,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            vertical: 8.0, horizontal: 8.0), // Körbefuttatott padding
+        child: Row(
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 1.0, // Négyzet alakú képet biztosít
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: Image.asset(
+                  imageName,
+                  fit: BoxFit.cover, // A kép kitölti a rendelkezésre álló teret
                 ),
               ),
-              SizedBox(width: 15.0), // Elválasztó tér a kép és a szöveg között
-              Expanded(
-                // A maradék hely kitöltése a szöveggel
-                child: Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start, // A szöveg balra igazítása
-                  // mainAxisAlignment: MainAxisAlignment
-                  //     .center, // A szöveg vertikális középre igazítása
-                  children: <Widget>[
-                    Text(
-                      title,
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.bold),
-                    ), // A cím stílusának beállítása
-                    // SizedBox(height: 5),
-                    Text(
-                      store,
-                      style: TextStyle(fontSize: 12.0),
-                    ), // Az alcím stílusának beállítása
-                  ],
-                ),
+            ),
+            SizedBox(width: 10.0),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                '${number + 1}',
+                style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                maxLines: 1,
+                overflow:
+                    TextOverflow.ellipsis, // Több sor esetén pontokkal zárul
               ),
-            ],
-          ),
+            ),
+            SizedBox(width: 10.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style:
+                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow
+                        .ellipsis, // Több sor esetén pontokkal zárul
+                  ),
+                  Text(
+                    store,
+                    style: TextStyle(fontSize: 12.0),
+                    maxLines: 1,
+                    overflow: TextOverflow
+                        .ellipsis, // Több sor esetén pontokkal zárul
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

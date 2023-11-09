@@ -2,6 +2,7 @@ import 'package:application/utils/colors.dart';
 import 'package:application/view/screens/add_product_screen.dart';
 import 'package:application/view/screens/add_store_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
+import 'package:application/view/screens/offers_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +20,8 @@ class _BaseScreenState extends State<BaseScreen> {
   final List<Widget> _pages = [
     const HomeScreen(), // A HomeScreen lesz az alapértelmezett oldal
     ProductsScreen(),
-    // AddScreen(),
-    //
+    Container(), // Ezt az indexet tartjuk fenn az "Hozzáadás" gomb számára
+    OffersScreen(),
     // SettingsScreen(),
   ];
 

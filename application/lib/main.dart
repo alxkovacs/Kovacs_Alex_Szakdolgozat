@@ -3,6 +3,7 @@ import 'package:application/view/screens/base_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/screens/loading_screen.dart';
 import 'package:application/view/screens/login_screen.dart';
+import 'package:application/view/screens/offers_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
 import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,7 +64,7 @@ class MyApp extends StatelessWidget {
             }
 
             if (snapshot.hasData) {
-              // return ProductsScreen();
+              // return OffersScreen();
               return const BaseScreen();
             }
 

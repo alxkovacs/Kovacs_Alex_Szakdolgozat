@@ -56,29 +56,93 @@ class HorizontalList extends StatelessWidget {
     // Add more products as needed
   ];
 
+  final List<Map<String, dynamic>> offers = [
+    {
+      'title': 'VILEDA Ultramat Turbo felmosó szett',
+      'subtitle': 'Laidi',
+      'image':
+          'assets/images/offer_02_image.png' // Replace with your image asset path
+    },
+    {
+      'title': 'VILEDA Ultramat Turbo felmosó szett',
+      'subtitle': 'Lokta',
+      'image':
+          'assets/images/offer_02_image.png' // Replace with your image asset path
+    },
+    {
+      'title': 'Dyson V15 Detect Absolute',
+      'subtitle': 'Laidi',
+      'image':
+          'assets/images/offer_02_image.png' // Replace with your image asset path
+    },
+    {
+      'title': 'VILEDA Ultramat Turbo felmosó szett',
+      'subtitle': 'Lokta',
+      'image':
+          'assets/images/offer_02_image.png' // Replace with your image asset path
+    },
+    {
+      'title': 'Dyson V15 Detect Absolute',
+      'subtitle': 'Laidi',
+      'image':
+          'assets/images/offer_02_image.png' // Replace with your image asset path
+    },
+    {
+      'title': 'VILEDA Ultramat Turbo felmosó szett',
+      'subtitle': 'Lokta',
+      'image':
+          'assets/images/offer_02_image.png' // Replace with your image asset path
+    },
+    {
+      'title': 'Dyson V15 Detect Absolute',
+      'subtitle': 'Laidi',
+      'image':
+          'assets/images/offer_02_image.png' // Replace with your image asset path
+    },
+    {
+      'title': 'VILEDA Ultramat Turbo felmosó szett',
+      'subtitle': 'Lokta',
+      'image':
+          'assets/images/offer_02_image.png' // Replace with your image asset path
+    },
+    {
+      'title': 'VILEDA Ultramat Turbo felmosó szett',
+      'subtitle': 'Lokta',
+      'image':
+          'assets/images/offer_02_image.png' // Replace with your image asset path
+    },
+    // Add more products as needed
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.transparent,
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      height:
-          240, // Dupla magasságra lesz szükség, hogy két elemet is meg tudj jeleníteni egymás alatt
+      height: 220, // A magasság megadása elegendő lehet a GridView számára
       child: GridView.builder(
+        shrinkWrap: true, // A GridView méretének korlátozása a tartalomhoz
+        physics: ScrollPhysics(), // Engedélyezi a vízszintes görgetést
         scrollDirection: Axis.horizontal,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, // Két elemet helyez el függőlegesen
-          crossAxisSpacing: 5, // Függőleges térköz
+          crossAxisCount: 3,
+          crossAxisSpacing: 0, // Függőleges térköz
           mainAxisSpacing: 10, // Vízszintes térköz
-          childAspectRatio:
-              0.202, // Az elemek arányának beállítása, szükség szerint módosítható
+          childAspectRatio: 0.195, // Az elemek arányának beállítása
         ),
-        itemCount: products.length,
+        itemCount: offers.length,
         itemBuilder: (context, index) {
-          return ProductItem(
-            number: index,
-            title: products[index]['title'],
-            store: products[index]['subtitle'],
-            imageName: products[index]['image'],
+          return Container(
+            margin: EdgeInsets.only(
+              left:
+                  index < 3 ? 10 : 0, // Az első elemnek adunk bal oldali margót
+              right: index > 5 ? 10 : 0,
+            ),
+            child: ProductItem(
+              number: index,
+              title: offers[index]['title'],
+              store: offers[index]['subtitle'],
+              imageName: offers[index]['image'],
+            ),
           );
         },
       ),

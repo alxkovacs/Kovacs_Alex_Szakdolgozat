@@ -80,10 +80,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        title: Text('Termékek'),
+        title: Text(
+          'Termékek',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 18.0, left: 18.0, right: 18.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Container(
