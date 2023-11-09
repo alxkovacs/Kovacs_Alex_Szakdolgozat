@@ -1,3 +1,4 @@
+import 'package:application/utils/colors.dart';
 import 'package:application/view/screens/base_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/screens/loading_screen.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           useMaterial3: true,
           primarySwatch: Colors.blue,
+          primaryColor: AppColor.mainColor,
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
               foregroundColor:

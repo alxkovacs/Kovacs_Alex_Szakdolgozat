@@ -1,4 +1,5 @@
 import 'package:application/utils/colors.dart';
+import 'package:application/view/screens/add_store_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,15 @@ class _BaseScreenState extends State<BaseScreen> {
           child: DefaultTabController(
             length: 2, // A TabBarView-ban lévő oldalak száma
             child: Scaffold(
-              appBar: AppBar(),
+              appBar: AppBar(
+                leading: IconButton(
+                  icon: const Icon(Icons.close), // "X" ikon
+                  onPressed: () =>
+                      Navigator.pop(context), // Bezárja a ModalBottomSheet-t
+                ),
+                // title: Text('Navigáció'),
+                // További AppBar beállítások...
+              ),
               // Itt állíthatod be a Scaffold háttérszínét, ha szükséges
               backgroundColor: Colors.white,
               body: Column(
@@ -54,7 +63,11 @@ class _BaseScreenState extends State<BaseScreen> {
                   Material(
                     color: Colors.white, // A TabBar háttérszíne
                     child: TabBar(
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      indicatorColor: Theme.of(context).primaryColor,
                       labelColor: Theme.of(context).primaryColor,
+                      labelStyle:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       unselectedLabelColor: Theme.of(context).disabledColor,
                       tabs: [
                         Tab(text: 'Áruház hozzáadása'),
@@ -62,11 +75,11 @@ class _BaseScreenState extends State<BaseScreen> {
                       ],
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     // A TabBarView használata az egyes fülek tartalmának megjelenítésére.
                     child: TabBarView(
                       children: [
-                        Center(child: Text('Áruház hozzáadása oldal')),
+                        AddStoreScreen(),
                         Center(child: Text('Termék hozzáadása oldal')),
                       ],
                     ),
