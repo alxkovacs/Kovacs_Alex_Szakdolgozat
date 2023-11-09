@@ -2,6 +2,7 @@ import 'package:application/view/screens/base_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/screens/loading_screen.dart';
 import 'package:application/view/screens/login_screen.dart';
+import 'package:application/view/screens/products_screen.dart';
 import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,22 +27,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Szakdolgozat',
       theme: ThemeData(
-        brightness: Brightness.light,
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor:
-                Colors.black.withOpacity(0.75), // A gomb szövegének színe
-            textStyle: const TextStyle(
-                fontWeight: FontWeight.bold), // A gomb szövegének stílusa
+          brightness: Brightness.light,
+          useMaterial3: true,
+          primarySwatch: Colors.blue,
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              foregroundColor:
+                  Colors.black.withOpacity(0.75), // A gomb szövegének színe
+              textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold), // A gomb szövegének stílusa
+            ),
           ),
-        ),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white, // Az AppBar hátterének színe
-          elevation: 0, // Az AppBar elevációjának eltávolítása
-        ),
-      ),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.white, // Az AppBar hátterének színe
+            elevation: 0, // Az AppBar elevációjának eltávolítása
+          ),
+          bottomSheetTheme: BottomSheetThemeData(
+              backgroundColor: Colors.white, modalElevation: 0.0)),
       routes: {
         'start': (context) => const StartScreen(),
         'base': (context) => const BaseScreen(),
@@ -59,6 +61,7 @@ class MyApp extends StatelessWidget {
             }
 
             if (snapshot.hasData) {
+              // return ProductsScreen();
               return const BaseScreen();
             }
 

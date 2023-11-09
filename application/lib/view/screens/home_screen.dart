@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
               const AuthImageWidget(
                 imagePath: 'assets/images/home_screen_image.png',
               ),
-              SavingsCard(),
+              const SavingsCard(),
               const SizedBox(height: 15),
               CustomElevatedButton(
                 onPressed: () {},

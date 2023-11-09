@@ -10,7 +10,7 @@ class SavingsCard extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           color: const Color.fromRGBO(67, 153, 182, 1), // Keret színe
-          width: 3, // Keret vastagsága
+          width: 2.5, // Keret vastagsága
         ),
         borderRadius: BorderRadius.circular(
             15), // Keret kerekítése, eznek meg kell egyeznie a Card borderRadius-ával

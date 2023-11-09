@@ -1,4 +1,5 @@
 import 'package:application/utils/colors.dart';
+import 'package:application/view/screens/base_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/widgets/auth_image_widget.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
@@ -149,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           PageRouteBuilder(
                                             pageBuilder: (context, animation1,
                                                     animation2) =>
-                                                const HomeScreen(),
+                                                const BaseScreen(),
                                             transitionDuration: Duration.zero,
                                           ),
                                           (Route<dynamic> route) => false,
@@ -158,7 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           PageRouteBuilder(
                                             pageBuilder: (context, animation1,
                                                     animation2) =>
-                                                const HomeScreen(),
+                                                const BaseScreen(),
                                             transitionDuration:
                                                 const Duration(seconds: 0),
                                           ),

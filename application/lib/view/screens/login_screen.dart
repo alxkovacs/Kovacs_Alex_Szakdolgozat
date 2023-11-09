@@ -1,4 +1,5 @@
 import 'package:application/utils/colors.dart';
+import 'package:application/view/screens/base_screen.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/widgets/auth_image_widget.dart';
 import 'package:application/view/widgets/auth_input_decoration.dart';
@@ -262,7 +263,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                           PageRouteBuilder(
                                             pageBuilder: (context, animation1,
                                                     animation2) =>
-                                                const HomeScreen(),
+                                                const BaseScreen(),
                                             transitionDuration: Duration.zero,
                                           ),
                                           (Route<dynamic> route) => false,
@@ -271,7 +272,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                           PageRouteBuilder(
                                             pageBuilder: (context, animation1,
                                                     animation2) =>
-                                                const HomeScreen(),
+                                                const BaseScreen(),
                                             transitionDuration:
                                                 const Duration(seconds: 0),
                                           ),

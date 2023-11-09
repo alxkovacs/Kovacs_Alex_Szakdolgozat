@@ -1,5 +1,6 @@
 import 'package:application/utils/colors.dart';
 import 'package:application/view/screens/home_screen.dart';
+import 'package:application/view/screens/products_screen.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatefulWidget {
@@ -15,7 +16,7 @@ class _BaseScreenState extends State<BaseScreen> {
   // Itt adunk hozzá minden oldalt, amit a BottomNavigationBar használni fog
   final List<Widget> _pages = [
     const HomeScreen(), // A HomeScreen lesz az alapértelmezett oldal
-    // ProductScreen(),
+    ProductsScreen(),
     // AddScreen(),
     //
     // SettingsScreen(),
@@ -35,27 +36,43 @@ class _BaseScreenState extends State<BaseScreen> {
   void _openBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Ez teszi teljes magasságúvá a bottom sheet-et
+      isScrollControlled: true,
+      // backgroundColor:
+      //     Colors.white, // Ez biztosítja, hogy a háttér fehér legyen
       builder: (BuildContext context) {
-        return DefaultTabController(
-          length: 2, // A TabBarView-ban lévő oldalak száma
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text('Navigáció'),
-              bottom: TabBar(
-                tabs: [
-                  Tab(text: 'Áruház hozzáadása'),
-                  Tab(text: 'Termék hozzáadása'),
+        return Padding(
+          padding: const EdgeInsets.only(top: 24.0),
+          child: DefaultTabController(
+            length: 2, // A TabBarView-ban lévő oldalak száma
+            child: Scaffold(
+              appBar: AppBar(),
+              // Itt állíthatod be a Scaffold háttérszínét, ha szükséges
+              backgroundColor: Colors.white,
+              body: Column(
+                children: <Widget>[
+                  // A TabBar háttérszínét is beállíthatod, ha szükséges
+                  Material(
+                    color: Colors.white, // A TabBar háttérszíne
+                    child: TabBar(
+                      labelColor: Theme.of(context).primaryColor,
+                      unselectedLabelColor: Theme.of(context).disabledColor,
+                      tabs: [
+                        Tab(text: 'Áruház hozzáadása'),
+                        Tab(text: 'Termék hozzáadása'),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    // A TabBarView használata az egyes fülek tartalmának megjelenítésére.
+                    child: TabBarView(
+                      children: [
+                        Center(child: Text('Áruház hozzáadása oldal')),
+                        Center(child: Text('Termék hozzáadása oldal')),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-            body: TabBarView(
-              children: [
-                // Az első oldal tartalma
-                Center(child: Text('Áruház hozzáadása oldal')),
-                // A második oldal tartalma
-                Center(child: Text('Termék hozzáadása oldal')),
-              ],
             ),
           ),
         );
