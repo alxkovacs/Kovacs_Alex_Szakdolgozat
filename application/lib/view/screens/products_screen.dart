@@ -86,7 +86,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 16, right: 16),
         child: Column(
           children: [
             Container(
@@ -145,6 +145,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             SizedBox(height: 30),
             Expanded(
               child: ListView.builder(
+                padding: EdgeInsets.only(bottom: 10),
                 itemCount: products.length, // itt a products a termékek listája
                 itemBuilder: (context, index) {
                   final product = products[index];

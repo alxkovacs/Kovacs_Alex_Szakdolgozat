@@ -21,14 +21,14 @@ class SavingsInfoRow extends StatelessWidget {
             title,
             style: const TextStyle(
               fontWeight: FontWeight.w500,
-              fontSize: 15,
+              fontSize: 16,
             ),
           ),
           Text(
             value,
             style: const TextStyle(
               color: const Color.fromRGBO(67, 153, 182, 1), // Szöveg színe
-              fontWeight: FontWeight.bold, fontSize: 14,
+              fontWeight: FontWeight.bold, fontSize: 15,
             ),
           ),
         ],

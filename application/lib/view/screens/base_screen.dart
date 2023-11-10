@@ -19,7 +19,7 @@ class _BaseScreenState extends State<BaseScreen> {
 
   // Itt adunk hozzá minden oldalt, amit a BottomNavigationBar használni fog
   final List<Widget> _pages = [
-    const HomeScreen(), // A HomeScreen lesz az alapértelmezett oldal
+    HomeScreen(), // A HomeScreen lesz az alapértelmezett oldal
     ProductsScreen(),
     Container(), // Ezt az indexet tartjuk fenn az "Hozzáadás" gomb számára
     OffersScreen(),
