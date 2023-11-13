@@ -48,17 +48,17 @@ class ShoppingListCard extends StatelessWidget {
                 title: 'Cím:',
                 value: 'Közép fasor 33\n6726 Szeged',
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               ShoppingListInfoRow(
                 title: 'Üzlet:',
                 value: 'Media Markt',
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               ShoppingListInfoRow(
                 title: 'Kedvezmény:',
                 value: '- 25 500 Ft',
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               ShoppingListInfoRow(
                 title: 'Végösszeg:',
                 value: '153 254 Ft',

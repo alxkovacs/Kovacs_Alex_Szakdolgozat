@@ -66,12 +66,20 @@ class _BaseScreenState extends State<BaseScreen> {
                   Material(
                     color: Colors.white, // A TabBar háttérszíne
                     child: TabBar(
+                      unselectedLabelColor: Colors.black,
+                      // indicatorPadding: EdgeInsets.all(0),
+                      dividerColor: Colors.transparent,
                       indicatorSize: TabBarIndicatorSize.tab,
-                      indicatorColor: Theme.of(context).primaryColor,
-                      labelColor: Theme.of(context).primaryColor,
-                      labelStyle:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      unselectedLabelColor: Theme.of(context).disabledColor,
+                      indicatorColor: const Color.fromRGBO(67, 153, 182, 1.00),
+                      labelColor: const Color.fromRGBO(67, 153, 182, 1.00),
+                      unselectedLabelStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      labelStyle: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                      ),
                       tabs: [
                         Tab(text: 'Termék hozzáadása'),
                         Tab(text: 'Áruház hozzáadása'),

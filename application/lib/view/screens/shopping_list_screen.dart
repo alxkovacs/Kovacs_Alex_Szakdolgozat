@@ -113,7 +113,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen>
                 // indicatorPadding: EdgeInsets.all(0),
                 dividerColor: Colors.transparent,
                 indicatorSize: TabBarIndicatorSize.tab,
-                indicatorColor: Colors.transparent,
+                indicatorColor: const Color.fromRGBO(67, 153, 182, 1.00),
                 labelColor: const Color.fromRGBO(67, 153, 182, 1.00),
                 unselectedLabelStyle: TextStyle(
                   fontSize: 16,
@@ -131,7 +131,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen>
               ),
               // A TabBarView mérete fix magasságú lehet, vagy egy másik SingleChildScrollView-ben
               Container(
-                height: 275, // Adhatsz neki egy fix magasságot
+                height: 300, // Adhatsz neki egy fix magasságot
                 // height: MediaQuery.of(context).size.height - 200,
                 child: TabBarView(
                   children: [
