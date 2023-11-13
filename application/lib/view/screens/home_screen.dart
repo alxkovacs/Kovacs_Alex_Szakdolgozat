@@ -1,4 +1,5 @@
 import 'package:application/view/screens/favorites_screen.dart';
+import 'package:application/view/screens/shopping_list_screen.dart';
 import 'package:application/view/widgets/auth_image_widget.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view/widgets/horizontal_list.dart';
@@ -15,7 +16,7 @@ class HomeScreen extends StatelessWidget {
     {
       'name': 'Bevásárlólista',
       'emoji': '🛒',
-      'goToPage': () => FavoritesScreen(),
+      'goToPage': () => ShoppingListScreen(),
     },
     {
       'name': 'Kedvencek',
