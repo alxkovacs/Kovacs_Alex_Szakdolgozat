@@ -28,9 +28,13 @@ class ProductItem extends StatelessWidget {
               aspectRatio: 1.0, // Négyzet alakú képet biztosít
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: Image.asset(
+                // child: Image.asset(
+                //   imageName,
+                //   fit: BoxFit.cover, // A kép kitölti a rendelkezésre álló teret
+                // ),
+                child: Text(
                   imageName,
-                  fit: BoxFit.cover, // A kép kitölti a rendelkezésre álló teret
+                  style: TextStyle(fontSize: 30),
                 ),
               ),
             ),

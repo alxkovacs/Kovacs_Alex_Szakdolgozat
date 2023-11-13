@@ -1,3 +1,4 @@
+import 'package:application/view/screens/favorites_screen.dart';
 import 'package:application/view/widgets/auth_image_widget.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view/widgets/horizontal_list.dart';
@@ -14,10 +15,12 @@ class HomeScreen extends StatelessWidget {
     {
       'name': 'Bevásárlólista',
       'emoji': '🛒',
+      'goToPage': () => FavoritesScreen(),
     },
     {
       'name': 'Kedvencek',
       'emoji': '❤️',
+      'goToPage': () => FavoritesScreen(),
     },
   ];
 
@@ -76,74 +79,84 @@ class HomeScreen extends StatelessWidget {
                   itemCount: emojis.length,
                   itemBuilder: (context, index) {
                     // final item = favorites[index];
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white, // Háttérszín beállítása
-                        borderRadius:
-                            BorderRadius.circular(10.0), // Keret lekerekítése
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromRGBO(67, 153, 182, 0.5),
-                            // color: Colors.green.shade900,
-                            offset: const Offset(
-                              5.0,
-                              5.0,
-                            ),
-                            blurRadius: 15.0,
-                            spreadRadius: 1.0,
-                          ), //BoxShadow
-                          BoxShadow(
-                            color: Colors.white,
-                            offset: const Offset(0.0, 0.0),
-                            blurRadius: 0.0,
-                            spreadRadius: 0.0,
-                          ), //BoxShadow
-                        ],
-                      ),
-                      child: Card(
-                        shadowColor: Colors.transparent,
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 0.0,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: 0,
-                            top: 0,
-                            right: 0,
-                            bottom: 0,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment
-                                .center, // Középre igazítás a függőleges tengely mentén
-                            crossAxisAlignment: CrossAxisAlignment
-                                .center, // Középre igazítás a vízszintes tengely mentén
-                            children: <Widget>[
-                              // Expanded(
-                              //   child: Center(
-                              //     child: Text(
-                              //       emojis[index][
-                              //           'emoji'], // Emoji, például a porszívó emoji🫧📺🧹
-                              //       textAlign: TextAlign
-                              //           .center, // Szöveg középre igazítása
-                              //       style: TextStyle(
-                              //         fontSize:
-                              //             20.0, // Méret beállítása, hogy illeszkedjen a layout-hoz
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              Text(
-                                emojis[index]['name'],
-                                textAlign: TextAlign
-                                    .center, // Szöveg középre igazítása
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  emojis[index]['goToPage']()),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Háttérszín beállítása
+                          borderRadius:
+                              BorderRadius.circular(10.0), // Keret lekerekítése
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color.fromRGBO(67, 153, 182, 0.5),
+                              // color: Colors.green.shade900,
+                              offset: const Offset(
+                                5.0,
+                                5.0,
                               ),
-                            ],
+                              blurRadius: 15.0,
+                              spreadRadius: 1.0,
+                            ), //BoxShadow
+                            BoxShadow(
+                              color: Colors.white,
+                              offset: const Offset(0.0, 0.0),
+                              blurRadius: 0.0,
+                              spreadRadius: 0.0,
+                            ), //BoxShadow
+                          ],
+                        ),
+                        child: Card(
+                          shadowColor: Colors.transparent,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 0.0,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 0,
+                              top: 0,
+                              right: 0,
+                              bottom: 0,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment
+                                  .center, // Középre igazítás a függőleges tengely mentén
+                              crossAxisAlignment: CrossAxisAlignment
+                                  .center, // Középre igazítás a vízszintes tengely mentén
+                              children: <Widget>[
+                                // Expanded(
+                                //   child: Center(
+                                //     child: Text(
+                                //       emojis[index][
+                                //           'emoji'], // Emoji, például a porszívó emoji🫧📺🧹
+                                //       textAlign: TextAlign
+                                //           .center, // Szöveg középre igazítása
+                                //       style: TextStyle(
+                                //         fontSize:
+                                //             20.0, // Méret beállítása, hogy illeszkedjen a layout-hoz
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                Text(
+                                  emojis[index]['name'],
+                                  textAlign: TextAlign
+                                      .center, // Szöveg középre igazítása
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

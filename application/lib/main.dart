@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
             }
 
             if (snapshot.hasData) {
-              // return SettingsScreen();
+              // return ProductsScreen();
               return const BaseScreen();
             }
 

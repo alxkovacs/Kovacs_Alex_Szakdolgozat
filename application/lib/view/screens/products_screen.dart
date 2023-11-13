@@ -15,62 +15,62 @@ class _ProductsScreenState extends State<ProductsScreen> {
     {
       'name': 'Dyson V15 Detect Absolute',
       'price': '319 990 Ft',
-      'store': 'Media Markt',
+      'store': '🛋️',
     },
     {
       'name': 'VILEDA Ultramat Turbo felmosó szett',
       'price': '13 890 Ft',
-      'store': 'Lidl',
+      'store': '🪠',
     },
     {
       'name': 'Dyson V15 Detect Absolute',
       'price': '319 990 Ft',
-      'store': 'Media Markt',
+      'store': '🧹',
     },
     {
       'name': 'VILEDA Ultramat Turbo felmosó szett',
       'price': '13 890 Ft',
-      'store': 'Lidl',
+      'store': '🛋️',
     },
     {
       'name': 'Dyson V15 Detect Absolute',
       'price': '319 990 Ft',
-      'store': 'Media Markt',
+      'store': '🪠',
     },
     {
       'name': 'VILEDA Ultramat Turbo felmosó szett',
       'price': '13 890 Ft',
-      'store': 'Lidl',
+      'store': '🪣',
     },
     {
       'name': 'Dyson V15 Detect Absolute',
       'price': '319 990 Ft',
-      'store': 'Media Markt',
+      'store': '🧹',
     },
     {
       'name': 'VILEDA Ultramat Turbo felmosó szett',
       'price': '13 890 Ft',
-      'store': 'Lidl',
+      'store': '🪠',
     },
     {
       'name': 'Dyson V15 Detect Absolute',
       'price': '319 990 Ft',
-      'store': 'Media Markt',
+      'store': '🪣',
     },
     {
       'name': 'VILEDA Ultramat Turbo felmosó szett',
       'price': '13 890 Ft',
-      'store': 'Lidl',
+      'store': '🪣',
     },
     {
       'name': 'Dyson V15 Detect Absolute',
       'price': '319 990 Ft',
-      'store': 'Media Markt',
+      'store': '🪣',
     },
     {
       'name': 'VILEDA Ultramat Turbo felmosó szett',
       'price': '13 890 Ft',
-      'store': 'Lidl',
+      'store': '🪣',
     },
     // További termékek...
   ];
@@ -78,6 +78,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Color.fromRGBO(67, 153, 182, 0.15),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text(
@@ -86,19 +88,21 @@ class _ProductsScreenState extends State<ProductsScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16),
+        padding: const EdgeInsets.only(left: 10, right: 10),
         child: Column(
           children: [
             Container(
               // Add padding around the search bar
-              padding: const EdgeInsets.all(0.0),
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
               // Use a Material design search bar
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
                   isDense: true, // Added this
-                  contentPadding: EdgeInsets.all(8),
+                  contentPadding: EdgeInsets.all(0),
                   hintText: 'Keresés a termékek között...',
+                  hintStyle:
+                      TextStyle(color: Color.fromRGBO(67, 153, 182, 0.75)),
                   filled: true, // Ez engedélyezi a háttérszín beállítását
                   fillColor: const Color.fromRGBO(
                       67, 153, 182, 0.20), // A háttérszín beállítása kék színre
@@ -142,10 +146,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.only(bottom: 10, left: 20, right: 20),
                 itemCount: products.length, // itt a products a termékek listája
                 itemBuilder: (context, index) {
                   final product = products[index];

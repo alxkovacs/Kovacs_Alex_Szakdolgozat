@@ -8,20 +8,17 @@ class HorizontalList extends StatelessWidget {
     {
       'title': 'Dyson V15 Detect Absolute',
       'subtitle': 'Laidi',
-      'image':
-          'assets/images/dyson_v15.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'VILEDA Ultramat Turbo felmosó szett',
       'subtitle': 'Lokta',
-      'image':
-          'assets/images/dyson_v15.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'Dyson V15 Detect Absolute',
       'subtitle': 'Laidi',
-      'image':
-          'assets/images/dyson_v15.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'VILEDA Ultramat Turbo felmosó szett',
@@ -60,56 +57,47 @@ class HorizontalList extends StatelessWidget {
     {
       'title': 'VILEDA Ultramat Turbo felmosó szett',
       'subtitle': 'Laidi',
-      'image':
-          'assets/images/offer_02_image.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'VILEDA Ultramat Turbo felmosó szett',
       'subtitle': 'Lokta',
-      'image':
-          'assets/images/offer_02_image.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'Dyson V15 Detect Absolute',
       'subtitle': 'Laidi',
-      'image':
-          'assets/images/offer_02_image.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'VILEDA Ultramat Turbo felmosó szett',
       'subtitle': 'Lokta',
-      'image':
-          'assets/images/offer_02_image.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'Dyson V15 Detect Absolute',
       'subtitle': 'Laidi',
-      'image':
-          'assets/images/offer_02_image.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'VILEDA Ultramat Turbo felmosó szett',
       'subtitle': 'Lokta',
-      'image':
-          'assets/images/offer_02_image.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'Dyson V15 Detect Absolute',
       'subtitle': 'Laidi',
-      'image':
-          'assets/images/offer_02_image.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'VILEDA Ultramat Turbo felmosó szett',
       'subtitle': 'Lokta',
-      'image':
-          'assets/images/offer_02_image.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     {
       'title': 'VILEDA Ultramat Turbo felmosó szett',
       'subtitle': 'Lokta',
-      'image':
-          'assets/images/offer_02_image.png' // Replace with your image asset path
+      'image': '🪠' // Replace with your image asset path
     },
     // Add more products as needed
   ];

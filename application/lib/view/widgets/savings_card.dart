@@ -44,7 +44,7 @@ class SavingsCard extends StatelessWidget {
                 MainAxisSize.min, // Hogy csak a szükséges területet foglalja el
             children: <Widget>[
               SavingsInfoRow(
-                title: 'Megtakarított pénz:',
+                title: 'Megtakarított összeg:',
                 value: '33 560 Ft',
               ),
               SizedBox(height: 10),
