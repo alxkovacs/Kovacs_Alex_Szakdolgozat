@@ -3,6 +3,8 @@ import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
+  const ProductScreen({super.key});
+
   @override
   _ProductScreenState createState() => _ProductScreenState();
 }

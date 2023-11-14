@@ -62,36 +62,36 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
             ),
-            Container(
-              color: const Color.fromRGBO(67, 153, 182, 0.15),
-              child: ListTile(
-                visualDensity: VisualDensity(vertical: -2),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
-                leading: Icon(
-                  Icons.favorite,
-                  color: const Color.fromRGBO(67, 153, 182, 1.00),
-                ),
-                title: Text(
-                  'Kedvencek',
-                  style: TextStyle(
-                      color: const Color.fromRGBO(67, 153, 182, 1.00),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                ),
-                trailing: Icon(
-                  Icons.arrow_forward_ios,
-                  color: const Color.fromRGBO(67, 153, 182, 0.75),
-                ),
-                onTap: () {
-                  // Navigate to profile page or perform action
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FavoritesScreen()),
-                  );
-                },
-              ),
-            ),
+            // Container(
+            //   color: const Color.fromRGBO(67, 153, 182, 0.15),
+            //   child: ListTile(
+            //     visualDensity: VisualDensity(vertical: -2),
+            //     contentPadding:
+            //         EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+            //     leading: Icon(
+            //       Icons.favorite,
+            //       color: const Color.fromRGBO(67, 153, 182, 1.00),
+            //     ),
+            //     title: Text(
+            //       'Kedvencek',
+            //       style: TextStyle(
+            //           color: const Color.fromRGBO(67, 153, 182, 1.00),
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 18),
+            //     ),
+            //     trailing: Icon(
+            //       Icons.arrow_forward_ios,
+            //       color: const Color.fromRGBO(67, 153, 182, 0.75),
+            //     ),
+            //     onTap: () {
+            //       // Navigate to profile page or perform action
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => FavoritesScreen()),
+            //       );
+            //     },
+            //   ),
+            // ),
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

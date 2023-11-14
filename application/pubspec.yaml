@@ -66,6 +66,7 @@ flutter:
     - assets/images/sign_up_screen_image.png
     - assets/images/login_screen_image.png
     - assets/images/home_screen_image.png
+    - assets/images/offer_screen_image.png
     - assets/images/dyson_v15.png
     - assets/images/offer_01_image.png
     - assets/images/offer_02_image.png

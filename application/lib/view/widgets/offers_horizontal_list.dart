@@ -1,3 +1,4 @@
+import 'package:application/view/screens/offer_screen.dart';
 import 'package:application/view/widgets/offer_item.dart';
 import 'package:application/view/widgets/product_item.dart';
 import 'package:flutter/material.dart';
@@ -42,11 +43,19 @@ class OffersHorizontalList extends StatelessWidget {
               left: index == 0 ? 10.0 : 0,
               right: 10.0, // Minden elem után 15.0 logikai pixel a távolság
             ),
-            child: OfferItem(
-              number: index,
-              title: products[index]['title'],
-              store: products[index]['subtitle'],
-              imageName: products[index]['image'],
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OfferScreen()),
+                );
+              },
+              child: OfferItem(
+                number: index,
+                title: products[index]['title'],
+                store: products[index]['subtitle'],
+                imageName: products[index]['image'],
+              ),
             ),
           );
         },
