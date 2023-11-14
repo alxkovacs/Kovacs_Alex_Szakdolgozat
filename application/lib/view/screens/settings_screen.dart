@@ -1,5 +1,6 @@
 import 'package:application/utils/colors.dart';
 import 'package:application/view/screens/favorites_screen.dart';
+import 'package:application/view/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -59,6 +60,11 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 onTap: () {
                   // Navigate to profile page or perform action
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfileScreen()),
+                  );
                 },
               ),
             ),

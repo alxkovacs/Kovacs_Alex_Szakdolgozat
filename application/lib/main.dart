@@ -7,6 +7,7 @@ import 'package:application/view/screens/offer_screen.dart';
 import 'package:application/view/screens/offers_screen.dart';
 import 'package:application/view/screens/product_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
+import 'package:application/view/screens/profile_screen.dart';
 import 'package:application/view/screens/settings_screen.dart';
 import 'package:application/view/screens/shopping_list_screen.dart';
 import 'package:application/view/screens/sign_up_screen.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
               // return ShoppingListScreen();
               // return ProductScreen();
               // return OfferScreen();
+              // return ProfileScreen();
               return const BaseScreen();
             }
 
