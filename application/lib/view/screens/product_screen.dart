@@ -30,10 +30,14 @@ class _ProductScreenState extends State<ProductScreen>
       {"name": "Titko", "price": "415 990 Ft"},
       {"name": "Metko", "price": "455 990 Ft"},
       {"name": "Latra", "price": "515 990 Ft"},
+      {"name": "Telko", "price": "315 990 Ft"},
+      {"name": "Titko", "price": "415 990 Ft"},
+      {"name": "Metko", "price": "455 990 Ft"},
+      {"name": "Latra", "price": "515 990 Ft"},
     ];
 
     return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       itemCount: offers.length,
       itemBuilder: (context, index) {
         return ListTile(
@@ -60,9 +64,8 @@ class _ProductScreenState extends State<ProductScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        // Az AppBar címe
-        // Beállíthatod az AppBar hátterét is, ha szükséges
         backgroundColor: const Color.fromRGBO(208, 229, 236, 1.0),
       ),
       backgroundColor: const Color.fromRGBO(208, 229, 236, 1.0),
@@ -71,7 +74,7 @@ class _ProductScreenState extends State<ProductScreen>
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40),
             child: Center(
-              child: Text('🧹', style: TextStyle(fontSize: 150)),
+              child: Text('🧹', style: TextStyle(fontSize: 125)),
             ),
           ),
           SizedBox(height: 30),
@@ -122,25 +125,18 @@ class _ProductScreenState extends State<ProductScreen>
                   ),
                   SizedBox(height: 30),
                   TabBar(
-                    // indicatorColor: Colors.white,
+                    dividerColor: const Color.fromRGBO(67, 153, 182, 0.5),
                     unselectedLabelColor: Colors.black,
-                    // indicatorPadding: EdgeInsets.all(0),
-                    dividerColor: Colors.transparent,
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicatorColor: const Color.fromRGBO(67, 153, 182, 1.00),
                     labelColor: const Color.fromRGBO(67, 153, 182, 1.00),
-                    unselectedLabelStyle: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    labelStyle: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    unselectedLabelStyle:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    labelStyle:
+                        TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     controller: _tabController,
                     tabs: [
                       Tab(text: 'Legjobb Ajánlatok'),
-                      // Tab(text: 'Price Diagram'),
                       Tab(text: 'Ár hozzáadása'),
                     ],
                   ),
@@ -149,17 +145,16 @@ class _ProductScreenState extends State<ProductScreen>
                       controller: _tabController,
                       children: [
                         buildBestOffersTab(),
-                        // Center(child: Text('Price Diagram')),
                         SingleChildScrollView(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 25), // 24 volt
+                                vertical: 10, horizontal: 25),
                             child: Form(
                               key: _form,
                               child: Column(
-                                mainAxisSize: MainAxisSize.min,
+                                // mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const SizedBox(height: 20),
+                                  const SizedBox(height: 30),
                                   TextFormField(
                                     decoration: AuthInputDecoration(
                                       labelText: 'Üzlet',

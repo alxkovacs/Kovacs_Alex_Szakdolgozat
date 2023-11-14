@@ -111,7 +111,7 @@ class _ShoppingListScreenState extends State<ShoppingListScreen>
                 // indicatorColor: Colors.white,
                 unselectedLabelColor: Colors.black,
                 // indicatorPadding: EdgeInsets.all(0),
-                dividerColor: Colors.transparent,
+                dividerColor: const Color.fromRGBO(67, 153, 182, 0.5),
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorColor: const Color.fromRGBO(67, 153, 182, 1.00),
                 labelColor: const Color.fromRGBO(67, 153, 182, 1.00),
