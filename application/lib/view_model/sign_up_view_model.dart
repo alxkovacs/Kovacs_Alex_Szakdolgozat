@@ -1,7 +1,10 @@
 import 'package:application/model/user.dart';
+import 'package:application/providers/user_provider.dart';
 import 'package:application/view/screens/login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SignUpViewModel {
   final FirebaseAuth _firebase = FirebaseAuth.instance;
@@ -50,14 +53,33 @@ class SignUpViewModel {
   // }
 
   Future<bool> submitSignUp(String enteredFirstName, String enteredEmail,
-      String enteredPassword) async {
+      String enteredPassword, WidgetRef ref) async {
     try {
       final userModel = UserModel(
           firstName: enteredFirstName,
           email: enteredEmail,
           password: enteredPassword);
-      await _firebase.createUserWithEmailAndPassword(
+      final userCredentials = await _firebase.createUserWithEmailAndPassword(
           email: userModel.email, password: userModel.password);
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredentials.user!.uid)
+          .set({
+        'email': userModel.email,
+        'firstname': userModel.firstName,
+      });
+
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredentials.user!.uid)
+          .get();
+      final userData = userDoc.data();
+      if (userData != null) {
+        // Itt állítjuk be a felhasználó nevét a Riverpod segítségével.
+        ref.read(userProvider.notifier).setUserFirstName(userData['firstname']);
+      }
+
       return true; // Sikeres regisztráció
     } on FirebaseAuthException catch (err) {
       return false; // Sikertelen regisztráció

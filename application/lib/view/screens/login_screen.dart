@@ -7,19 +7,20 @@ import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view_model/login_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _firebase = FirebaseAuth.instance;
 
-class LogInScreen extends StatefulWidget {
+class LogInScreen extends ConsumerStatefulWidget {
   const LogInScreen({super.key});
 
   @override
-  State<LogInScreen> createState() {
+  ConsumerState<LogInScreen> createState() {
     return _LogInScreenState();
   }
 }
 
-class _LogInScreenState extends State<LogInScreen> {
+class _LogInScreenState extends ConsumerState<LogInScreen> {
   LogInViewModel viewModel = LogInViewModel();
   final _form = GlobalKey<FormState>();
 
@@ -251,6 +252,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                     bool success = await viewModel.submitLogIn(
                                       _enteredEmail,
                                       _enteredPassword,
+                                      ref,
                                     );
                                     // await Future.delayed(
                                     //     const Duration(milliseconds: 100));

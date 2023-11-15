@@ -1,16 +1,27 @@
+import 'package:application/providers/user_provider.dart';
+import 'package:application/utils/colors.dart';
 import 'package:application/view/screens/favorites_screen.dart';
 import 'package:application/view/screens/shopping_list_screen.dart';
 import 'package:application/view/widgets/auth_image_widget.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view/widgets/horizontal_list.dart';
 import 'package:application/view/widgets/savings_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _firebase = FirebaseAuth.instance;
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   HomeScreen({super.key});
+
+  @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  // var _userFirstName = "";
 
   final List<Map<String, dynamic>> emojis = [
     {
@@ -25,8 +36,61 @@ class HomeScreen extends StatelessWidget {
     },
   ];
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getName();
+  // }
+
+  // void _getName() async {
+  //   final user = FirebaseAuth.instance.currentUser!;
+  //   if (user != null) {
+  //     final userData = await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(user.uid)
+  //         .get();
+  //     setState(() {
+  //       _userFirstName = userData.data()!['firstname'];
+  //     });
+  //   }
+  // }
+
+  // void _getName() async {
+  //   final user = FirebaseAuth.instance.currentUser!;
+  //   if (user != null) {
+  //     try {
+  //       final userData = await FirebaseFirestore.instance
+  //           .collection('users')
+  //           .doc(user.uid)
+  //           .get();
+  //       setState(() {
+  //         _userFirstName = userData.data()!['firstname'];
+  //       });
+  //     } catch (e) {
+  //       // Kezelheted a hibát vagy beállíthatsz egy alapértelmezett nevet
+  //       setState(() {
+  //         _userFirstName = '';
+  //       });
+  //     }
+  //   }
+  // }
+
+  // Widget _buildGreeting() {
+  //   if (_userFirstName == "") {
+  //     // Vagy jeleníts meg egy CircularProgressIndicator-t
+  //     return CircularProgressIndicator(
+  //         valueColor: AlwaysStoppedAnimation<Color>(AppColor.mainColor));
+  //   } else {
+  //     return Text(
+  //       'Hello, $_userFirstName',
+  //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+  //     );
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
+    final userFirstName = ref.watch(userProvider);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -39,34 +103,15 @@ class HomeScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Hello, Alex',
+                    'Hello, $userFirstName',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                   ),
                 ),
                 const AuthImageWidget(
                   imagePath: 'assets/images/home_screen_image.png',
                 ),
-                // ListTile(
-                //   leading: Text(
-                //     '🛒', // Porszívó emoji
-                //     style: TextStyle(
-                //       fontSize:
-                //           45.0, // állítsd be a méretet, hogy illeszkedjen a layout-hoz
-                //     ),
-                //   ),
-                //   title: Text(
-                //     'Bevásárlólista',
-                //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                //   ),
-                //   trailing: Icon(Icons.arrow_forward_ios),
-                //   onTap: () {
-                //     // A kiválasztott elem kezelése
-                //   },
-                // ),
-                // const SizedBox(height: 20),
                 const SavingsCard(),
                 const SizedBox(height: 20),
-
                 GridView.builder(
                   shrinkWrap: true, // Add this line
                   physics: NeverScrollableScrollPhysics(), // And this one
@@ -133,20 +178,6 @@ class HomeScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment
                                   .center, // Középre igazítás a vízszintes tengely mentén
                               children: <Widget>[
-                                // Expanded(
-                                //   child: Center(
-                                //     child: Text(
-                                //       emojis[index][
-                                //           'emoji'], // Emoji, például a porszívó emoji🫧📺🧹
-                                //       textAlign: TextAlign
-                                //           .center, // Szöveg középre igazítása
-                                //       style: TextStyle(
-                                //         fontSize:
-                                //             20.0, // Méret beállítása, hogy illeszkedjen a layout-hoz
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
                                 Text(
                                   emojis[index]['name'],
                                   textAlign: TextAlign
@@ -164,7 +195,6 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
-
                 const SizedBox(height: 40),
                 Align(
                   alignment: Alignment.centerLeft,

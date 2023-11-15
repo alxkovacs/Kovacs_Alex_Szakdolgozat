@@ -6,17 +6,18 @@ import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view_model/sign_up_view_model.dart';
 import 'package:application/view/widgets/auth_input_decoration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() {
+  ConsumerState<SignUpScreen> createState() {
     return _SignUpScreenState();
   }
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   SignUpViewModel viewModel = SignUpViewModel();
   final _form = GlobalKey<FormState>();
 
@@ -138,6 +139,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       _enteredFirstName,
                                       _enteredEmail,
                                       _enteredPassword,
+                                      ref,
                                     );
                                     // await Future.delayed(
                                     //     const Duration(milliseconds: 100));
