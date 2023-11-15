@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AddStoreViewModel {
+class AddProductViewModel {
   final FirebaseAuth _firebase = FirebaseAuth.instance;
 
-  Future<bool> addStore(String enteredStoreName, String enteredPostCode,
+  Future<bool> addProduct(String enteredStoreName, String enteredPostCode,
       String enteredCity, String enteredAddress) async {
     try {
       await FirebaseFirestore.instance.collection('stores').doc().set({
