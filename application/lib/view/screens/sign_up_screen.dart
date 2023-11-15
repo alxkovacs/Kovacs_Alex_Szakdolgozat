@@ -157,15 +157,15 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                           ),
                                           (Route<dynamic> route) => false,
                                         );
-                                        Navigator.of(context).pushReplacement(
-                                          PageRouteBuilder(
-                                            pageBuilder: (context, animation1,
-                                                    animation2) =>
-                                                const BaseScreen(),
-                                            transitionDuration:
-                                                const Duration(seconds: 0),
-                                          ),
-                                        );
+                                        // Navigator.of(context).pushReplacement(
+                                        //   PageRouteBuilder(
+                                        //     pageBuilder: (context, animation1,
+                                        //             animation2) =>
+                                        //         const BaseScreen(),
+                                        //     transitionDuration:
+                                        //         const Duration(seconds: 0),
+                                        //   ),
+                                        // );
                                       }
                                     } else {
                                       if (mounted) {

@@ -2,23 +2,29 @@ import 'package:application/utils/colors.dart';
 import 'package:application/view/widgets/auth_image_widget.dart';
 import 'package:application/view/widgets/auth_input_decoration.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
-import 'package:application/view_model/sign_up_view_model.dart';
+import 'package:application/view_model/add_store_view_model.dart';
 import 'package:flutter/material.dart';
 
-class AddStoreScreen extends StatelessWidget {
+class AddStoreScreen extends StatefulWidget {
   const AddStoreScreen({super.key});
 
   @override
+  State<AddStoreScreen> createState() => _AddStoreScreenState();
+}
+
+class _AddStoreScreenState extends State<AddStoreScreen> {
+  AddStoreViewModel viewModel = AddStoreViewModel();
+  final _form = GlobalKey<FormState>();
+
+  bool _isLoading = false;
+
+  var _enteredStoreName = '';
+  var _enteredPostcode = '';
+  var _enteredCity = '';
+  var _enteredAddress = '';
+
+  @override
   Widget build(BuildContext context) {
-    SignUpViewModel viewModel = SignUpViewModel();
-    final _form = GlobalKey<FormState>();
-
-    bool _isLoading = false;
-
-    var _enteredFirstName = '';
-    var _enteredEmail = '';
-    var _enteredPassword = '';
-
     return Center(
       child: _isLoading
           ? const CircularProgressIndicator(
@@ -49,13 +55,13 @@ class AddStoreScreen extends StatelessWidget {
                               textCapitalization: TextCapitalization.sentences,
                               validator: (value) {
                                 if (value == null || value.trim().length < 3) {
-                                  return 'A névnek legalább 3 karakter hosszúnak kell lennie.';
+                                  return 'Az üzletnévnek legalább 3 karakter hosszúnak kell lennie.';
                                 }
 
                                 return null;
                               },
                               onSaved: (value) {
-                                // _enteredFirstName = value!;
+                                _enteredStoreName = value!;
                               },
                             ),
                             const SizedBox(height: 15),
@@ -67,14 +73,14 @@ class AddStoreScreen extends StatelessWidget {
                               autocorrect: true,
                               textCapitalization: TextCapitalization.sentences,
                               validator: (value) {
-                                if (value == null || value.trim().length < 3) {
-                                  return 'A névnek legalább 3 karakter hosszúnak kell lennie.';
+                                if (value == null || value.trim().length != 4) {
+                                  return 'Az irányítószámnak 4 karakter hosszúnak kell lennie.';
                                 }
 
                                 return null;
                               },
                               onSaved: (value) {
-                                // _enteredFirstName = value!;
+                                _enteredPostcode = value!;
                               },
                             ),
                             const SizedBox(height: 15),
@@ -87,13 +93,13 @@ class AddStoreScreen extends StatelessWidget {
                               textCapitalization: TextCapitalization.sentences,
                               validator: (value) {
                                 if (value == null || value.trim().length < 3) {
-                                  return 'A névnek legalább 3 karakter hosszúnak kell lennie.';
+                                  return 'A városnévnek legalább 3 karakter hosszúnak kell lennie.';
                                 }
 
                                 return null;
                               },
                               onSaved: (value) {
-                                // _enteredFirstName = value!;
+                                _enteredCity = value!;
                               },
                             ),
                             const SizedBox(height: 15),
@@ -106,38 +112,52 @@ class AddStoreScreen extends StatelessWidget {
                               textCapitalization: TextCapitalization.sentences,
                               validator: (value) {
                                 if (value == null || value.trim().length < 3) {
-                                  return 'A névnek legalább 3 karakter hosszúnak kell lennie.';
+                                  return 'A címnek legalább 3 karakter hosszúnak kell lennie.';
                                 }
 
                                 return null;
                               },
                               onSaved: (value) {
-                                // _enteredFirstName = value!;
-                              },
-                            ),
-                            const SizedBox(height: 15),
-                            TextFormField(
-                              decoration: AuthInputDecoration(
-                                labelText: 'Nyitvatartás',
-                                iconData: Icons.access_time_rounded,
-                              ),
-                              keyboardType: TextInputType.datetime,
-                              validator: (value) {
-                                if (value == null ||
-                                    value.trim().isEmpty ||
-                                    !value.contains('@')) {
-                                  return 'Kérlek egy létező e-mail címet adj meg';
-                                }
-
-                                return null;
-                              },
-                              onSaved: (value) {
-                                // _enteredEmail = value!;
+                                _enteredAddress = value!;
                               },
                             ),
                             const SizedBox(height: 30),
                             CustomElevatedButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                if (_form.currentState!.validate()) {
+                                  setState(() => _isLoading = true);
+                                  _form.currentState!.save();
+                                  bool success = await viewModel.addStore(
+                                      _enteredStoreName,
+                                      _enteredPostcode,
+                                      _enteredCity,
+                                      _enteredAddress);
+
+                                  if (success) {
+                                    if (mounted) {
+                                      Navigator.pop(context);
+                                    }
+                                  } else {
+                                    if (mounted) {
+                                      ScaffoldMessenger.of(context)
+                                          .clearSnackBars();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Sikertelen áruház hozzáadás!'),
+                                        ),
+                                      );
+                                    }
+                                  }
+                                  await Future.delayed(
+                                    const Duration(milliseconds: 100),
+                                  );
+                                  if (mounted) {
+                                    setState(() => _isLoading = false);
+                                  }
+                                }
+                              },
                               text: 'Hozzáadás',
                             ),
                           ],
