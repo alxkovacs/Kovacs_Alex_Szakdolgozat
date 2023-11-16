@@ -5,14 +5,29 @@ import 'package:flutter/material.dart';
 class AddProductViewModel {
   final FirebaseAuth _firebase = FirebaseAuth.instance;
 
-  Future<bool> addProduct(String enteredStoreName, String enteredPostCode,
-      String enteredCity, String enteredAddress) async {
+  Future<bool> addProduct(String enteredProduct, String enteredCategory,
+      String enteredStore, String enteredPrice) async {
     try {
-      await FirebaseFirestore.instance.collection('stores').doc().set({
-        'storeName': enteredStoreName,
-        'postcode': enteredPostCode,
-        'city': enteredCity,
-        'address': enteredAddress,
+      // Create a new document reference with a unique ID
+      DocumentReference docRef =
+          FirebaseFirestore.instance.collection('products').doc();
+
+      // Use the unique document ID
+      String newProductId = docRef.id;
+
+      // Set the data on the new document
+      await docRef.set({
+        'product': enteredProduct,
+        'category': enteredCategory.split('-')[0],
+        'emoji': enteredCategory.split('-')[1],
+        // You can now also include the newProductId in your document if needed
+        // 'id': newProductId,
+      });
+
+      await FirebaseFirestore.instance.collection('productPrice').doc().set({
+        'productID': newProductId,
+        'storeID': enteredStore,
+        'price': int.parse(enteredPrice),
       });
 
       return true; // Sikeres regisztráció
