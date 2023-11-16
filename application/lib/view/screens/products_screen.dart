@@ -1,82 +1,86 @@
+import 'package:application/providers/products_provider.dart';
 import 'package:application/view/widgets/product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProductsScreen extends StatefulWidget {
+class ProductsScreen extends ConsumerStatefulWidget {
   ProductsScreen({super.key});
 
   @override
-  State<ProductsScreen> createState() => _ProductsScreenState();
+  ConsumerState<ProductsScreen> createState() => _ProductsScreenState();
 }
 
-class _ProductsScreenState extends State<ProductsScreen> {
+class _ProductsScreenState extends ConsumerState<ProductsScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  final List<Map<String, dynamic>> products = [
+  final List<Map<String, dynamic>> productss = [
     {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🛋️',
+      'product': 'Dyson V15 Detect Absolute',
+      'category': '319 990 Ft',
+      'emoji': '🛋️',
     },
     {
-      'name': 'VILEDA Ultramat Turbo felmosó szett',
-      'price': '13 890 Ft',
-      'store': '🪠',
+      'product': 'VILEDA Ultramat Turbo felmosó szett',
+      'category': '13 890 Ft',
+      'emoji': '🪠',
     },
     {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🧹',
+      'product': 'Dyson V15 Detect Absolute',
+      'category': '319 990 Ft',
+      'emoji': '🧹',
     },
     {
-      'name': 'VILEDA Ultramat Turbo felmosó szett',
-      'price': '13 890 Ft',
-      'store': '🛋️',
+      'product': 'VILEDA Ultramat Turbo felmosó szett',
+      'category': '13 890 Ft',
+      'emoji': '🛋️',
     },
     {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🪠',
+      'product': 'Dyson V15 Detect Absolute',
+      'category': '319 990 Ft',
+      'emoji': '🪠',
     },
     {
-      'name': 'VILEDA Ultramat Turbo felmosó szett',
-      'price': '13 890 Ft',
-      'store': '🪣',
+      'product': 'VILEDA Ultramat Turbo felmosó szett',
+      'category': '13 890 Ft',
+      'emoji': '🪣',
     },
     {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🧹',
+      'product': 'Dyson V15 Detect Absolute',
+      'category': '319 990 Ft',
+      'emoji': '🧹',
     },
     {
-      'name': 'VILEDA Ultramat Turbo felmosó szett',
-      'price': '13 890 Ft',
-      'store': '🪠',
+      'product': 'VILEDA Ultramat Turbo felmosó szett',
+      'category': '13 890 Ft',
+      'emoji': '🪠',
     },
     {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🪣',
+      'product': 'Dyson V15 Detect Absolute',
+      'category': '319 990 Ft',
+      'emoji': '🪣',
     },
     {
-      'name': 'VILEDA Ultramat Turbo felmosó szett',
-      'price': '13 890 Ft',
-      'store': '🪣',
+      'product': 'VILEDA Ultramat Turbo felmosó szett',
+      'category': '13 890 Ft',
+      'emoji': '🪣',
     },
     {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🪣',
+      'product': 'Dyson V15 Detect Absolute',
+      'category': '319 990 Ft',
+      'emoji': '🪣',
     },
     {
-      'name': 'VILEDA Ultramat Turbo felmosó szett',
-      'price': '13 890 Ft',
-      'store': '🪣',
+      'product': 'VILEDA Ultramat Turbo felmosó szett',
+      'category': '13 890 Ft',
+      'emoji': '🪣',
     },
     // További termékek...
   ];
 
   @override
   Widget build(BuildContext context) {
+    final products = ref.watch(productsProvider);
+
     return Scaffold(
       // backgroundColor: Color.fromRGBO(67, 153, 182, 0.15),
       backgroundColor: Colors.white,
@@ -154,9 +158,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 itemBuilder: (context, index) {
                   final product = products[index];
                   return ProductCard(
-                    productName: product['name'],
-                    price: product['price'],
-                    storeName: product['store'],
+                    id: product['id'],
+                    product: product['product'],
+                    category: product['category'],
+                    emoji: product['emoji'],
                   );
                 },
               ),

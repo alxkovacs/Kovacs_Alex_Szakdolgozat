@@ -29,6 +29,7 @@ void main() async {
     statusBarBrightness: Brightness.light,
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarColor: const Color.fromRGBO(67, 153, 182, 1.00),
+    // systemNavigationBarColor: Colors.transparent,
   ));
   runApp(
     const ProviderScope(
@@ -62,8 +63,9 @@ class MyApp extends StatelessWidget {
               statusBarColor: Colors.transparent,
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.dark,
-              systemNavigationBarColor:
-                  const Color.fromRGBO(67, 153, 182, 1.00),
+              // systemNavigationBarColor:
+              //     const Color.fromRGBO(67, 153, 182, 1.00),
+              systemNavigationBarColor: Colors.transparent,
             ),
             backgroundColor: Colors.white, // Az AppBar hátterének színe
             elevation: 0, // Az AppBar elevációjának eltávolítása

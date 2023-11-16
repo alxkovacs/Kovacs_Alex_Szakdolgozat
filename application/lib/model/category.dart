@@ -8,7 +8,7 @@ class Category {
 List<Category> categories = [
   Category('Étel', '🍔'),
   Category('Ital', '🍹'),
-  Category('Utazás', '✈️'),
+  Category('Utazás', '🧹'),
   Category('Bevásárlás', '🛍️'),
   // További kategóriákat ide lehet hozzáadni
 ];

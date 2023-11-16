@@ -2,15 +2,17 @@ import 'package:application/view/screens/product_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  final String productName;
-  final String price;
-  final String storeName;
+  final String id;
+  final String product;
+  final String category;
+  final String emoji;
 
   const ProductCard({
     Key? key,
-    required this.productName,
-    required this.price,
-    required this.storeName,
+    required this.id,
+    required this.product,
+    required this.category,
+    required this.emoji,
   }) : super(key: key);
 
   void navigateToDetails(BuildContext context) {
@@ -23,7 +25,14 @@ class ProductCard extends StatelessWidget {
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ProductScreen()),
+      MaterialPageRoute(
+        builder: (context) => ProductScreen(
+          id: id,
+          product: product,
+          category: category,
+          emoji: emoji,
+        ),
+      ),
     );
   }
 
@@ -64,7 +73,7 @@ class ProductCard extends StatelessWidget {
                 ],
               ),
               child: Text(
-                storeName, // Itt helyezze el az emojit.
+                emoji, // Itt helyezze el az emojit.
                 style: TextStyle(fontSize: 24), // Emoji méretének beállítása.
               ),
             ),
@@ -74,11 +83,11 @@ class ProductCard extends StatelessWidget {
               maxLines: 1,
               overflow:
                   TextOverflow.ellipsis, // Több sor esetén pontokkal zárul
-              productName,
+              product,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
             subtitle: Text(
-              price,
+              category,
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,

@@ -224,9 +224,8 @@ class _AddProductScreenState extends ConsumerState<AddProductScreen> {
                                 keyboardType: TextInputType.number,
                                 textCapitalization: TextCapitalization.none,
                                 validator: (value) {
-                                  if (value == null ||
-                                      value.trim().length < 3) {
-                                    return 'A címnek legalább 3 karakter hosszúnak kell lennie.';
+                                  if (value == null || value.trim().isEmpty) {
+                                    return 'Kérlek valós összeget adj meg.';
                                   }
 
                                   return null;
