@@ -19,7 +19,7 @@ class SavingsCard extends StatelessWidget {
               5.0,
               5.0,
             ),
-            blurRadius: 15.0,
+            blurRadius: 10.0,
             spreadRadius: 1.0,
           ), //BoxShadow
           BoxShadow(

@@ -1,3 +1,4 @@
+import 'package:application/providers/home_screen_provider.dart';
 import 'package:application/providers/user_provider.dart';
 import 'package:application/utils/colors.dart';
 import 'package:application/view/screens/favorites_screen.dart';
@@ -36,61 +37,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     },
   ];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _getName();
-  // }
-
-  // void _getName() async {
-  //   final user = FirebaseAuth.instance.currentUser!;
-  //   if (user != null) {
-  //     final userData = await FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(user.uid)
-  //         .get();
-  //     setState(() {
-  //       _userFirstName = userData.data()!['firstname'];
-  //     });
-  //   }
-  // }
-
-  // void _getName() async {
-  //   final user = FirebaseAuth.instance.currentUser!;
-  //   if (user != null) {
-  //     try {
-  //       final userData = await FirebaseFirestore.instance
-  //           .collection('users')
-  //           .doc(user.uid)
-  //           .get();
-  //       setState(() {
-  //         _userFirstName = userData.data()!['firstname'];
-  //       });
-  //     } catch (e) {
-  //       // Kezelheted a hibát vagy beállíthatsz egy alapértelmezett nevet
-  //       setState(() {
-  //         _userFirstName = '';
-  //       });
-  //     }
-  //   }
-  // }
-
-  // Widget _buildGreeting() {
-  //   if (_userFirstName == "") {
-  //     // Vagy jeleníts meg egy CircularProgressIndicator-t
-  //     return CircularProgressIndicator(
-  //         valueColor: AlwaysStoppedAnimation<Color>(AppColor.mainColor));
-  //   } else {
-  //     return Text(
-  //       'Hello, $_userFirstName',
-  //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-  //     );
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     final userFirstName = ref.watch(userProvider);
+    final productsSnapshot = ref.watch(topViewedProductsProvider);
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -147,7 +98,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 5.0,
                                 5.0,
                               ),
-                              blurRadius: 15.0,
+                              blurRadius: 10.0,
                               spreadRadius: 1.0,
                             ), //BoxShadow
                             BoxShadow(
@@ -204,7 +155,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                HorizontalList(),
+                productsSnapshot.when(
+                  data: (products) {
+                    // Itt adja át a termékek listáját a `HorizontalList` widgetnek.
+                    return HorizontalList(products: products);
+                  },
+                  loading: () => CircularProgressIndicator(),
+                  error: (e, _) => Text('Hiba: $e'),
+                ),
                 const SizedBox(height: 30),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -214,7 +172,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                HorizontalList(),
+                productsSnapshot.when(
+                  data: (products) {
+                    // Itt adja át a termékek listáját a `HorizontalList` widgetnek.
+                    return HorizontalList(products: products);
+                  },
+                  loading: () => CircularProgressIndicator(),
+                  error: (e, _) => Text('Hiba: $e'),
+                ),
               ],
             ),
           ),

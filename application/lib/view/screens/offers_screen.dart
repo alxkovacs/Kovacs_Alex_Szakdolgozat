@@ -108,7 +108,7 @@ class OffersScreen extends StatelessWidget {
                 ),
               ),
             ),
-            HorizontalList(),
+            // HorizontalList(),
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16.0),

@@ -1,4 +1,5 @@
 import 'package:application/model/user.dart';
+import 'package:application/providers/products_provider.dart';
 import 'package:application/providers/user_provider.dart';
 import 'package:application/view/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -79,6 +80,8 @@ class SignUpViewModel {
         // Itt állítjuk be a felhasználó nevét a Riverpod segítségével.
         ref.read(userProvider.notifier).setUserFirstName(userData['firstname']);
       }
+      ref.refresh(productsProvider(
+          '')); // Ha szükséges, cseréld le az üres stringet a kívánt keresési szóra.
 
       return true; // Sikeres regisztráció
     } on FirebaseAuthException catch (err) {

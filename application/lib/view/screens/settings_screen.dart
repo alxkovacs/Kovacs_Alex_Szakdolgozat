@@ -1,14 +1,22 @@
+import 'package:application/providers/products_provider.dart';
+import 'package:application/providers/user_provider.dart';
 import 'package:application/utils/colors.dart';
 import 'package:application/view/screens/favorites_screen.dart';
 import 'package:application/view/screens/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _firebase = FirebaseAuth.instance;
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
+  @override
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,8 +156,11 @@ class SettingsScreen extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: TextButton(
-                onPressed: () {
-                  _firebase.signOut();
+                onPressed: () async {
+                  await _firebase.signOut();
+                  // Itt állítjuk be az állapotot üres stringre vagy null értékre
+                  ref.read(userProvider.notifier).setUserFirstName('');
+                  ref.refresh(productsProvider(''));
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       'start', (Route<dynamic> route) => false);
                 },

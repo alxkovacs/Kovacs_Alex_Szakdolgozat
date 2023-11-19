@@ -1,57 +1,12 @@
+import 'package:application/view/widgets/horizontal_product_item.dart';
+import 'package:application/view/widgets/product_card.dart';
 import 'package:application/view/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalList extends StatelessWidget {
-  HorizontalList({super.key});
+  final List<Map<String, dynamic>> products;
 
-  final List<Map<String, dynamic>> products = [
-    {
-      'title': 'Dyson V15 Detect Absolute',
-      'subtitle': 'Laidi',
-      'image': '🪠' // Replace with your image asset path
-    },
-    {
-      'title': 'VILEDA Ultramat Turbo felmosó szett',
-      'subtitle': 'Lokta',
-      'image': '🪠' // Replace with your image asset path
-    },
-    {
-      'title': 'Dyson V15 Detect Absolute',
-      'subtitle': 'Laidi',
-      'image': '🪠' // Replace with your image asset path
-    },
-    {
-      'title': 'VILEDA Ultramat Turbo felmosó szett',
-      'subtitle': 'Lokta',
-      'image':
-          'assets/images/dyson_v15.png' // Replace with your image asset path
-    },
-    {
-      'title': 'Dyson V15 Detect Absolute',
-      'subtitle': 'Laidi',
-      'image':
-          'assets/images/dyson_v15.png' // Replace with your image asset path
-    },
-    {
-      'title': 'VILEDA Ultramat Turbo felmosó szett',
-      'subtitle': 'Lokta',
-      'image':
-          'assets/images/dyson_v15.png' // Replace with your image asset path
-    },
-    {
-      'title': 'Dyson V15 Detect Absolute',
-      'subtitle': 'Laidi',
-      'image':
-          'assets/images/dyson_v15.png' // Replace with your image asset path
-    },
-    {
-      'title': 'VILEDA Ultramat Turbo felmosó szett',
-      'subtitle': 'Lokta',
-      'image':
-          'assets/images/dyson_v15.png' // Replace with your image asset path
-    },
-    // Add more products as needed
-  ];
+  HorizontalList({super.key, required this.products});
 
   final List<Map<String, dynamic>> offers = [
     {
@@ -117,20 +72,35 @@ class HorizontalList extends StatelessWidget {
           mainAxisSpacing: 10, // Vízszintes térköz
           childAspectRatio: 0.195, // Az elemek arányának beállítása
         ),
-        itemCount: offers.length,
+        itemCount: products.length,
         itemBuilder: (context, index) {
           return Container(
             margin: EdgeInsets.only(
               left:
-                  index < 3 ? 10 : 0, // Az első elemnek adunk bal oldali margót
+                  index < 3 ? 0 : 0, // Az első elemnek adunk bal oldali margót
               right: index > 5 ? 10 : 0,
             ),
-            child: ProductItem(
+            child: HorizontalProductItem(
               number: index,
-              title: offers[index]['title'],
-              store: offers[index]['subtitle'],
-              imageName: offers[index]['image'],
+              id: products[index]['id'],
+              product: products[index]['name'],
+              category: products[index]['category']['name'],
+              emoji: products[index]['category']['emoji'],
             ),
+            // ProductItem(
+            //   number: index,
+            //   title: products[index]['name'],
+            //   categoryName: products[index]['category']['name'],
+            //   imageName: products[index]['category']['emoji'],
+            // ),
+            // child: ProductCard(
+            //   id: products[index]['id'],
+            //   product: products[index]['name'],
+            //   category: products[index]['category']['name'],
+            //   emoji: products[index]['category']['emoji'],
+            //   // feltételezve, hogy a ProductCard widget támogatja az árat is
+            //   // price: product['price'].toString(),
+            // ),
           );
         },
       ),

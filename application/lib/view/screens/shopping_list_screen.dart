@@ -1,17 +1,19 @@
+import 'package:application/providers/shopping_list_provider.dart';
 import 'package:application/view/widgets/product_card.dart';
 import 'package:application/view/widgets/savings_card.dart';
 import 'package:application/view/widgets/shopping_list_card.dart';
 import 'package:application/view/widgets/shopping_list_item_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ShoppingListScreen extends StatefulWidget {
+class ShoppingListScreen extends ConsumerStatefulWidget {
   const ShoppingListScreen({super.key});
 
   @override
-  State<ShoppingListScreen> createState() => _ShoppingListScreenState();
+  ConsumerState<ShoppingListScreen> createState() => _ShoppingListScreenState();
 }
 
-class _ShoppingListScreenState extends State<ShoppingListScreen>
+class _ShoppingListScreenState extends ConsumerState<ShoppingListScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -81,6 +83,8 @@ class _ShoppingListScreenState extends State<ShoppingListScreen>
 
   @override
   Widget build(BuildContext context) {
+    // final shoppingList = ref.watch(shoppingListProvider);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -98,13 +102,33 @@ class _ShoppingListScreenState extends State<ShoppingListScreen>
           child: Column(
             children: [
               // Termékek listája Column widgetben
-              for (var product in products)
-                ShoppingListItemCard(
-                  productName: product['name'],
-                  price: product['price'],
-                  store: product['store'],
-                  storeName: product['store_name'],
-                ),
+              ListView.builder(
+                shrinkWrap:
+                    true, // Így használható a ListView a SingleChildScrollView-ben
+                physics:
+                    NeverScrollableScrollPhysics(), // Kikapcsoljuk a görgetést, mivel a SingleChildScrollView kezeli
+                // itemCount: shoppingList.length, // A lista elemek száma
+                // itemBuilder: (context, index) {
+                //   final product = shoppingList[index];
+                //   return ShoppingListItemCard(
+                //     productName: product.productName,
+                //     price: product.productName,
+                //     store: product
+                //         .productName, // Ez lehet egy emoji vagy a bolt neve
+                //     storeName: product.productName,
+                //   );
+                itemCount: products.length, // A lista elemek száma
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return ShoppingListItemCard(
+                    productName: product['name'],
+                    price: product['price'],
+                    store:
+                        product['store'], // Ez lehet egy emoji vagy a bolt neve
+                    storeName: product['store_name'],
+                  );
+                },
+              ),
               SizedBox(height: 20),
               // A TabBar itt már nem része egy Expanded widgetnek
               TabBar(

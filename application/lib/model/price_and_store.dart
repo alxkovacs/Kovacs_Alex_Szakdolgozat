@@ -1,7 +1,13 @@
-// Egyedi ár és áruház adatait tartalmazó modell
 class PriceAndStore {
+  final String storeId;
   final String storeName;
   final int price;
+  final int priceCount;
 
-  PriceAndStore({required this.storeName, required this.price});
+  PriceAndStore({
+    required this.storeId,
+    required this.storeName,
+    required this.price,
+    required this.priceCount,
+  });
 }

@@ -5,23 +5,23 @@ class ProductItem extends StatelessWidget {
     Key? key,
     required this.number,
     required this.title,
-    required this.store,
+    required this.categoryName,
     required this.imageName,
   }) : super(key: key);
 
   final int number;
   final String title;
-  final String store;
+  final String categoryName;
   final String imageName;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color.fromRGBO(67, 153, 182, 0.05),
+      color: const Color.fromRGBO(67, 153, 182, 0.15),
       elevation: 0.0,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            vertical: 8.0, horizontal: 8.0), // Körbefuttatott padding
+            vertical: 10.0, horizontal: 10.0), // Körbefuttatott padding
         child: Row(
           children: <Widget>[
             AspectRatio(
@@ -63,7 +63,7 @@ class ProductItem extends StatelessWidget {
                         .ellipsis, // Több sor esetén pontokkal zárul
                   ),
                   Text(
-                    store,
+                    categoryName,
                     style: TextStyle(fontSize: 12.0),
                     maxLines: 1,
                     overflow: TextOverflow

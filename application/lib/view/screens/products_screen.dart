@@ -1,4 +1,5 @@
 import 'package:application/providers/products_provider.dart';
+import 'package:application/utils/colors.dart';
 import 'package:application/view/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,73 +14,10 @@ class ProductsScreen extends ConsumerStatefulWidget {
 class _ProductsScreenState extends ConsumerState<ProductsScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  final List<Map<String, dynamic>> productss = [
-    {
-      'product': 'Dyson V15 Detect Absolute',
-      'category': '319 990 Ft',
-      'emoji': '🛋️',
-    },
-    {
-      'product': 'VILEDA Ultramat Turbo felmosó szett',
-      'category': '13 890 Ft',
-      'emoji': '🪠',
-    },
-    {
-      'product': 'Dyson V15 Detect Absolute',
-      'category': '319 990 Ft',
-      'emoji': '🧹',
-    },
-    {
-      'product': 'VILEDA Ultramat Turbo felmosó szett',
-      'category': '13 890 Ft',
-      'emoji': '🛋️',
-    },
-    {
-      'product': 'Dyson V15 Detect Absolute',
-      'category': '319 990 Ft',
-      'emoji': '🪠',
-    },
-    {
-      'product': 'VILEDA Ultramat Turbo felmosó szett',
-      'category': '13 890 Ft',
-      'emoji': '🪣',
-    },
-    {
-      'product': 'Dyson V15 Detect Absolute',
-      'category': '319 990 Ft',
-      'emoji': '🧹',
-    },
-    {
-      'product': 'VILEDA Ultramat Turbo felmosó szett',
-      'category': '13 890 Ft',
-      'emoji': '🪠',
-    },
-    {
-      'product': 'Dyson V15 Detect Absolute',
-      'category': '319 990 Ft',
-      'emoji': '🪣',
-    },
-    {
-      'product': 'VILEDA Ultramat Turbo felmosó szett',
-      'category': '13 890 Ft',
-      'emoji': '🪣',
-    },
-    {
-      'product': 'Dyson V15 Detect Absolute',
-      'category': '319 990 Ft',
-      'emoji': '🪣',
-    },
-    {
-      'product': 'VILEDA Ultramat Turbo felmosó szett',
-      'category': '13 890 Ft',
-      'emoji': '🪣',
-    },
-    // További termékek...
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final products = ref.watch(productsProvider);
+    final searchTerm = ref.watch(searchTermProvider);
+    final productsStream = ref.watch(productsProvider(searchTerm));
 
     return Scaffold(
       // backgroundColor: Color.fromRGBO(67, 153, 182, 0.15),
@@ -100,6 +38,10 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
               // Use a Material design search bar
               child: TextField(
+                onChanged: (value) {
+                  // Frissítsd a keresőszó állapotát minden egyes karakter beírása után.
+                  ref.read(searchTermProvider.notifier).state = value;
+                },
                 controller: _searchController,
                 decoration: InputDecoration(
                   isDense: true, // Added this
@@ -116,17 +58,15 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
                       Icons.clear,
                       color: Color.fromRGBO(67, 153, 182, 1.0),
                     ),
-                    onPressed: () => _searchController.clear(),
+                    onPressed: () {
+                      _searchController.clear();
+                      ref.read(searchTermProvider.notifier).state = '';
+                    },
                   ),
                   // Adj hozzá egy kereső ikont vagy gombot a keresősávhoz
-                  prefixIcon: IconButton(
-                    icon: Icon(
-                      Icons.search,
-                      color: Color.fromRGBO(67, 153, 182, 1.0),
-                    ),
-                    onPressed: () {
-                      // Itt hajts végre keresést
-                    },
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Color.fromRGBO(67, 153, 182, 1.0),
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -152,18 +92,29 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
             ),
             SizedBox(height: 20),
             Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.only(bottom: 10, left: 20, right: 20),
-                itemCount: products.length, // itt a products a termékek listája
-                itemBuilder: (context, index) {
-                  final product = products[index];
-                  return ProductCard(
-                    id: product['id'],
-                    product: product['product'],
-                    category: product['category'],
-                    emoji: product['emoji'],
-                  );
-                },
+              child: productsStream.when(
+                data: (products) => ListView.builder(
+                  padding: EdgeInsets.only(bottom: 10, left: 20, right: 20),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    return ProductCard(
+                      id: product['id'],
+                      product: product['product'],
+                      category: product['category'],
+                      emoji: product['emoji'],
+                      // feltételezve, hogy a ProductCard widget támogatja az árat is
+                      // price: product['price'].toString(),
+                    );
+                  },
+                ),
+                loading: () => Center(
+                  child: const CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppColor.mainColor),
+                  ),
+                ),
+                error: (error, stack) => Text('Hiba történt: $error'),
               ),
             ),
             // SizedBox(height: 20),

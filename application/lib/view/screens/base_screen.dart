@@ -45,59 +45,26 @@ class _BaseScreenState extends State<BaseScreen> {
       //     Colors.white, // Ez biztosítja, hogy a háttér fehér legyen
       builder: (BuildContext context) {
         return Padding(
-          padding: const EdgeInsets.only(top: 24.0),
-          child: DefaultTabController(
-            length: 2, // A TabBarView-ban lévő oldalak száma
-            child: Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                  icon: const Icon(Icons.close), // "X" ikon
-                  onPressed: () =>
-                      Navigator.pop(context), // Bezárja a ModalBottomSheet-t
-                ),
-                // title: Text('Navigáció'),
-                // További AppBar beállítások...
+          padding: const EdgeInsets.symmetric(vertical: 35.0),
+          child: Scaffold(
+            appBar: AppBar(
+              scrolledUnderElevation: 0,
+              centerTitle: true,
+              title: const Text(
+                'Termék hozzáadása',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
               ),
-              // Itt állíthatod be a Scaffold háttérszínét, ha szükséges
-              backgroundColor: Colors.white,
-              body: Column(
-                children: <Widget>[
-                  // A TabBar háttérszínét is beállíthatod, ha szükséges
-                  Material(
-                    color: Colors.white, // A TabBar háttérszíne
-                    child: TabBar(
-                      unselectedLabelColor: Colors.black,
-                      // indicatorPadding: EdgeInsets.all(0),
-                      dividerColor: Colors.transparent,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      indicatorColor: const Color.fromRGBO(67, 153, 182, 1.00),
-                      labelColor: const Color.fromRGBO(67, 153, 182, 1.00),
-                      unselectedLabelStyle: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      labelStyle: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      tabs: [
-                        Tab(text: 'Termék hozzáadása'),
-                        Tab(text: 'Áruház hozzáadása'),
-                      ],
-                    ),
-                  ),
-                  const Expanded(
-                    // A TabBarView használata az egyes fülek tartalmának megjelenítésére.
-                    child: TabBarView(
-                      children: [
-                        AddProductScreen(),
-                        AddStoreScreen(),
-                      ],
-                    ),
-                  ),
-                ],
+              leading: IconButton(
+                icon: const Icon(Icons.close), // "X" ikon
+                onPressed: () =>
+                    Navigator.pop(context), // Bezárja a ModalBottomSheet-t
               ),
+              // title: Text('Navigáció'),
+              // További AppBar beállítások...
             ),
+            // Itt állíthatod be a Scaffold háttérszínét, ha szükséges
+            backgroundColor: Colors.white,
+            body: AddProductScreen(),
           ),
         );
       },
