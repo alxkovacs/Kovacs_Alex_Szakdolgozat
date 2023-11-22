@@ -1,3 +1,4 @@
+import 'package:application/model/user.dart';
 import 'package:application/providers/products_provider.dart';
 import 'package:application/providers/user_provider.dart';
 import 'package:application/view/screens/login_screen.dart';
@@ -20,14 +21,19 @@ class LogInViewModel {
           .get();
       final userData = userDoc.data();
       if (userData != null) {
-        // Itt állítjuk be a felhasználó nevét a Riverpod segítségével.
-        ref.read(userProvider.notifier).setUserFirstName(userData['firstname']);
+        // Beállítjuk a UserModel típusú felhasználói állapotot
+        ref.read(userProvider.notifier).state =
+            UserModel(firstName: userData['firstname']);
       }
+      // Ha van valamilyen felhasználó-specifikus termék lista, akkor valószínűleg
+      // szükséged lesz a felhasználó UID-jára az adatok frissítéséhez.
+      // final userId = userCredentials.user!.uid;
       ref.refresh(productsProvider(
-          '')); // Ha szükséges, cseréld le az üres stringet a kívánt keresési szóra.
-      return true; // Sikeres regisztráció
+          '')); // Frissítjük a termékeket az új felhasználói ID alapján.
+      return true; // Sikeres bejelentkezés
     } on FirebaseAuthException catch (err) {
-      return false; // Sikertelen regisztráció
+      // Kezeld a FirebaseAuthException hibákat itt
+      return false; // Sikertelen bejelentkezés
     }
   }
 

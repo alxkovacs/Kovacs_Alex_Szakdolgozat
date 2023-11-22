@@ -1,8 +1,11 @@
 import 'package:application/providers/shopping_list_provider.dart';
+import 'package:application/utils/colors.dart';
 import 'package:application/view/widgets/product_card.dart';
 import 'package:application/view/widgets/savings_card.dart';
 import 'package:application/view/widgets/shopping_list_card.dart';
 import 'package:application/view/widgets/shopping_list_item_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,75 +18,27 @@ class ShoppingListScreen extends ConsumerStatefulWidget {
 
 class _ShoppingListScreenState extends ConsumerState<ShoppingListScreen>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  final List<Map<String, dynamic>> products = [
-    {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🛋️',
-      'store_name': 'Media Markt'
-    },
-    {
-      'name': 'VILEDA Ultramat Turbo felmosó szett',
-      'price': '13 890 Ft',
-      'store': '🪠',
-      'store_name': 'Media Markt'
-    },
-    {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🧹',
-      'store_name': 'Media Markt'
-    },
-    {
-      'name': 'VILEDA Ultramat Turbo felmosó szett',
-      'price': '13 890 Ft',
-      'store': '🛋️',
-      'store_name': 'Media Markt'
-    },
-    {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🪠',
-      'store_name': 'Media Markt'
-    },
-    {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🧹',
-      'store_name': 'Media Markt'
-    },
-    {
-      'name': 'VILEDA Ultramat Turbo felmosó szett',
-      'price': '13 890 Ft',
-      'store': '🛋️',
-      'store_name': 'Media Markt'
-    },
-    {
-      'name': 'Dyson V15 Detect Absolute',
-      'price': '319 990 Ft',
-      'store': '🪠',
-      'store_name': 'Media Markt'
-    },
-    // További termékek...
-  ];
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  late Future<List<dynamic>> _loadingFuture;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _initializeData();
+  }
+
+  void _initializeData() {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    _loadingFuture = Future.wait([
+      ref.read(shoppingListProvider).getFavoriteStoresTotal(userId),
+      ref.read(shoppingListProvider).getCheapestStoreTotal(userId),
+    ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    // final shoppingList = ref.watch(shoppingListProvider);
+    final shoppingListAsyncValue = ref.watch(shoppingListStreamProvider);
+    final userId = FirebaseAuth
+        .instance.currentUser!.uid; // Bejelentkezett felhasználó UID-je
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -95,95 +50,169 @@ class _ShoppingListScreenState extends ConsumerState<ShoppingListScreen>
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
         ),
       ),
-      body: SingleChildScrollView(
-        // A görgethető terület itt kezdődik
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-          child: Column(
-            children: [
-              // Termékek listája Column widgetben
-              ListView.builder(
-                shrinkWrap:
-                    true, // Így használható a ListView a SingleChildScrollView-ben
-                physics:
-                    NeverScrollableScrollPhysics(), // Kikapcsoljuk a görgetést, mivel a SingleChildScrollView kezeli
-                // itemCount: shoppingList.length, // A lista elemek száma
-                // itemBuilder: (context, index) {
-                //   final product = shoppingList[index];
-                //   return ShoppingListItemCard(
-                //     productName: product.productName,
-                //     price: product.productName,
-                //     store: product
-                //         .productName, // Ez lehet egy emoji vagy a bolt neve
-                //     storeName: product.productName,
-                //   );
-                itemCount: products.length, // A lista elemek száma
-                itemBuilder: (context, index) {
-                  final product = products[index];
-                  return ShoppingListItemCard(
-                    productName: product['name'],
-                    price: product['price'],
-                    store:
-                        product['store'], // Ez lehet egy emoji vagy a bolt neve
-                    storeName: product['store_name'],
-                  );
-                },
+      body: FutureBuilder<List<dynamic>>(
+        future: _loadingFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  AppColor.mainColor,
+                ),
               ),
-              SizedBox(height: 20),
-              // A TabBar itt már nem része egy Expanded widgetnek
-              TabBar(
-                // indicatorColor: Colors.white,
-                unselectedLabelColor: Colors.black,
-                // indicatorPadding: EdgeInsets.all(0),
-                dividerColor: const Color.fromRGBO(67, 153, 182, 0.5),
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicatorColor: const Color.fromRGBO(67, 153, 182, 1.00),
-                labelColor: const Color.fromRGBO(67, 153, 182, 1.00),
-                unselectedLabelStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-                labelStyle: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                ),
-                tabs: [
-                  Tab(text: 'Saját lista'),
-                  Tab(text: 'Kedvezményes lista'),
+            );
+          } else if (snapshot.hasError) {
+            // return Center(child: Text('Hiba történt: ${snapshot.error}'));
+            // Ha hiba történt, megvizsgáljuk, hogy mi volt a hiba oka
+            if (snapshot.error.toString().contains('No element')) {
+              // Specifikus hibaüzenet, ha a felhasználónak nincs bevásárlólistája
+              return Center(child: Text('Üres bevásárlólista'));
+            } else {
+              // Egyéb hibák kezelése
+              return Center(child: Text('Hiba történt: ${snapshot.error}'));
+            }
+          } else if (snapshot.hasData) {
+            final favoriteStoresTotals =
+                snapshot.data![0] as List<Map<String, dynamic>>;
+            final cheapestStoreTotal =
+                snapshot.data![1] as Map<String, dynamic>;
+
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  shoppingListAsyncValue.when(
+                    data: (products) {
+                      // Ha vannak adatok, akkor megjelenítjük őket
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: products.length,
+                        itemBuilder: (context, index) {
+                          final product = products[index];
+                          // Itt használd a widget-edet, ami megjeleníti a termékeket
+                          return ShoppingListItemCard(
+                            onRemove: () async {
+                              // Először megszerzzük a felhasználó bevásárlólistájának azonosítóját
+                              final userShoppingListSnapshot =
+                                  await FirebaseFirestore.instance
+                                      .collection('shoppingLists')
+                                      .where('userId',
+                                          isEqualTo: FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                      .limit(1)
+                                      .get();
+
+                              if (userShoppingListSnapshot.docs.isEmpty) {
+                                // Kezeljük a hibát: a felhasználónak nincs bevásárlólistája
+                                return;
+                              }
+
+                              final shoppingListId =
+                                  userShoppingListSnapshot.docs.first.id;
+
+                              await ref
+                                  .read(shoppingListProvider)
+                                  .removeProductFromShoppingList(
+                                      shoppingListId, product.id);
+                              // Frissítjük a UI-t a bevásárlólista újratöltésével
+                              ref.refresh(shoppingListStreamProvider);
+                              _initializeData(); // Ez újraindítja a Future.wait() hívást, és frissíti az összegzett összegeket
+                            },
+                            id: product.id,
+                            name: product.name,
+                            categoryName: product.categoryName,
+                            emoji: product.categoryEmoji,
+                          );
+                        },
+                      );
+                    },
+                    loading: () => Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          AppColor.mainColor,
+                        ),
+                      ),
+                    ),
+                    error: (error, stack) => Text('Hiba történt: $error'),
+                  ),
+                  // SizedBox(
+                  //   height: 20,
+                  // ),
+
+                  Divider(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 15, bottom: 0, left: 10, right: 10),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Kedvenc áruház(ak)',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: favoriteStoresTotals.length,
+                    itemBuilder: (context, index) {
+                      final storeTotal = favoriteStoresTotals[index];
+                      return ListTile(
+                        title: Text(
+                          storeTotal['storeName'] ??
+                              'Ismeretlen áruház', // Alapértelmezett érték, ha null
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18,
+                              color: Colors.black.withOpacity(0.65)),
+                        ),
+                        trailing: Text(
+                          '${storeTotal['total'] ?? '0'} Ft', // Alapértelmezett érték, ha null
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                      );
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 15, bottom: 0, left: 10, right: 10),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Legolcsóbb áruház',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  // A legolcsóbb bolt adatai
+                  ListTile(
+                    title: Text(
+                      cheapestStoreTotal['storeName'] ??
+                          'Nincs elérhető áruház', // Alapértelmezett érték, ha null
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: Colors.black.withOpacity(0.65)),
+                    ),
+                    trailing: Text(
+                      cheapestStoreTotal['total'] != null
+                          ? "${cheapestStoreTotal['total']} Ft"
+                          : 'Nincs adat', // Kezeljük a null értéket
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                  ),
+                  // Egyéb widgetek
                 ],
-                controller: _tabController,
               ),
-              // A TabBarView mérete fix magasságú lehet, vagy egy másik SingleChildScrollView-ben
-              Container(
-                height: 300, // Adhatsz neki egy fix magasságot
-                // height: MediaQuery.of(context).size.height - 200,
-                child: TabBarView(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      child: Column(
-                        children: [
-                          const ShoppingListCard(),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      child: Column(
-                        children: [
-                          const ShoppingListCard(),
-                        ],
-                      ),
-                    ),
-                  ],
-                  controller: _tabController,
-                ),
-              ),
-            ],
-          ),
-        ),
+            );
+          } else {
+            return Center(child: Text('Üres bevásárlólista'));
+          }
+        },
       ),
     );
   }

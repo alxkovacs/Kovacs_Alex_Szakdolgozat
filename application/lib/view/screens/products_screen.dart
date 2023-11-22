@@ -2,6 +2,7 @@ import 'package:application/providers/products_provider.dart';
 import 'package:application/utils/colors.dart';
 import 'package:application/view/widgets/product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProductsScreen extends ConsumerStatefulWidget {
@@ -16,6 +17,10 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   systemNavigationBarColor:
+    //       const Color.fromRGBO(67, 153, 182, 1.00), // Az új szín.
+    // ));
     final searchTerm = ref.watch(searchTermProvider);
     final productsStream = ref.watch(productsProvider(searchTerm));
 

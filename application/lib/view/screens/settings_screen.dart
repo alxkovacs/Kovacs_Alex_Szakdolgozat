@@ -1,5 +1,8 @@
+import 'package:application/main.dart';
+import 'package:application/providers/favorite_stores_provider.dart';
+import 'package:application/providers/price_and_store_provider.dart';
 import 'package:application/providers/products_provider.dart';
-import 'package:application/providers/user_provider.dart';
+import 'package:application/providers/user_provider.dart' as user_prov;
 import 'package:application/utils/colors.dart';
 import 'package:application/view/screens/favorites_screen.dart';
 import 'package:application/view/screens/profile_screen.dart';
@@ -157,12 +160,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               alignment: Alignment.topLeft,
               child: TextButton(
                 onPressed: () async {
-                  await _firebase.signOut();
-                  // Itt állítjuk be az állapotot üres stringre vagy null értékre
-                  ref.read(userProvider.notifier).setUserFirstName('');
+                  // Felhasználó kijelentkeztetése.
+                  await FirebaseAuth.instance.signOut();
+
+                  // Állapotok frissítése a kijelentkezés után.
+                  ref.invalidate(user_prov
+                      .userProvider); // Ez megsemmisíti a felhasználó állapotát és újraindítja az authStateChanges figyelését.
+                  ref.invalidate(
+                      favoriteStoresProvider); // Ez újra fogja indítani a favoriteStoresProvider állapotát, ha szükséges.
+
+                  ref.invalidate(priceAndStoreProvider);
+
+                  // Törli a termékekkel kapcsolatos állapotot is, ha van rá szükség.
                   ref.refresh(productsProvider(''));
+
+                  // Navigálás a kezdőképernyőre és az előzmények törlése.
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       'start', (Route<dynamic> route) => false);
+                  // Navigator.of(context).pushAndRemoveUntil(
+                  //     MaterialPageRoute(builder: (context) => MyApp()),
+                  //     (Route<dynamic> route) => false);
                 },
                 child: const Text(
                   'Kijelentkezés',

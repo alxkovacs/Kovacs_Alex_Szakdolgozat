@@ -6,10 +6,12 @@ import 'package:application/providers/shopping_list_provider.dart';
 import 'package:application/providers/stores_provider.dart';
 import 'package:application/services/database_service.dart';
 import 'package:application/utils/colors.dart';
+import 'package:application/view/screens/product_prices_screen.dart';
 import 'package:application/view/screens/store_search_screen.dart';
 import 'package:application/view/widgets/auth_input_decoration.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view_model/product_view_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,6 +36,7 @@ class ProductScreen extends ConsumerStatefulWidget {
 
 class _ProductScreenState extends ConsumerState<ProductScreen>
     with SingleTickerProviderStateMixin {
+  late final DatabaseService _databaseService;
   ProductViewModel viewModel = ProductViewModel();
   final _form = GlobalKey<FormState>();
   late TabController _tabController;
@@ -50,6 +53,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
   @override
   void initState() {
     super.initState();
+    _databaseService = DatabaseService();
     _tabController = TabController(length: 2, vsync: this);
     selectedLocation = 'Válassz helyszínt';
 
@@ -124,10 +128,11 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
       error: (err, stack) => Text('Error: $err'),
       data: (priceAndStoreList) {
         return ListView.builder(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
           itemCount: priceAndStoreList.length,
           itemBuilder: (context, index) {
             final priceAndStoreItem = priceAndStoreList[index];
+
             return ListTile(
               leading: Text('${index + 1}.',
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
@@ -139,15 +144,42 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
               //       .watch(shoppingListProvider.notifier)
               //       .addProductToShoppingList(priceAndStoreItem),
               // ),
-              trailing: Text(
-                '${priceAndStoreItem.priceCount} db ár alapján',
-                style: TextStyle(fontSize: 11),
+              contentPadding: EdgeInsets.only(
+                left: 0.0,
+                right: 0.0, // Csökkentett jobb oldali padding
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '${priceAndStoreItem.priceCount} db ár alapján',
+                    style: TextStyle(fontSize: 11),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 25,
+                  ),
+                ],
               ),
               subtitle: Text('${priceAndStoreItem.price} Ft',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: Colors.black54)),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ProductPricesScreen(
+                      productId: widget.id,
+                      storeId: priceAndStoreItem.storeId,
+                      storeName: priceAndStoreItem.storeName,
+                    ),
+                  ),
+                );
+              },
             );
           },
         );
@@ -155,12 +187,68 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
     );
   }
 
+  // Új függvény a termék hozzáadásához a bevásárló listához
+  void _addProductToShoppingList() async {
+    final String userId = FirebaseAuth.instance.currentUser!.uid;
+    final String productId = widget.id;
+
+    try {
+      // Létrehozunk egy új bevásárlólista bejegyzést, ha még nem létezik
+      QuerySnapshot shoppingListSnapshot = await _databaseService
+          .collection('shoppingLists')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      DocumentReference shoppingListRef;
+      if (shoppingListSnapshot.docs.isEmpty) {
+        shoppingListRef =
+            await _databaseService.collection('shoppingLists').add({
+          'userId': userId,
+          'createdOn': FieldValue.serverTimestamp(),
+        });
+      } else {
+        shoppingListRef = shoppingListSnapshot.docs.first.reference;
+      }
+
+      // Ellenőrizzük, hogy a termék már szerepel-e a listán
+      QuerySnapshot shoppingListProductsSnapshot = await _databaseService
+          .collection('shoppingListProducts')
+          .where('shoppingListId', isEqualTo: shoppingListRef.id)
+          .where('productId', isEqualTo: productId)
+          .get();
+
+      if (shoppingListProductsSnapshot.docs.isEmpty) {
+        // Hozzáadjuk a terméket, ha még nem szerepel
+        await _databaseService.collection('shoppingListProducts').add({
+          'shoppingListId': shoppingListRef.id,
+          'productId': productId,
+          'addedOn': FieldValue.serverTimestamp(),
+        });
+
+        // Frissítjük a UI-t, hogy jelezzük a termék hozzáadását
+        setState(() {
+          // Itt állítsd be azokat a változókat, amik szükségesek a UI frissítéséhez
+        });
+
+        // Opcionálisan megjeleníthetünk egy üzenetet a sikeres hozzáadásról
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Termék hozzáadva a bevásárlólistához.')),
+        );
+      }
+    } catch (e) {
+      // Kezeljük a lehetséges hibákat
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Hiba történt a hozzáadás során: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final DatabaseService _databaseService = DatabaseService();
     AsyncValue<List<PriceAndStore>> priceAndStore =
         ref.watch(priceAndStoreProvider(widget.id));
-    AsyncValue<List<Store>> stores = ref.watch(storesProvider);
+    // AsyncValue<List<Store>> stores = ref.watch(storesProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -217,9 +305,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
                             size: 45,
                             color: Colors.black,
                           ),
-                          onPressed: () {
-                            // Handle favorite toggling
-                          },
+                          onPressed: _addProductToShoppingList,
                         ),
                       ],
                     ),

@@ -1,7 +1,26 @@
-class Favorite {
-  final String name;
-  final String price;
-  final String store;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  Favorite({required this.name, required this.price, required this.store});
+class Favorite {
+  final String id;
+  final String name;
+  final String category;
+  final String emoji;
+
+  Favorite({
+    required this.id,
+    required this.name,
+    required this.category,
+    required this.emoji,
+  });
+
+  factory Favorite.fromDocument(DocumentSnapshot productSnapshot) {
+    var data = productSnapshot.data() as Map<String, dynamic>;
+
+    return Favorite(
+      id: productSnapshot.id,
+      name: data['name'],
+      category: data['category']['name'],
+      emoji: data['category']['emoji'],
+    );
+  }
 }

@@ -283,13 +283,13 @@ class _OfferScreenState extends State<OfferScreen>
                           ),
                           child: Column(
                             children: [
-                              for (var item in offerItems)
-                                ShoppingListItemCard(
-                                  productName: item['name'],
-                                  price: item['price'],
-                                  store: item['emoji'],
-                                  storeName: item['store_name'],
-                                ),
+                              // for (var item in offerItems)
+                              //   ShoppingListItemCard(
+                              //     productName: item['name'],
+                              //     price: item['price'],
+                              //     store: item['emoji'],
+                              //     storeName: item['store_name'],
+                              //   ),
                               // SizedBox(height: 20),
                               // CustomElevatedButton(
                               //     onPressed: () {},

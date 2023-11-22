@@ -57,17 +57,16 @@ class SignUpViewModel {
       String enteredPassword, WidgetRef ref) async {
     try {
       final userModel = UserModel(
-          firstName: enteredFirstName,
-          email: enteredEmail,
-          password: enteredPassword);
+        firstName: enteredFirstName,
+      );
       final userCredentials = await _firebase.createUserWithEmailAndPassword(
-          email: userModel.email, password: userModel.password);
+          email: enteredEmail, password: enteredPassword);
 
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredentials.user!.uid)
           .set({
-        'email': userModel.email,
+        'email': enteredEmail,
         'firstname': userModel.firstName,
       });
 
@@ -77,11 +76,15 @@ class SignUpViewModel {
           .get();
       final userData = userDoc.data();
       if (userData != null) {
-        // Itt állítjuk be a felhasználó nevét a Riverpod segítségével.
-        ref.read(userProvider.notifier).setUserFirstName(userData['firstname']);
+        // Beállítjuk a UserModel típusú felhasználói állapotot
+        ref.read(userProvider.notifier).state =
+            UserModel(firstName: userData['firstname']);
       }
+      // Ha van valamilyen felhasználó-specifikus termék lista, akkor valószínűleg
+      // szükséged lesz a felhasználó UID-jára az adatok frissítéséhez.
+      // final userId = userCredentials.user!.uid;
       ref.refresh(productsProvider(
-          '')); // Ha szükséges, cseréld le az üres stringet a kívánt keresési szóra.
+          '')); // Frissítjük a termékeket az új felhasználói ID alapján.
 
       return true; // Sikeres regisztráció
     } on FirebaseAuthException catch (err) {

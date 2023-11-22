@@ -10,6 +10,7 @@ import 'package:application/view/widgets/savings_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _firebase = FirebaseAuth.instance;
@@ -39,6 +40,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   systemNavigationBarColor:
+    //       const Color.fromRGBO(67, 153, 182, 1.00), // Az új szín.
+    // ));
     final userFirstName = ref.watch(userProvider);
     final productsSnapshot = ref.watch(topViewedProductsProvider);
 
@@ -51,18 +56,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Hello, $userFirstName',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                if (userFirstName !=
+                    null) // Csak akkor jelenítjük meg a felhasználó nevét, ha nem null
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Hello, ${userFirstName.firstName}',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    ),
                   ),
-                ),
                 const AuthImageWidget(
                   imagePath: 'assets/images/home_screen_image.png',
                 ),
                 const SavingsCard(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 25),
                 GridView.builder(
                   shrinkWrap: true, // Add this line
                   physics: NeverScrollableScrollPhysics(), // And this one
@@ -160,7 +168,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     // Itt adja át a termékek listáját a `HorizontalList` widgetnek.
                     return HorizontalList(products: products);
                   },
-                  loading: () => CircularProgressIndicator(),
+                  loading: () => CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColor.mainColor,
+                    ),
+                  ),
                   error: (e, _) => Text('Hiba: $e'),
                 ),
                 const SizedBox(height: 30),
@@ -177,7 +189,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     // Itt adja át a termékek listáját a `HorizontalList` widgetnek.
                     return HorizontalList(products: products);
                   },
-                  loading: () => CircularProgressIndicator(),
+                  loading: () => CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColor.mainColor,
+                    ),
+                  ),
                   error: (e, _) => Text('Hiba: $e'),
                 ),
               ],

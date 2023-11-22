@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
 class ShoppingListItemCard extends StatelessWidget {
-  final String productName;
-  final String price;
-  final String store;
-  final String storeName;
+  final String id;
+  final String name;
+  final String categoryName;
+  final String emoji;
+  final VoidCallback onRemove; // Hozzáadunk egy új paramétert
 
   const ShoppingListItemCard({
     Key? key,
-    required this.productName,
-    required this.price,
-    required this.store,
-    required this.storeName,
+    required this.id,
+    required this.name,
+    required this.categoryName,
+    required this.emoji,
+    required this.onRemove, // Kötelező paraméterként kezeljük
   }) : super(key: key);
 
   @override
@@ -21,28 +23,12 @@ class ShoppingListItemCard extends StatelessWidget {
       elevation: 0.0,
       margin: EdgeInsets.only(bottom: 10),
       child: Container(
-        decoration: BoxDecoration(
-            // color: Color.fromRGBO(67, 153, 182, 0.15),
-            // borderRadius: BorderRadius.circular(15.0),
-            // border:
-            //     Border.all(color: Color.fromRGBO(67, 153, 182, 0.5), width: 2),
-            // border: Border(
-            //   bottom: BorderSide(
-            //     color: Color.fromRGBO(67, 153, 182, 1.00),
-            //     width: 1.0, // Vastag kék szegély az alján
-            //   ),
-            // ),
-            ),
         child: ListTile(
-          // leading: Text(
-          //   storeName,
-          //   style: TextStyle(fontSize: 30),
-          // ),
           leading: Container(
             padding: EdgeInsets.all(11), // A padding beállítása az emoji körül.
             decoration: BoxDecoration(
               color: Colors.white, // Zöld háttér beállítása.
-              shape: BoxShape.circle, // Kerek forma a konténernek.
+              shape: BoxShape.rectangle, // Kerek forma a konténernek.
               boxShadow: [
                 BoxShadow(
                   color: const Color.fromRGBO(67, 153, 182, 0.5),
@@ -60,28 +46,31 @@ class ShoppingListItemCard extends StatelessWidget {
               ],
             ),
             child: Text(
-              store, // Itt helyezze el az emojit.
+              emoji, // Itt helyezze el az emojit.
               style: TextStyle(fontSize: 24), // Emoji méretének beállítása.
             ),
           ),
           contentPadding: EdgeInsets.symmetric(
-              horizontal: 35.0), // Állítsd be a ListTile paddingját
+              horizontal: 25.0), // Állítsd be a ListTile paddingját
           title: Text(
             maxLines: 1,
             overflow: TextOverflow.ellipsis, // Több sor esetén pontokkal zárul
-            productName,
+            name,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           subtitle: Text(
-            '${price} - ${storeName}',
+            categoryName,
             style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
                 color: Colors.black54),
           ),
-          trailing: Icon(
-            Icons.close,
-            size: 30,
+          trailing: IconButton(
+            icon: Icon(
+              Icons.close,
+              size: 30,
+            ),
+            onPressed: onRemove, // Itt adjuk hozzá az eseménykezelőt
           ),
         ),
       ),

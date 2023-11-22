@@ -28,7 +28,7 @@ void main() async {
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light,
     statusBarIconBrightness: Brightness.dark,
-    systemNavigationBarColor: const Color.fromRGBO(67, 153, 182, 1.00),
+    systemNavigationBarColor: Colors.white,
     // systemNavigationBarColor: Colors.transparent,
   ));
   runApp(
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
               statusBarIconBrightness: Brightness.dark,
               // systemNavigationBarColor:
               //     const Color.fromRGBO(67, 153, 182, 1.00),
-              systemNavigationBarColor: Colors.transparent,
+              systemNavigationBarColor: Colors.white,
             ),
             backgroundColor: Colors.white, // Az AppBar hátterének színe
             elevation: 0, // Az AppBar elevációjának eltávolítása

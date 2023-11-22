@@ -6,6 +6,7 @@ import 'package:application/view/screens/offers_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
 import 'package:application/view/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
@@ -36,6 +37,30 @@ class _BaseScreenState extends State<BaseScreen> {
       });
     }
   }
+
+  // void _onItemTapped(int index) {
+  //   if (index == 2) {
+  //     _openBottomSheet(context);
+  //   } else {
+  //     // Csak akkor állítja be a kék színt, ha a kiválasztott oldal azok közé tartozik,
+  //     // ahol kéknek kell lennie.
+  //     if (index == 0 || index == 1 || index == 3 || index == 4) {
+  //       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //         systemNavigationBarColor: Colors.blue, // Kívánt kék szín.
+  //       ));
+  //     } else {
+  //       // Itt állíthatja vissza a fehér vagy alapértelmezett színt, ha szükséges
+  //       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //         systemNavigationBarColor:
+  //             Colors.white, // Vagy más alapértelmezett szín.
+  //       ));
+  //     }
+
+  //     setState(() {
+  //       _selectedIndex = index;
+  //     });
+  //   }
+  // }
 
   void _openBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -73,61 +98,97 @@ class _BaseScreenState extends State<BaseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   systemNavigationBarColor: _selectedIndex == 0 ||
+    //           _selectedIndex == 1 ||
+    //           _selectedIndex == 3 ||
+    //           _selectedIndex == 4
+    //       ? const Color.fromRGBO(67, 153, 182, 1.00) // A kívánt kék szín
+    //       : Colors.white, // Más oldalak színe, ha szükséges
+    // ));
     return Scaffold(
       body: IndexedStack(
         // Az IndexedStack segít abban, hogy az oldalak állapotát megőrizze
         index: _selectedIndex,
         children: _pages,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedFontSize: 12,
-        backgroundColor:
-            AppColor.mainColor, // A navigációs sáv hátterének színe
-        selectedItemColor: Colors.white, // A kijelölt elem színe
-        unselectedItemColor: Colors.white, // A nem kijelölt elemek színe
-        selectedLabelStyle:
-            TextStyle(color: Colors.white), // Kijelölt címke stílusa
-        unselectedLabelStyle: TextStyle(
-          color: Colors.white,
-          // fontWeight: FontWeight.w500,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+                color: const Color.fromRGBO(67, 153, 182, 1.00),
+                width: 0.5), // Állítsa be a színét és a vastagságát a vonalnak
+          ),
         ),
-        iconSize: 27.0, // Az ikonok mérete
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 0
-                ? const Icon(Icons.home) // Ha a Főoldal van kiválasztva
-                : const Icon(
-                    Icons.home_outlined), // Ha nem a Főoldal van kiválasztva
-            label: 'Főoldal',
+        child: BottomNavigationBar(
+          // unselectedFontSize: 12,
+          // backgroundColor:
+          //     AppColor.mainColor, // A navigációs sáv hátterének színe
+          // selectedItemColor: Colors.white, // A kijelölt elem színe
+          // unselectedItemColor: Colors.white, // A nem kijelölt elemek színe
+          // selectedLabelStyle:
+          //     TextStyle(color: Colors.white), // Kijelölt címke stílusa
+          // unselectedLabelStyle: TextStyle(
+          //   color: Colors.white,
+          //   // fontWeight: FontWeight.w500,
+          // ),
+          // iconSize: 27.0, // Az ikonok mérete
+
+          // -----------------------------
+
+          elevation: 10,
+          unselectedFontSize: 13,
+          selectedFontSize: 13,
+          backgroundColor: Colors.white, // A navigációs sáv hátterének színe
+          selectedItemColor:
+              const Color.fromRGBO(67, 153, 182, 1.00), // A kijelölt elem színe
+          unselectedItemColor: const Color.fromRGBO(
+              67, 153, 182, 1.00), // A nem kijelölt elemek színe
+          selectedLabelStyle:
+              TextStyle(color: Colors.white), // Kijelölt címke stílusa
+          unselectedLabelStyle: TextStyle(
+            color: Colors.white,
+            // fontWeight: FontWeight.w500,
           ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 1
-                ? Icon(Icons.saved_search) // Ha a Főoldal van kiválasztva
-                : Icon(Icons.search), // Ha nem a Főoldal van kiválasztva
-            label: 'Termékek',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            label: 'Hozzáadás',
-          ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 3
-                ? Icon(Icons.discount) // Ha a Főoldal van kiválasztva
-                : Icon(Icons
-                    .discount_outlined), // Ha nem a Főoldal van kiválasztva
-            label: 'Ajánlatok',
-          ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 4
-                ? Icon(Icons.settings) // Ha a Főoldal van kiválasztva
-                : Icon(Icons
-                    .settings_outlined), // Ha nem a Főoldal van kiválasztva
-            label: 'Beállítások',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+          iconSize: 27.0, // Az ikonok mérete
+
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 0
+                  ? const Icon(Icons.home) // Ha a Főoldal van kiválasztva
+                  : const Icon(
+                      Icons.home_outlined), // Ha nem a Főoldal van kiválasztva
+              label: 'Főoldal',
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 1
+                  ? Icon(Icons.saved_search) // Ha a Főoldal van kiválasztva
+                  : Icon(Icons.search), // Ha nem a Főoldal van kiválasztva
+              label: 'Termékek',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_circle_outline),
+              label: 'Hozzáadás',
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 3
+                  ? Icon(Icons.discount) // Ha a Főoldal van kiválasztva
+                  : Icon(Icons
+                      .discount_outlined), // Ha nem a Főoldal van kiválasztva
+              label: 'Ajánlatok',
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 4
+                  ? Icon(Icons.settings) // Ha a Főoldal van kiválasztva
+                  : Icon(Icons
+                      .settings_outlined), // Ha nem a Főoldal van kiválasztva
+              label: 'Beállítások',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }

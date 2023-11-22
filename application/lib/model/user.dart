@@ -1,8 +1,7 @@
+// Létrehozhatsz egy felhasználó modellt, ha szeretnél több adatot tárolni
 class UserModel {
   final String firstName;
-  final String email;
-  final String password;
+  // Itt adhatsz hozzá további mezőket
 
-  UserModel(
-      {required this.firstName, required this.email, required this.password});
+  UserModel({required this.firstName});
 }
