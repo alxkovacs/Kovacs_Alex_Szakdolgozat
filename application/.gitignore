@@ -49,6 +49,8 @@ analysis_benchmark.json
 .packages.generated
 
 # Flutter/Dart/Pub related
+**/flutter/generated_plugin_registrant.*
+**/flutter/generated_plugins.cmake
 **/doc/api/
 .dart_tool/
 .flutter-plugins
