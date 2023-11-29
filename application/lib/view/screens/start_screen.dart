@@ -1,15 +1,17 @@
 import 'package:application/utils/styles/styles.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
-import 'package:application/view_model/start_view_model.dart';
 import 'package:flutter/material.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
 
+  void goToSignUpScreen(BuildContext context) {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('signup', (Route<dynamic> route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    StartViewModel viewModel = StartViewModel();
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -26,19 +28,13 @@ class StartScreen extends StatelessWidget {
               children: [
                 const Text(
                   'CleanIT',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Styles.headerStyle,
                 ),
                 const SizedBox(height: 300),
                 Padding(
                   padding: const EdgeInsets.all(30),
                   child: CustomElevatedButton(
-                    onPressed: () {
-                      viewModel.goToNextScreen(context);
-                    },
+                    onPressed: () => goToSignUpScreen(context),
                     text: 'Tovább',
                   ),
                 ),

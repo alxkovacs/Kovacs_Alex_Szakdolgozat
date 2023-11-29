@@ -1,16 +1,4 @@
 import 'package:application/utils/colors.dart';
-import 'package:application/view/screens/base_screen.dart';
-import 'package:application/view/screens/home_screen.dart';
-import 'package:application/view/screens/loading_screen.dart';
-import 'package:application/view/screens/login_screen.dart';
-import 'package:application/view/screens/offer_screen.dart';
-import 'package:application/view/screens/offers_screen.dart';
-import 'package:application/view/screens/product_screen.dart';
-import 'package:application/view/screens/products_screen.dart';
-import 'package:application/view/screens/profile_screen.dart';
-import 'package:application/view/screens/settings_screen.dart';
-import 'package:application/view/screens/shopping_list_screen.dart';
-import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light,
     statusBarIconBrightness: Brightness.dark,
@@ -58,7 +46,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold), // A gomb szövegének stílusa
             ),
           ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: Colors.transparent,
               statusBarBrightness: Brightness.light,
@@ -70,14 +58,14 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.white, // Az AppBar hátterének színe
             elevation: 0, // Az AppBar elevációjának eltávolítása
           ),
-          bottomSheetTheme: BottomSheetThemeData(
+          bottomSheetTheme: const BottomSheetThemeData(
               backgroundColor: Colors.white, modalElevation: 0.0)),
       routes: {
         'start': (context) => const StartScreen(),
-        'base': (context) => const BaseScreen(),
-        'home': (context) => HomeScreen(),
-        'signup': (context) => const SignUpScreen(),
-        'login': (context) => const LogInScreen(),
+        // 'base': (context) => const BaseScreen(),
+        // 'home': (context) => HomeScreen(),
+        // 'signup': (context) => const SignUpScreen(),
+        // 'login': (context) => const LogInScreen(),
       },
       // initialRoute: 'start',
       // home: const StartScreen(),
@@ -85,7 +73,7 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const LoadingScreen();
+              // return const LoadingScreen();
             }
 
             if (snapshot.hasData) {
@@ -94,7 +82,7 @@ class MyApp extends StatelessWidget {
               // return ProductScreen();
               // return OfferScreen();
               // return ProfileScreen();
-              return const BaseScreen();
+              // return const BaseScreen();
             }
 
             return const StartScreen();
