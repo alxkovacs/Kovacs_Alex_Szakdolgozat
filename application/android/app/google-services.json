@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "446188934482",
+    "project_id": "flutter-szakdolgozat-app",
+    "storage_bucket": "flutter-szakdolgozat-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446188934482:android:0527fc4cedef1898f4568b",
+        "android_client_info": {
+          "package_name": "com.example.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVUFVXXMLZWf6guRkw7d4LMpcjjvoNrAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
