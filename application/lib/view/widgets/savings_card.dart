@@ -1,9 +1,16 @@
 import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view/widgets/savings_info_row.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class SavingsCard extends StatelessWidget {
   const SavingsCard({Key? key}) : super(key: key);
+
+  Future<int> getDocumentCount(String collectionPath) async {
+    final querySnapshot =
+        await FirebaseFirestore.instance.collection(collectionPath).get();
+    return querySnapshot.docs.length;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,33 +50,38 @@ class SavingsCard extends StatelessWidget {
             mainAxisSize:
                 MainAxisSize.min, // Hogy csak a szükséges területet foglalja el
             children: <Widget>[
-              SavingsInfoRow(
-                title: 'Megtakarított összeg:',
-                value: '33 560 Ft',
+              FutureBuilder<int>(
+                future: getDocumentCount('products'),
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Hiba történt');
+                  } else {
+                    return SavingsInfoRow(
+                      title: 'Termékek száma:',
+                      value:
+                          '${snapshot.data} db', // Módosítva az érték megjelenítéséhez
+                    );
+                  }
+                },
               ),
               SizedBox(height: 10),
-              SavingsInfoRow(
-                title: 'Összesen:',
-                value: '153 254 Ft',
+              FutureBuilder<int>(
+                future: getDocumentCount('stores'),
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Hiba történt');
+                  } else {
+                    return SavingsInfoRow(
+                      title: 'Üzletek száma:',
+                      value: '${snapshot.data} db',
+                    );
+                  }
+                },
               ),
-              // SizedBox(height: 20),
-              // ListTile(
-              //   leading: Text(
-              //     '🛒', // Porszívó emoji
-              //     style: TextStyle(
-              //       fontSize:
-              //           40.0, // állítsd be a méretet, hogy illeszkedjen a layout-hoz
-              //     ),
-              //   ),
-              //   title: Text(
-              //     'Bevásárlólista',
-              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-              //   ),
-              //   trailing: Icon(Icons.arrow_forward_ios),
-              //   onTap: () {
-              //     // A kiválasztott elem kezelése
-              //   },
-              // ),
             ],
           ),
         ),

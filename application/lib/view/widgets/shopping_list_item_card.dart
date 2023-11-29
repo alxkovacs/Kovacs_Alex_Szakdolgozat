@@ -27,6 +27,7 @@ class ShoppingListItemCard extends StatelessWidget {
           leading: Container(
             padding: EdgeInsets.all(11), // A padding beállítása az emoji körül.
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
               color: Colors.white, // Zöld háttér beállítása.
               shape: BoxShape.rectangle, // Kerek forma a konténernek.
               boxShadow: [

@@ -61,6 +61,15 @@ class DatabaseService {
     });
   }
 
+  Future<void> incrementOfferViewCount(String offerId) async {
+    var productRef = _db.collection('offers').doc(offerId);
+
+    // Növeld a viewCount mezőt egyel
+    await productRef.update({
+      'viewCount': FieldValue.increment(1),
+    });
+  }
+
   Future<void> addOrUpdateProduct(String productName, String categoryName,
       String categoryEmoji, String storeName, int price) async {
     // Lekérjük vagy létrehozunk egy új termék azonosítót

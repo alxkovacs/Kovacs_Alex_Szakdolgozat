@@ -99,7 +99,7 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
             Expanded(
               child: productsStream.when(
                 data: (products) => ListView.builder(
-                  padding: EdgeInsets.only(bottom: 10, left: 20, right: 20),
+                  padding: EdgeInsets.only(bottom: 10, left: 15, right: 15),
                   itemCount: products.length,
                   itemBuilder: (context, index) {
                     final product = products[index];

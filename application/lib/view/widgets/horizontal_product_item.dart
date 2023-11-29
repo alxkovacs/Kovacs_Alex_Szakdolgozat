@@ -54,8 +54,9 @@ class HorizontalProductItem extends StatelessWidget {
                 padding:
                     EdgeInsets.all(7), // A padding beállítása az emoji körül.
                 decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
                   color: Colors.white, // Zöld háttér beállítása.
-                  shape: BoxShape.circle, // Kerek forma a konténernek.
+                  shape: BoxShape.rectangle, // Kerek forma a konténernek.
                   boxShadow: [
                     BoxShadow(
                       color: const Color.fromRGBO(67, 153, 182, 0.5),

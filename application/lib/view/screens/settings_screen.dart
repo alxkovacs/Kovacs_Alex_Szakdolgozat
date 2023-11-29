@@ -109,52 +109,52 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             //     },
             //   ),
             // ),
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Beállítások',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: AppColor.mainColor),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Container(
-              color: const Color.fromRGBO(67, 153, 182, 0.15),
-              child: ListTile(
-                visualDensity: VisualDensity(vertical: -2),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
-                leading: Icon(
-                  Icons.dark_mode,
-                  color: const Color.fromRGBO(67, 153, 182, 1.00),
-                ),
-                title: Text(
-                  'Sötét mód',
-                  style: TextStyle(
-                      color: const Color.fromRGBO(67, 153, 182, 1.00),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                ),
-                trailing: Switch(
-                  inactiveTrackColor: const Color.fromRGBO(67, 153, 182, 0.25),
-                  inactiveThumbColor: const Color.fromRGBO(67, 153, 182, 1.00),
-                  activeTrackColor: const Color.fromRGBO(
-                      67, 153, 182, 0.5), // Beállíthatja az aktív track színét
-                  activeColor: const Color.fromRGBO(
-                      67, 153, 182, 1.00), // Beállíthatja az aktív thumb színét
-                  value: false,
-                  onChanged: (bool value) {
-                    // Toggle dark mode
-                  },
-                ),
-              ),
-            ),
+            // SizedBox(height: 20),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 16),
+            //   child: Align(
+            //     alignment: Alignment.centerLeft,
+            //     child: Text(
+            //       'Beállítások',
+            //       style: TextStyle(
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 20,
+            //           color: AppColor.mainColor),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 10),
+            // Container(
+            //   color: const Color.fromRGBO(67, 153, 182, 0.15),
+            //   child: ListTile(
+            //     visualDensity: VisualDensity(vertical: -2),
+            //     contentPadding:
+            //         EdgeInsets.symmetric(horizontal: 16.0, vertical: 0.0),
+            //     leading: Icon(
+            //       Icons.dark_mode,
+            //       color: const Color.fromRGBO(67, 153, 182, 1.00),
+            //     ),
+            //     title: Text(
+            //       'Sötét mód',
+            //       style: TextStyle(
+            //           color: const Color.fromRGBO(67, 153, 182, 1.00),
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 18),
+            //     ),
+            //     trailing: Switch(
+            //       inactiveTrackColor: const Color.fromRGBO(67, 153, 182, 0.25),
+            //       inactiveThumbColor: const Color.fromRGBO(67, 153, 182, 1.00),
+            //       activeTrackColor: const Color.fromRGBO(
+            //           67, 153, 182, 0.5), // Beállíthatja az aktív track színét
+            //       activeColor: const Color.fromRGBO(
+            //           67, 153, 182, 1.00), // Beállíthatja az aktív thumb színét
+            //       value: false,
+            //       onChanged: (bool value) {
+            //         // Toggle dark mode
+            //       },
+            //     ),
+            //   ),
+            // ),
             SizedBox(height: 20),
             Align(
               alignment: Alignment.topLeft,
