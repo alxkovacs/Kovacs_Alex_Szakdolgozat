@@ -1,5 +1,4 @@
 import 'package:application/utils/colors.dart';
-import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,12 +12,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarBrightness: Brightness.light,
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarColor: Colors.white,
-    // systemNavigationBarColor: Colors.transparent,
   ));
   runApp(
     const ProviderScope(
@@ -47,44 +45,27 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold), // A gomb szövegének stílusa
             ),
           ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             systemOverlayStyle: SystemUiOverlayStyle(
               statusBarColor: Colors.transparent,
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.dark,
-              // systemNavigationBarColor:
-              //     const Color.fromRGBO(67, 153, 182, 1.00),
               systemNavigationBarColor: Colors.white,
             ),
             backgroundColor: Colors.white, // Az AppBar hátterének színe
             elevation: 0, // Az AppBar elevációjának eltávolítása
           ),
-          bottomSheetTheme: BottomSheetThemeData(
+          bottomSheetTheme: const BottomSheetThemeData(
               backgroundColor: Colors.white, modalElevation: 0.0)),
       routes: {
         'start': (context) => const StartScreen(),
-        // 'base': (context) => const BaseScreen(),
-        // 'home': (context) => HomeScreen(),
-        // 'signup': (context) => const SignUpScreen(),
-        // 'login': (context) => const LogInScreen(),
       },
-      // initialRoute: 'start',
-      // home: const StartScreen(),
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (ctx, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              // return const LoadingScreen();
-            }
+            if (snapshot.connectionState == ConnectionState.waiting) {}
 
-            if (snapshot.hasData) {
-              // return ProductsScreen();
-              // return ShoppingListScreen();
-              // return ProductScreen();
-              // return OfferScreen();
-              // return ProfileScreen();
-              // return const BaseScreen();
-            }
+            if (snapshot.hasData) {}
 
             return const StartScreen();
           }),

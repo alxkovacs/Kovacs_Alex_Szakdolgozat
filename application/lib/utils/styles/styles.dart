@@ -2,8 +2,8 @@ import 'package:application/utils/styles/utils.dart';
 import 'package:flutter/material.dart';
 
 class Styles {
-  static final String valamiFont = 'Trajan Pro';
-  static final String masikFont = 'Schyler';
+  static const String trojanFont = 'Trajan Pro';
+  static const String schylerFont = 'Schyler';
 
   static const headerStyle = TextStyle(
     color: Colors.black,
@@ -11,8 +11,8 @@ class Styles {
     fontWeight: FontWeight.bold,
   );
 
-  static final TextStyle headerStyles = TextStyle(
-    fontFamily: valamiFont,
+  static const TextStyle headerStyles = TextStyle(
+    fontFamily: trojanFont,
     fontWeight: FontWeight.bold,
     fontSize: 20,
     color: Colors.black87,
@@ -33,15 +33,13 @@ class Styles {
     shadowColor: Colors.blue[200], // Árnyék színe
     elevation: 5, // Árnyék mélysége
     minimumSize: const Size(double.infinity, 50),
-    // padding: const EdgeInsets.symmetric(
-    //     horizontal: 115, vertical: 15), // Padding a gomb körül
     shape: RoundedRectangleBorder(
       // Kerekített szélű gomb
       borderRadius: BorderRadius.circular(10), // Szögletek kerekítése
     ),
   );
 
-  static final startScreenButtonTextStyle = const TextStyle(
+  static const startScreenButtonTextStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );

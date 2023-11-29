@@ -1,4 +1,6 @@
+import 'package:application/utils/image_src.dart';
 import 'package:application/utils/styles/styles.dart';
+import 'package:application/utils/translation_en.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +20,7 @@ class StartScreen extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/images/start_screen_image.png',
+              ImageSrc.startScreenImage,
               fit: BoxFit.cover,
             ),
           ),
@@ -26,11 +28,13 @@ class StartScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
-                  'CleanIT',
-                  style: Styles.headerStyle,
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 300),
+                  child: Text(
+                    TranslationEN.startScreenText,
+                    style: Styles.headerStyle,
+                  ),
                 ),
-                const SizedBox(height: 300),
                 Padding(
                   padding: const EdgeInsets.all(30),
                   child: CustomElevatedButton(
