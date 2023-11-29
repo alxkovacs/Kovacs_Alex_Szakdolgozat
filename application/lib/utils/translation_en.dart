@@ -1,3 +1,4 @@
 class TranslationEN {
-  static const String startScreenText = 'CleanIT';
+  static const String applicationName = 'CleanIT';
+  static const String continueButton = 'Tovább';
 }
