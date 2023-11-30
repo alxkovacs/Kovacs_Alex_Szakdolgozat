@@ -1,9 +1,13 @@
+import 'package:application/utils/colors.dart';
 import 'package:application/utils/styles/utils.dart';
 import 'package:flutter/material.dart';
 
 class Styles {
   static const String trojanFont = 'Trajan Pro';
   static const String schylerFont = 'Schyler';
+
+  static const screenCenterTitle =
+      TextStyle(fontWeight: FontWeight.bold, fontSize: 22);
 
   static const signUpLoginStyle = TextStyle(
     fontSize: 38,

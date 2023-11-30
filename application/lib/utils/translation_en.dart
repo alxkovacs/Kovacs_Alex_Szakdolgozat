@@ -18,5 +18,10 @@ class TranslationEN {
   static const String email = 'E-mail';
   static const String password = 'Jelszó';
   static const String home = 'Főoldal';
+  static const String products = 'Termékek';
+  static const String add = 'Hozzáadás';
+  static const String offers = 'Ajánlatok';
+  static const String settings = 'Beállítások';
+  static const String addProduct = 'Termék hozzáadása';
   static const String loading = 'Tölt';
 }
