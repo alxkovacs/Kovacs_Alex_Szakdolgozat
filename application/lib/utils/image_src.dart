@@ -3,4 +3,5 @@ class ImageSrc {
   static const String signUpScreenImage =
       'assets/images/sign_up_screen_image.png';
   static const String loginScreenImage = 'assets/images/login_screen_image.png';
+  static const String homeScreenImage = 'assets/images/home_screen_image.png';
 }
