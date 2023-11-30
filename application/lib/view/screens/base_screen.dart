@@ -4,14 +4,23 @@ import 'package:application/view_model/base_screen_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BaseScreen extends StatefulWidget {
+class BaseScreen extends ConsumerStatefulWidget {
   const BaseScreen({super.key});
 
   @override
-  State<BaseScreen> createState() => _BaseScreenState();
+  ConsumerState<BaseScreen> createState() => _BaseScreenState();
 }
 
-class _BaseScreenState extends State<BaseScreen> {
+class _BaseScreenState extends ConsumerState<BaseScreen> {
+  // Itt adunk hozzá minden oldalt, amit a BottomNavigationBar használni fog
+  final List<Widget> _pages = [
+    const HomeScreen(), // A HomeScreen lesz az alapértelmezett oldal
+    const ProductsScreen(),
+    Container(), // Ezt az indexet tartjuk fenn az "Hozzáadás" gomb számára
+    const OffersScreen(),
+    const SettingsScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final baseScreenViewModel = Provider.of<BaseScreenViewModel>(context);
