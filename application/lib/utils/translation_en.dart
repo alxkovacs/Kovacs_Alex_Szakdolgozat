@@ -24,4 +24,9 @@ class TranslationEN {
   static const String settings = 'Beállítások';
   static const String addProduct = 'Termék hozzáadása';
   static const String loading = 'Tölt';
+  static const String products = 'Termékek';
+  static const String add = 'Hozzáadás';
+  static const String offers = 'Ajánlatok';
+  static const String settings = 'Beállítások';
+  static const String addProduct = 'Termék hozzáadása';
 }
