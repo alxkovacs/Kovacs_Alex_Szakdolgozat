@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         Roots.startScreen: (context) => const StartScreen(),
         Roots.baseScreen: (context) => const BaseScreen(),
         Roots.signUpScreen: (context) => const SignUpScreen(),
-        Roots.logInScreen: (context) => const LogInScreen(),
+        Roots.logInScreen: (context) => const LoginScreen(),
       },
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),

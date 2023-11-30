@@ -11,7 +11,10 @@ class TranslationEN {
       'A jelszónak legalább 6 karakter hosszúnak kell lennie.';
   static const String goToLogInScreen =
       'Ha már van fiókja, jelentkezzen be itt.';
+  static const String goToSignUpScreen =
+      'Még nem regisztrált? Hozzon létre egy fiókot itt.';
   static const String registrationFailed = 'Sikertelen regisztráció!';
+  static const String loginFailed = 'Sikertelen bejelentkezés!';
   static const String email = 'E-mail';
   static const String password = 'Jelszó';
   static const String home = 'Főoldal';

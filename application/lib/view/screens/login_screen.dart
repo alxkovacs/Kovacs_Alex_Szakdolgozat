@@ -2,18 +2,24 @@ import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LogInScreen extends ConsumerStatefulWidget {
-  const LogInScreen({super.key});
+class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  ConsumerState<LogInScreen> createState() {
-    return _LogInScreenState();
+  ConsumerState<LoginScreen> createState() {
+    return _LoginScreenState();
   }
 }
 
-class _LogInScreenState extends ConsumerState<LogInScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  var _enteredEmail = '';
+  var _enteredPassword = '';
+
   @override
   Widget build(BuildContext context) {
+    final viewModel = ref.watch(loginViewModelProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text(TranslationEN.login),
