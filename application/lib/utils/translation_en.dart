@@ -40,6 +40,7 @@ class TranslationEN {
   static const String addToShoppingList = 'Add a bevásárlólistához';
   static const String description = 'Leírás';
   static const String favorites = 'Kedvencek';
+  static const String noFavoritesYet = 'Még nincsenek kedvencek.';
   static const String mostViewedProducts = 'Legtöbbet megtekintett termékek';
   static const String productsRecommendedForYou = 'Neked ajánlott termékek';
   static const String error = 'Hiba';
@@ -52,12 +53,18 @@ class TranslationEN {
   static const String numberOfProducts = 'Termékek száma';
   static const String numberOfStores = 'Üzletek száma';
   static const String store = 'Üzlet';
+  static const String stores = 'Üzletek';
+  static const String addFavoriteStore = 'Kedvenc áruház hozzáadása';
+  static const String noFavoriteStores = 'Nincsenek kedvenc áruházak.';
+  static const String loginToSeeYourFavorites =
+      'Kérlek jelentkezz be, hogy megtekinthesd a kedvenceidet.';
   static const String noData = 'N/A';
   static const String greet = 'Hello';
   static const String unknownStore = 'Ismeretlen áruház';
+  static const String storeNotFound = 'Nem található a keresett áruház.';
   static const String searchBetweenProducts = 'Keresés a termékek között';
   static const String searchBetweenStores = 'Keresés az üzletek között';
-  static const String chooseLocation = 'Válasszon helyszínt';
+  static const String chooseLocation = 'Válasszon üzletet';
   static const String chooseLocationFirst =
       'Kérjük, először válasszon üzletet!';
   static const String chooseCategory = 'Kérjük, válasszon egy kategóriát.';
