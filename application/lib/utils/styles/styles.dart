@@ -6,6 +6,9 @@ class Styles {
   static const String trojanFont = 'Trajan Pro';
   static const String schylerFont = 'Schyler';
 
+  static const offersScreenHorizontalListSubtitle = TextStyle(
+      fontWeight: FontWeight.bold, fontSize: 22, color: AppColor.mainColor);
+
   static const homeScreenHorizontalListTitle =
       TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
 
