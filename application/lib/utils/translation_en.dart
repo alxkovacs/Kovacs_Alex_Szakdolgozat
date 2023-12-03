@@ -12,6 +12,7 @@ class TranslationEN {
   static const String productValidator =
       'A terméknek legalább 3 karakter hosszúnak kell lennie.';
   static const String priceValidator = 'Kérlek valós összeget adj meg.';
+  static const String addPriceValidator = 'Kérlek adj meg egy árat.';
   static const String priceIntValidator =
       'Kérlek csak előjel nélküli egész számokat adj meg.';
   static const String goToLogInScreen =
@@ -26,10 +27,13 @@ class TranslationEN {
   static const String products = 'Termékek';
   static const String product = 'Termék';
   static const String price = 'Ár';
+  static const String addPrice = 'Ár hozzáadása';
+  static const String pricePerUnit = 'db ár alapján';
   static const String currencyHUF = 'Ft';
   static const String category = 'Kategória';
   static const String unknownCategory = 'Ismeretlen kategória';
   static const String add = 'Hozzáadás';
+  static const String bestOffers = 'Legjobb Ajánlatok';
   static const String offers = 'Ajánlatok';
   static const String myOffers = 'Ajánlataim';
   static const String specialOffers = 'Különleges ajánlatok';
@@ -38,6 +42,8 @@ class TranslationEN {
   static const String addProduct = 'Termék hozzáadása';
   static const String loading = 'Tölt';
   static const String shoppingList = 'Bevásárlólista';
+  static const String productAddedToShoppingList =
+      'Termék hozzáadva a bevásárlólistához.';
   static const String favoriteStores = 'Kedvenc áruház(ak)';
   static const String cheapestStore = 'Legolcsóbb áruház';
   static const String noStoreAvailable = 'Nincs elérhető áruház';
@@ -58,6 +64,9 @@ class TranslationEN {
       'Hiba történt a termékek lekérdezése közben';
   static const String addProductError =
       'Hiba történt a termék hozzáadása közben';
+  static const String addPriceError =
+      'Hiba történt a termék ár hozzáadása közben';
+  static const String errorDuringQuery = 'Hiba történt a lekérdezés során';
   static const String numberOfProducts = 'Termékek száma';
   static const String numberOfStores = 'Üzletek száma';
   static const String store = 'Üzlet';
