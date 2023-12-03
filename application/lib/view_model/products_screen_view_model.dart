@@ -6,6 +6,7 @@ class ProductsScreenViewModel extends ChangeNotifier {
   final ProductsScreenService _productService = ProductsScreenService();
   List<ProductModel> _products = [];
   String _searchTerm = '';
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? _subscription;
 
   ProductsScreenViewModel() {
     fetchProducts();
@@ -35,5 +36,12 @@ class ProductsScreenViewModel extends ChangeNotifier {
       }).toList();
       notifyListeners();
     });
+  }
+
+  @override
+  void dispose() {
+    _subscription
+        ?.cancel(); // Leiratkozik a stream-ről, amikor a ViewModel már nem aktív
+    super.dispose();
   }
 }
