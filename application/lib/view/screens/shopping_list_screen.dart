@@ -1,3 +1,10 @@
+import 'package:application/model/product_model.dart';
+import 'package:application/providers/shopping_list_view_model_provider.dart';
+import 'package:application/utils/styles/styles.dart';
+import 'package:application/utils/translation_en.dart';
+import 'package:application/view/widgets/custom_circular_progress_indicator.dart';
+import 'package:application/view/widgets/shopping_list_item_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
