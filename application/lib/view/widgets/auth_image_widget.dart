@@ -14,8 +14,10 @@ class AuthImageWidget extends StatelessWidget {
         left: 20,
         right: 20,
       ),
-      width: 400,
-      child: Image.asset(imagePath),
+      child: FractionallySizedBox(
+        widthFactor: 0.8,
+        child: Image.asset(imagePath),
+      ),
     );
   }
 }

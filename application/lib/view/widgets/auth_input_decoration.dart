@@ -8,8 +8,6 @@ class AuthInputDecoration extends InputDecoration {
   AuthInputDecoration({
     required this.labelText,
     required this.iconData,
-    // A Theme.of(context) nem használható itt közvetlenül, mivel ez nem egy widget.
-    // A színek és a text style paraméterekként kerülnek átadásra.
     Color fillColor = AppColor.authInputDecorationFillColor,
     Color borderColor = AppColor.mainColor,
   }) : super(

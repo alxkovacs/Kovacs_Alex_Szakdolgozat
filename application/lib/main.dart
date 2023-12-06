@@ -5,11 +5,13 @@ import 'package:application/view/screens/loading_screen.dart';
 import 'package:application/view/screens/login_screen.dart';
 import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:application/view/screens/start_screen.dart';
+import 'package:application/view_model/sign_up_screen_view_model.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,8 +25,14 @@ void main() async {
     systemNavigationBarColor: Colors.white,
   ));
   runApp(
-    const ProviderScope(
-      child: MyApp(),
+    DevicePreview(
+      enabled: true,
+      builder: (context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => SignUpScreenViewModel()),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -35,18 +43,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       title: 'Szakdolgozat',
       theme: ThemeData(
         brightness: Brightness.light,
         useMaterial3: true,
-        primarySwatch: Colors.blue,
         primaryColor: AppColor.mainColor,
+        scaffoldBackgroundColor: Colors.white,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor:
-                Colors.black.withOpacity(0.75), // A gomb szövegének színe
-            textStyle: const TextStyle(
-                fontWeight: FontWeight.bold), // A gomb szövegének stílusa
+            foregroundColor: Colors.black.withOpacity(0.75),
+            textStyle: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         appBarTheme: const AppBarTheme(
@@ -56,8 +64,8 @@ class MyApp extends StatelessWidget {
             statusBarIconBrightness: Brightness.dark,
             systemNavigationBarColor: Colors.white,
           ),
-          backgroundColor: Colors.white, // Az AppBar hátterének színe
-          elevation: 0, // Az AppBar elevációjának eltávolítása
+          backgroundColor: Colors.white,
+          scrolledUnderElevation: 0,
         ),
         bottomSheetTheme: const BottomSheetThemeData(
           backgroundColor: Colors.white,

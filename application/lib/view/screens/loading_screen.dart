@@ -1,3 +1,4 @@
+import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -7,10 +8,10 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Főoldal'),
+        title: const Text(TranslationEN.home),
       ),
       body: const Center(
-        child: Text('Tölt...'),
+        child: Text('${TranslationEN.loading}...'),
       ),
     );
   }

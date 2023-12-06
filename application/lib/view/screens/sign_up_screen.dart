@@ -1,4 +1,3 @@
-import 'package:application/providers/sign_up_view_model_provider.dart';
 import 'package:application/utils/image_src.dart';
 import 'package:application/utils/styles/styles.dart';
 import 'package:application/utils/translation_en.dart';
@@ -6,19 +5,20 @@ import 'package:application/view/widgets/auth_image_widget.dart';
 import 'package:application/view/widgets/custom_circular_progress_indicator.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view/widgets/auth_input_decoration.dart';
+import 'package:application/view_model/sign_up_screen_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
-class SignUpScreen extends ConsumerStatefulWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  ConsumerState<SignUpScreen> createState() {
+  State<SignUpScreen> createState() {
     return _SignUpScreenState();
   }
 }
 
-class _SignUpScreenState extends ConsumerState<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
   var _enteredFirstName = '';
@@ -27,18 +27,22 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ref.watch(signUpViewModelProvider);
+    final signUpScreenViewModel = Provider.of<SignUpScreenViewModel>(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    double horizontalPadding = screenWidth > 600 ? screenWidth * 0.2 : 30;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            viewModel.goToStartScreen(context);
+            signUpScreenViewModel.goToStartScreen(context);
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),
       ),
       body: Center(
-        child: viewModel.isLoading
+        child: signUpScreenViewModel.isLoading
             ? const CustomCircularProgressIndicator()
             : SingleChildScrollView(
                 child: Column(
@@ -47,93 +51,92 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     const AuthImageWidget(
                       imagePath: ImageSrc.signUpScreenImage,
                     ),
-                    SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(30), // 24 volt
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Align(
-                                alignment: Alignment.topLeft,
-                                child: Text(
-                                  TranslationEN.signUp,
-                                  style: Styles.signUpLoginStyle,
-                                ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: horizontalPadding),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                TranslationEN.signUp,
+                                style: Styles.signUpLoginStyle,
                               ),
-                              const SizedBox(height: 20),
-                              TextFormField(
-                                decoration: AuthInputDecoration(
-                                  labelText: TranslationEN.firstName,
-                                  iconData: Icons.person_2_outlined,
-                                ),
-                                validator: (value) =>
-                                    viewModel.validateFirstName(value),
-                                onSaved: (value) {
-                                  _enteredFirstName = value!;
-                                },
+                            ),
+                            const SizedBox(height: 20),
+                            TextFormField(
+                              decoration: AuthInputDecoration(
+                                labelText: TranslationEN.firstName,
+                                iconData: Icons.person_2_outlined,
                               ),
-                              const SizedBox(height: 10),
-                              TextFormField(
-                                decoration: AuthInputDecoration(
-                                  labelText: TranslationEN.email,
-                                  iconData: Icons.email_outlined,
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                                autocorrect: false,
-                                textCapitalization: TextCapitalization.none,
-                                validator: (value) =>
-                                    viewModel.validateEmail(value),
-                                onSaved: (value) {
-                                  _enteredEmail = value!;
-                                },
+                              validator: (value) => signUpScreenViewModel
+                                  .validateFirstName(value),
+                              onSaved: (value) {
+                                _enteredFirstName = value!;
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              decoration: AuthInputDecoration(
+                                labelText: TranslationEN.email,
+                                iconData: Icons.email_outlined,
                               ),
-                              const SizedBox(height: 10),
-                              TextFormField(
-                                decoration: AuthInputDecoration(
-                                  labelText: TranslationEN.password,
-                                  iconData: Icons.lock_outline,
-                                ),
-                                obscureText: true,
-                                validator: (value) =>
-                                    viewModel.validatePassword(value),
-                                onSaved: (value) {
-                                  _enteredPassword = value!;
-                                },
+                              keyboardType: TextInputType.emailAddress,
+                              autocorrect: false,
+                              textCapitalization: TextCapitalization.none,
+                              validator: (value) =>
+                                  signUpScreenViewModel.validateEmail(value),
+                              onSaved: (value) {
+                                _enteredEmail = value!;
+                              },
+                            ),
+                            const SizedBox(height: 10),
+                            TextFormField(
+                              decoration: AuthInputDecoration(
+                                labelText: TranslationEN.password,
+                                iconData: Icons.lock_outline,
                               ),
-                              const SizedBox(height: 20),
-                              CustomElevatedButton(
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    _formKey.currentState!.save();
-                                    final success =
-                                        await viewModel.submitSignUp(
-                                      _enteredFirstName,
-                                      _enteredEmail,
-                                      _enteredPassword,
-                                      context,
-                                      ref,
-                                    );
+                              obscureText: true,
+                              validator: (value) =>
+                                  signUpScreenViewModel.validatePassword(value),
+                              onSaved: (value) {
+                                _enteredPassword = value!;
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            CustomElevatedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  final success =
+                                      await signUpScreenViewModel.submitSignUp(
+                                    _enteredFirstName,
+                                    _enteredEmail,
+                                    _enteredPassword,
+                                    context,
+                                  );
 
-                                    if (success && mounted) {
-                                      viewModel.goToBaseScreen(context);
-                                    }
+                                  if (success && mounted) {
+                                    signUpScreenViewModel
+                                        .goToBaseScreen(context);
                                   }
-                                },
-                                text: TranslationEN.signUp,
+                                }
+                              },
+                              text: TranslationEN.signUp,
+                            ),
+                            const SizedBox(height: 5),
+                            TextButton(
+                              onPressed: () {
+                                signUpScreenViewModel.goToLogInScreen(context);
+                              },
+                              child: const Text(
+                                TranslationEN.goToLogInScreen,
                               ),
-                              const SizedBox(height: 5),
-                              TextButton(
-                                onPressed: () {
-                                  viewModel.goToLogInScreen(context);
-                                },
-                                child: const Text(
-                                  TranslationEN.goToLogInScreen,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
