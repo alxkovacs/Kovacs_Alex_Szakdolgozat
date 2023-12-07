@@ -21,16 +21,9 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  var _enteredFirstName = '';
-  var _enteredEmail = '';
-  var _enteredPassword = '';
-
   @override
   Widget build(BuildContext context) {
     final signUpScreenViewModel = Provider.of<SignUpScreenViewModel>(context);
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    double horizontalPadding = screenWidth > 600 ? screenWidth * 0.2 : 30;
 
     return Scaffold(
       appBar: AppBar(
@@ -51,9 +44,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const AuthImageWidget(
                       imagePath: ImageSrc.signUpScreenImage,
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: horizontalPadding),
+                    FractionallySizedBox(
+                      widthFactor: 0.8,
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -75,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               validator: (value) => signUpScreenViewModel
                                   .validateFirstName(value),
                               onSaved: (value) {
-                                _enteredFirstName = value!;
+                                signUpScreenViewModel.enteredFirstName = value!;
                               },
                             ),
                             const SizedBox(height: 10),
@@ -90,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               validator: (value) =>
                                   signUpScreenViewModel.validateEmail(value),
                               onSaved: (value) {
-                                _enteredEmail = value!;
+                                signUpScreenViewModel.enteredEmail = value!;
                               },
                             ),
                             const SizedBox(height: 10),
@@ -103,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               validator: (value) =>
                                   signUpScreenViewModel.validatePassword(value),
                               onSaved: (value) {
-                                _enteredPassword = value!;
+                                signUpScreenViewModel.enteredPassword = value!;
                               },
                             ),
                             const SizedBox(height: 20),
@@ -111,13 +103,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
-                                  final success =
-                                      await signUpScreenViewModel.submitSignUp(
-                                    _enteredFirstName,
-                                    _enteredEmail,
-                                    _enteredPassword,
-                                    context,
-                                  );
+                                  final success = await signUpScreenViewModel
+                                      .submitSignUp(context);
 
                                   if (success && mounted) {
                                     signUpScreenViewModel

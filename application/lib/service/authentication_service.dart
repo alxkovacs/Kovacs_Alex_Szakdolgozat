@@ -6,11 +6,11 @@ class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<bool> createUser(UserModel userModel, String password) async {
+  Future<bool> createUser(UserModel userModel) async {
     try {
       final userCredentials =
           await _firebaseAuth.createUserWithEmailAndPassword(
-              email: userModel.email, password: password);
+              email: userModel.email!, password: userModel.password!);
 
       await _firestore
           .collection('users')

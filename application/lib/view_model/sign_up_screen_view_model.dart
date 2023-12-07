@@ -6,6 +6,7 @@ import 'package:application/view/screens/base_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreenViewModel extends ChangeNotifier {
+  final UserModel _userModel = UserModel();
   final AuthenticationService _userService = AuthenticationService();
   bool _isLoading = false;
 
@@ -16,16 +17,25 @@ class SignUpScreenViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> submitSignUp(String enteredFirstName, String enteredEmail,
-      String enteredPassword, BuildContext context) async {
+  set enteredFirstName(String value) {
+    _userModel.firstName = value;
+    notifyListeners();
+  }
+
+  set enteredEmail(String value) {
+    _userModel.email = value;
+    notifyListeners();
+  }
+
+  set enteredPassword(String value) {
+    _userModel.password = value;
+    notifyListeners();
+  }
+
+  Future<bool> submitSignUp(BuildContext context) async {
     isLoading = true;
 
-    final userModel = UserModel(
-      firstName: enteredFirstName,
-      email: enteredEmail,
-    );
-
-    final result = await _userService.createUser(userModel, enteredPassword);
+    final result = await _userService.createUser(_userModel);
 
     isLoading = false;
     if (!result) {
