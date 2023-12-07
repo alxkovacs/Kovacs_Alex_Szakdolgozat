@@ -1,4 +1,3 @@
-import 'package:application/utils/colors.dart';
 import 'package:application/utils/styles/utils.dart';
 import 'package:flutter/material.dart';
 
