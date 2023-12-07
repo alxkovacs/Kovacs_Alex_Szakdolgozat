@@ -12,14 +12,6 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const ProductsScreen(),
-    Container(),
-    const OffersScreen(),
-    const SettingsScreen(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final baseScreenViewModel = Provider.of<BaseScreenViewModel>(context);
