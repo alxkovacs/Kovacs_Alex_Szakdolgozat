@@ -1,3 +1,4 @@
+import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,10 +16,10 @@ class _LogInScreenState extends ConsumerState<LogInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bejelentkezés'),
+        title: const Text(TranslationEN.login),
       ),
       body: const Center(
-        child: Text('Hello'),
+        child: Text(TranslationEN.login),
       ),
     );
   }

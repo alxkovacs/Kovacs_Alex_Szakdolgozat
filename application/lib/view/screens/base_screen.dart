@@ -1,3 +1,4 @@
+import 'package:application/utils/translation_en.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,18 +14,18 @@ class _BaseScreenState extends State<BaseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Főoldal'),
+        title: const Text(TranslationEN.home),
         actions: [
           IconButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
             },
-            icon: Icon(Icons.exit_to_app),
+            icon: const Icon(Icons.exit_to_app),
           ),
         ],
       ),
       body: const Center(
-        child: Text('Hello'),
+        child: Text(TranslationEN.home),
       ),
     );
   }

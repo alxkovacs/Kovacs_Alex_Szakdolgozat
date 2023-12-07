@@ -2,6 +2,7 @@ class TranslationEN {
   static const String applicationName = 'CleanIT';
   static const String continueButton = 'Tovább';
   static const String signUp = 'Regisztráció';
+  static const String login = 'Bejelentkezés';
   static const String firstName = 'Keresztnév';
   static const String firstNameValidator =
       'A névnek legalább 3 karakter hosszúnak kell lennie.';
