@@ -10,23 +10,22 @@ class HorizontalList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.transparent,
-      height: 220, // A magasság megadása elegendő lehet a GridView számára
+      height: 220,
       child: GridView.builder(
-        shrinkWrap: true, // A GridView méretének korlátozása a tartalomhoz
-        physics: const ScrollPhysics(), // Engedélyezi a vízszintes görgetést
+        shrinkWrap: true,
+        physics: const ScrollPhysics(),
         scrollDirection: Axis.horizontal,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
-          crossAxisSpacing: 0, // Függőleges térköz
-          mainAxisSpacing: 10, // Vízszintes térköz
-          childAspectRatio: 0.195, // Az elemek arányának beállítása
+          crossAxisSpacing: 0,
+          mainAxisSpacing: 10,
+          childAspectRatio: 0.195,
         ),
         itemCount: products.length,
         itemBuilder: (context, index) {
           return Container(
             margin: EdgeInsets.only(
-              left:
-                  index < 3 ? 0 : 0, // Az első elemnek adunk bal oldali margót
+              left: index < 3 ? 0 : 0,
               right: index > 5 ? 10 : 0,
             ),
             child: HorizontalProductItem(

@@ -31,4 +31,5 @@ class TranslationEN {
   static const String error = 'Hiba';
   static const String numberOfProducts = 'Termékek száma';
   static const String numberOfStores = 'Üzletek száma';
+  static const String noData = 'N/A';
 }

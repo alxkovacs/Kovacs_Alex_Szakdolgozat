@@ -37,20 +37,18 @@ class HorizontalProductItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => navigateToDetails(context),
       child: Card(
+        color: Colors.white,
         elevation: 0.0,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-              vertical: 10.0, horizontal: 5.0), // Körbefuttatott padding
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
           child: Row(
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.all(
-                    7), // A padding beállítása az emoji körül.
+                padding: const EdgeInsets.all(7),
                 decoration: Styles.productBoxDecoration,
                 child: Text(
-                  emoji, // Itt helyezze el az emojit.
-                  style: const TextStyle(
-                      fontSize: 24), // Emoji méretének beállítása.
+                  emoji,
+                  style: const TextStyle(fontSize: 24),
                 ),
               ),
               const SizedBox(width: 15.0),
@@ -61,8 +59,7 @@ class HorizontalProductItem extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 14.0, fontWeight: FontWeight.bold),
                   maxLines: 1,
-                  overflow:
-                      TextOverflow.ellipsis, // Több sor esetén pontokkal zárul
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               const SizedBox(width: 15.0),
@@ -75,23 +72,21 @@ class HorizontalProductItem extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.bold),
                       maxLines: 1,
-                      overflow: TextOverflow
-                          .ellipsis, // Több sor esetén pontokkal zárul
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       category,
                       style: const TextStyle(fontSize: 12.0),
                       maxLines: 1,
-                      overflow: TextOverflow
-                          .ellipsis, // Több sor esetén pontokkal zárul
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
               const Icon(
-                Icons.arrow_forward_ios, // Nyíl ikon.
-                size: 18.0, // A nyíl mérete.
-                color: Colors.black, // A nyíl színe.
+                Icons.arrow_forward_ios,
+                size: 18.0,
+                color: Colors.black,
               ),
             ],
           ),
