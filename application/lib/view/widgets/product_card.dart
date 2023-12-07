@@ -1,6 +1,8 @@
+import 'package:application/model/product_model.dart';
 import 'package:application/utils/styles/styles.dart';
-import 'package:application/view/screens/product_screen.dart';
+import 'package:application/view_model/products_screen_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   final String id;
@@ -16,44 +18,34 @@ class ProductCard extends StatelessWidget {
     required this.emoji,
   }) : super(key: key);
 
-  void navigateToDetails(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ProductScreen(
-          id: id,
-          product: product,
-          category: category,
-          emoji: emoji,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final productsScreenviewModel =
+        Provider.of<ProductsScreenViewModel>(context, listen: false);
+
     return GestureDetector(
-      onTap: () => navigateToDetails(context),
+      onTap: () => productsScreenviewModel.navigateToDetails(
+        context,
+        ProductModel(
+            id: id, product: product, category: category, emoji: emoji),
+      ),
       child: Card(
         color: Colors.white,
         elevation: 0.0,
         margin: const EdgeInsets.only(bottom: 10),
         child: ListTile(
           leading: Container(
-            padding: const EdgeInsets.all(
-                11), // A padding beállítása az emoji körül.
+            padding: const EdgeInsets.all(11),
             decoration: Styles.productBoxDecoration,
             child: Text(
-              emoji, // Itt helyezze el az emojit.
-              style:
-                  const TextStyle(fontSize: 24), // Emoji méretének beállítása.
+              emoji,
+              style: const TextStyle(fontSize: 24),
             ),
           ),
-          contentPadding: const EdgeInsets.symmetric(
-              horizontal: 0.0), // Állítsd be a ListTile paddingját
+          contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
           title: Text(
             maxLines: 1,
-            overflow: TextOverflow.ellipsis, // Több sor esetén pontokkal zárul
+            overflow: TextOverflow.ellipsis,
             product,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),

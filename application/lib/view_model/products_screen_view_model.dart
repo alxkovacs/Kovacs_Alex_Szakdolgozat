@@ -1,14 +1,15 @@
-import 'package:application/model/product_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:application/service/products_screen_service.dart';
+import 'package:application/view/screens/product_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:application/model/product_model.dart';
 
 class ProductsScreenViewModel extends ChangeNotifier {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final ProductsScreenService _productService = ProductsScreenService();
   List<ProductModel> _products = [];
   String _searchTerm = '';
 
   ProductsScreenViewModel() {
-    fetchProducts(); // A ViewModel inicializálásakor hívja meg
+    fetchProducts();
   }
 
   List<ProductModel> get products => _products;
@@ -20,33 +21,24 @@ class ProductsScreenViewModel extends ChangeNotifier {
     fetchProducts();
   }
 
-  void fetchProducts() async {
-    Stream<QuerySnapshot<Map<String, dynamic>>> stream;
-    final lowercaseSearchTerm = searchTerm.toLowerCase();
-
-    // Ha nincs keresési szöveg, minden terméket lekér
-    if (lowercaseSearchTerm.isNotEmpty) {
-      stream = _db
-          .collection('products')
-          .where('name_lowercase', isGreaterThanOrEqualTo: lowercaseSearchTerm)
-          .where('name_lowercase',
-              isLessThanOrEqualTo: '${lowercaseSearchTerm}\uf8ff')
-          .snapshots();
-    } else {
-      stream = _db.collection('products').snapshots();
-    }
-
-    stream.listen((snapshot) {
-      _products = snapshot.docs.map((doc) {
-        final data = doc.data();
-        return ProductModel(
-          id: doc.id,
-          product: data['name'] as String? ?? '',
-          category: data['category']['name'] as String? ?? '',
-          emoji: data['category']['emoji'] as String? ?? '',
-        );
-      }).toList();
+  void fetchProducts() {
+    _productService.fetchProducts(_searchTerm).listen((productList) {
+      _products = productList;
       notifyListeners();
     });
+  }
+
+  void navigateToDetails(BuildContext context, ProductModel product) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductScreen(
+          id: product.id,
+          product: product.product,
+          category: product.category,
+          emoji: product.emoji,
+        ),
+      ),
+    );
   }
 }
