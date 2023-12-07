@@ -24,7 +24,7 @@ class HomeScreenService {
       var docSnapshot = await _firestore.collection('users').doc(userId).get();
       if (docSnapshot.exists) {
         UserModel user = UserModel.fromFirestore(docSnapshot);
-        return user.firstName;
+        return user.firstName!;
       } else {
         return TranslationEN.noData;
       }

@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Hello, ${homeScreenViewModel.userFirstName}',
+                    '${TranslationEN.greet}, ${homeScreenViewModel.userFirstName}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: MediaQuery.of(context).textScaleFactor * 30,
@@ -56,8 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 const AuthImageWidget(
                   imagePath: ImageSrc.homeScreenImage,
                 ),
-                const SavingsCard(),
-                const SizedBox(height: 15),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: SavingsCard(),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -94,33 +96,35 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10),
                     Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    homeScreenViewModel.menu[1]['goToPage']()),
-                          );
-                        },
-                        child: Container(
-                          decoration: Styles.boxDecorationWithShadow,
-                          child: Card(
-                            shadowColor: Colors.transparent,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            elevation: 0.0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Center(
-                                child: Text(
-                                  homeScreenViewModel.menu[1]['name'],
-                                  textAlign: TextAlign.center,
-                                  style: Styles.homeScreenButtons,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => homeScreenViewModel
+                                      .menu[1]['goToPage']()),
+                            );
+                          },
+                          child: Container(
+                            decoration: Styles.boxDecorationWithShadow,
+                            child: Card(
+                              shadowColor: Colors.transparent,
+                              color: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              elevation: 0.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Center(
+                                  child: Text(
+                                    homeScreenViewModel.menu[1]['name'],
+                                    textAlign: TextAlign.center,
+                                    style: Styles.homeScreenButtons,
+                                  ),
                                 ),
                               ),
                             ),
@@ -130,27 +134,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 40),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    TranslationEN.mostViewedProducts,
-                    style: Styles.homeScreenHorizontalListTitle,
+                const Padding(
+                  padding: EdgeInsets.only(
+                    top: 40,
+                    bottom: 15,
+                  ),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      TranslationEN.mostViewedProducts,
+                      style: Styles.homeScreenHorizontalListTitle,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 15),
                 if (homeScreenViewModel.topViewedProducts.isNotEmpty)
-                  HorizontalList(
-                      products: homeScreenViewModel.topViewedProducts),
-                const SizedBox(height: 30),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    TranslationEN.productsRecommendedForYou,
-                    style: Styles.homeScreenHorizontalListTitle,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 30),
+                    child: HorizontalList(
+                        products: homeScreenViewModel.topViewedProducts),
+                  ),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      TranslationEN.productsRecommendedForYou,
+                      style: Styles.homeScreenHorizontalListTitle,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 15),
                 if (homeScreenViewModel.topViewedProducts.isNotEmpty)
                   HorizontalList(
                       products: homeScreenViewModel.topViewedProducts),

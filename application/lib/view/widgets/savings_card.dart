@@ -11,7 +11,7 @@ class SavingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.sizeOf(context).width;
     double padding = screenWidth > 600 ? 24 : 12;
     final viewModel = Provider.of<HomeScreenViewModel>(context, listen: false);
 
@@ -39,11 +39,13 @@ class SavingsCard extends StatelessWidget {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    SavingsInfoRow(
-                      title: '${TranslationEN.numberOfProducts}:',
-                      value: '${snapshot.data![0]} db',
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: SavingsInfoRow(
+                        title: '${TranslationEN.numberOfProducts}:',
+                        value: '${snapshot.data![0]} db',
+                      ),
                     ),
-                    const SizedBox(height: 10),
                     SavingsInfoRow(
                       title: '${TranslationEN.numberOfStores}:',
                       value: '${snapshot.data![1]} db',

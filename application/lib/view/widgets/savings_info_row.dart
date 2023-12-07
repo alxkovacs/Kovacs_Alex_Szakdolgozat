@@ -15,28 +15,25 @@ class SavingsInfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 0.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 16 * textScaleFactor,
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 16 * textScaleFactor,
           ),
-          Text(
-            value,
-            style: TextStyle(
-              color: AppColor.mainColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 15 * textScaleFactor,
-            ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            color: AppColor.mainColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 15 * textScaleFactor,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

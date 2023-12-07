@@ -1,3 +1,4 @@
+import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingListScreen extends StatelessWidget {
@@ -7,10 +8,10 @@ class ShoppingListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shopping List'),
+        title: const Text(TranslationEN.shoppingList),
       ),
       body: const Center(
-        child: Text('Shopping List Screen'),
+        child: Text(TranslationEN.shoppingList),
       ),
     );
   }

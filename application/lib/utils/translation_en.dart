@@ -32,4 +32,6 @@ class TranslationEN {
   static const String numberOfProducts = 'Termékek száma';
   static const String numberOfStores = 'Üzletek száma';
   static const String noData = 'N/A';
+  static const String greet = 'Hello';
+  static const String product = 'Termék';
 }

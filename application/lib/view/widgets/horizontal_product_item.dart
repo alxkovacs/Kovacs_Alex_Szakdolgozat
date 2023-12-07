@@ -43,26 +43,30 @@ class HorizontalProductItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
           child: Row(
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(7),
-                decoration: Styles.productBoxDecoration,
-                child: Text(
-                  emoji,
-                  style: const TextStyle(fontSize: 24),
+              Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: Container(
+                  padding: const EdgeInsets.all(7),
+                  decoration: Styles.productBoxDecoration,
+                  child: Text(
+                    emoji,
+                    style: const TextStyle(fontSize: 24),
+                  ),
                 ),
               ),
-              const SizedBox(width: 15.0),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  '${number + 1}',
-                  style: const TextStyle(
-                      fontSize: 14.0, fontWeight: FontWeight.bold),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+              Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    '${number + 1}',
+                    style: const TextStyle(
+                        fontSize: 14.0, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
-              const SizedBox(width: 15.0),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

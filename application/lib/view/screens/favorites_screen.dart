@@ -1,3 +1,4 @@
+import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -7,10 +8,10 @@ class FavoritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorites'),
+        title: const Text(TranslationEN.favorites),
       ),
       body: const Center(
-        child: Text('Favorites Screen'),
+        child: Text(TranslationEN.favorites),
       ),
     );
   }
