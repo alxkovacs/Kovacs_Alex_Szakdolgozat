@@ -4,11 +4,11 @@ import 'package:application/view_model/base_screen_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class BaseScreen extends ConsumerStatefulWidget {
+class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
 
   @override
-  ConsumerState<BaseScreen> createState() => _BaseScreenState();
+  State<BaseScreen> createState() => _BaseScreenState();
 }
 
 class _BaseScreenState extends ConsumerState<BaseScreen> {
