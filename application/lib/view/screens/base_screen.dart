@@ -1,9 +1,5 @@
 import 'package:application/utils/colors.dart';
 import 'package:application/utils/translation_en.dart';
-import 'package:application/view/screens/home_screen.dart';
-import 'package:application/view/screens/offers_screen.dart';
-import 'package:application/view/screens/products_screen.dart';
-import 'package:application/view/screens/settings_screen.dart';
 import 'package:application/view_model/base_screen_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,14 +12,6 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const ProductsScreen(),
-    Container(),
-    const OffersScreen(),
-    const SettingsScreen(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final baseScreenViewModel = Provider.of<BaseScreenViewModel>(context);
@@ -31,7 +19,7 @@ class _BaseScreenState extends State<BaseScreen> {
     return Scaffold(
       body: IndexedStack(
         index: baseScreenViewModel.selectedIndex,
-        children: _pages,
+        children: baseScreenViewModel.pages,
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(

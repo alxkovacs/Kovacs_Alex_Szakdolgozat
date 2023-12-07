@@ -1,3 +1,4 @@
+import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 
 class OffersScreen extends StatelessWidget {
@@ -7,10 +8,10 @@ class OffersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Offers'),
+        title: const Text(TranslationEN.offers),
       ),
       body: const Center(
-        child: Text('Offers Screen'),
+        child: Text(TranslationEN.offers),
       ),
     );
   }

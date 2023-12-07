@@ -2,9 +2,20 @@ import 'package:application/utils/colors.dart';
 import 'package:application/utils/styles/styles.dart';
 import 'package:application/utils/translation_en.dart';
 import 'package:application/view/screens/add_product_screen.dart';
+import 'package:application/view/screens/home_screen.dart';
+import 'package:application/view/screens/offers_screen.dart';
+import 'package:application/view/screens/products_screen.dart';
+import 'package:application/view/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreenViewModel extends ChangeNotifier {
+  final List<Widget> pages = [
+    const HomeScreen(),
+    const ProductsScreen(),
+    Container(),
+    const OffersScreen(),
+    const SettingsScreen(),
+  ];
   int _selectedIndex = 0;
 
   int get selectedIndex => _selectedIndex;

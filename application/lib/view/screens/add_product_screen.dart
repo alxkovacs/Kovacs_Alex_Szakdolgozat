@@ -1,3 +1,4 @@
+import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 
 class AddProductScreen extends StatelessWidget {
@@ -5,12 +6,9 @@ class AddProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Product'),
-      ),
-      body: const Center(
-        child: Text('Add Product Screen'),
+    return const Scaffold(
+      body: Center(
+        child: Text(TranslationEN.addProduct),
       ),
     );
   }

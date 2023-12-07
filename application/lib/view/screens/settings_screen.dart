@@ -1,3 +1,4 @@
+import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -7,10 +8,10 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text(TranslationEN.settings),
       ),
       body: const Center(
-        child: Text('Settings Screen'),
+        child: Text(TranslationEN.settings),
       ),
     );
   }
