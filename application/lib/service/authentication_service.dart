@@ -34,10 +34,10 @@ class AuthenticationService {
     }
   }
 
-  Future<bool> loginUser(String email, String password) async {
+  Future<bool> loginUser(UserModel userModel) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+          email: userModel.email!, password: userModel.password!);
 
       return true;
     } on FirebaseAuthException {
