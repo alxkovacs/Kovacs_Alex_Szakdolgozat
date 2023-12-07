@@ -1,13 +1,11 @@
+import 'package:application/service/authentication_service.dart';
 import 'package:application/utils/roots.dart';
 import 'package:application/utils/translation_en.dart';
 import 'package:application/view/screens/base_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginViewModel extends ChangeNotifier {
-  final FirebaseAuth _firebase = FirebaseAuth.instance;
-
+class LoginScreenViewModel extends ChangeNotifier {
+  final AuthenticationService _userService = AuthenticationService();
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -17,25 +15,25 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> submitLogIn(String enteredEmail, String enteredPassword,
-      BuildContext context, WidgetRef ref) async {
+  Future<bool> submitLogin(
+      String enteredEmail, String enteredPassword, BuildContext context) async {
     isLoading = true;
 
-    try {
-      await _firebase.signInWithEmailAndPassword(
-          email: enteredEmail, password: enteredPassword);
+    final result = await _userService.loginUser(enteredEmail, enteredPassword);
 
-      isLoading = false;
-      return true;
-    } on FirebaseAuthException {
-      isLoading = false;
-      if (context.findRenderObject() != null) {
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(TranslationEN.loginFailed)),
-        );
-      }
-      return false;
+    isLoading = false;
+    if (!result) {
+      _showSnackbar(context, TranslationEN.loginFailed);
+    }
+    return result;
+  }
+
+  void _showSnackbar(BuildContext context, String message) {
+    if (context.findRenderObject() != null) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
     }
   }
 
@@ -48,16 +46,16 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   String? validatePassword(String? value) {
-    if (value == null || value.trim().length < 6) {
+    if ((value?.trim().length ?? 0) < 6) {
       return TranslationEN.passwordValidator;
     }
 
     return null;
   }
 
-  void goToLogInScreen(BuildContext context) {
+  void goToSignUpScreen(BuildContext context) {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        Roots.logInScreen, (Route<dynamic> route) => false);
+        Roots.signUpScreen, (Route<dynamic> route) => false);
   }
 
   void goToStartScreen(BuildContext context) {

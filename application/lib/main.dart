@@ -5,6 +5,7 @@ import 'package:application/view/screens/loading_screen.dart';
 import 'package:application/view/screens/login_screen.dart';
 import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:application/view/screens/start_screen.dart';
+import 'package:application/view_model/login_screen_view_model.dart';
 import 'package:application/view_model/sign_up_screen_view_model.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,10 +27,11 @@ void main() async {
   ));
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
       builder: (context) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => SignUpScreenViewModel()),
+          ChangeNotifierProvider(create: (_) => LoginScreenViewModel()),
         ],
         child: const MyApp(),
       ),

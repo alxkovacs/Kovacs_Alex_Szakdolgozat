@@ -22,4 +22,15 @@ class AuthenticationService {
       return false;
     }
   }
+
+  Future<bool> loginUser(String email, String password) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      return true;
+    } on FirebaseAuthException {
+      return false;
+    }
+  }
 }
