@@ -14,12 +14,11 @@ class BaseScreenViewModel extends ChangeNotifier {
       _openBottomSheet(context);
     } else {
       _selectedIndex = index;
-      notifyListeners(); // Ez a sor biztosítja, hogy a UI frissüljön az állapotváltozás után
+      notifyListeners();
     }
   }
 
   void _openBottomSheet(BuildContext context) {
-    // Bottom Sheet megnyitásának logikája
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -35,12 +34,10 @@ class BaseScreenViewModel extends ChangeNotifier {
                 style: Styles.screenCenterTitle,
               ),
               leading: IconButton(
-                icon: const Icon(Icons.close), // "X" ikon
-                onPressed: () =>
-                    Navigator.pop(context), // Bezárja a ModalBottomSheet-t
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.pop(context),
               ),
             ),
-            // Itt állíthatod be a Scaffold háttérszínét, ha szükséges
             backgroundColor: AppColor.lightBackgroundColor,
             body: const AddProductScreen(),
           ),

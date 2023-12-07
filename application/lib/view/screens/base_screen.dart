@@ -1,36 +1,36 @@
-import 'package:application/providers/base_view_model_provider.dart';
 import 'package:application/utils/colors.dart';
 import 'package:application/utils/translation_en.dart';
 import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/screens/offers_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
 import 'package:application/view/screens/settings_screen.dart';
+import 'package:application/view_model/base_screen_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
-class BaseScreen extends ConsumerStatefulWidget {
+class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
 
   @override
-  ConsumerState<BaseScreen> createState() => _BaseScreenState();
+  State<BaseScreen> createState() => _BaseScreenState();
 }
 
-class _BaseScreenState extends ConsumerState<BaseScreen> {
-  // Itt adunk hozzá minden oldalt, amit a BottomNavigationBar használni fog
+class _BaseScreenState extends State<BaseScreen> {
   final List<Widget> _pages = [
-    const HomeScreen(), // A HomeScreen lesz az alapértelmezett oldal
+    const HomeScreen(),
     const ProductsScreen(),
-    Container(), // Ezt az indexet tartjuk fenn az "Hozzáadás" gomb számára
+    Container(),
     const OffersScreen(),
     const SettingsScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ref.watch(baseViewModelProvider);
+    final baseScreenViewModel = Provider.of<BaseScreenViewModel>(context);
+
     return Scaffold(
       body: IndexedStack(
-        index: viewModel.selectedIndex,
+        index: baseScreenViewModel.selectedIndex,
         children: _pages,
       ),
       bottomNavigationBar: Container(
@@ -55,13 +55,13 @@ class _BaseScreenState extends ConsumerState<BaseScreen> {
           type: BottomNavigationBarType.fixed,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: viewModel.selectedIndex == 0
+              icon: baseScreenViewModel.selectedIndex == 0
                   ? const Icon(Icons.home)
                   : const Icon(Icons.home_outlined),
               label: TranslationEN.home,
             ),
             BottomNavigationBarItem(
-              icon: viewModel.selectedIndex == 1
+              icon: baseScreenViewModel.selectedIndex == 1
                   ? const Icon(Icons.saved_search)
                   : const Icon(Icons.search),
               label: TranslationEN.products,
@@ -71,20 +71,20 @@ class _BaseScreenState extends ConsumerState<BaseScreen> {
               label: TranslationEN.add,
             ),
             BottomNavigationBarItem(
-              icon: viewModel.selectedIndex == 3
+              icon: baseScreenViewModel.selectedIndex == 3
                   ? const Icon(Icons.discount)
                   : const Icon(Icons.discount_outlined),
               label: TranslationEN.offers,
             ),
             BottomNavigationBarItem(
-              icon: viewModel.selectedIndex == 4
+              icon: baseScreenViewModel.selectedIndex == 4
                   ? const Icon(Icons.settings)
                   : const Icon(Icons.settings_outlined),
               label: TranslationEN.settings,
             ),
           ],
-          currentIndex: viewModel.selectedIndex,
-          onTap: (index) => viewModel.selectTab(index, context),
+          currentIndex: baseScreenViewModel.selectedIndex,
+          onTap: (index) => baseScreenViewModel.selectTab(index, context),
         ),
       ),
     );
