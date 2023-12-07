@@ -33,14 +33,12 @@ class Styles {
 
   static final startScreenButtonStyle = ElevatedButton.styleFrom(
     foregroundColor: Colors.white,
-    backgroundColor:
-        const Color.fromRGBO(67, 153, 182, 1.0), // Gombon lévő szöveg színe
-    shadowColor: Colors.blue[200], // Árnyék színe
-    elevation: 5, // Árnyék mélysége
+    backgroundColor: const Color.fromRGBO(67, 153, 182, 1.0),
+    shadowColor: Colors.blue[200],
+    elevation: 5,
     minimumSize: const Size(double.infinity, 50),
     shape: RoundedRectangleBorder(
-      // Kerekített szélű gomb
-      borderRadius: BorderRadius.circular(10), // Szögletek kerekítése
+      borderRadius: BorderRadius.circular(10),
     ),
   );
 

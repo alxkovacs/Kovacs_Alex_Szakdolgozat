@@ -21,15 +21,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  var _enteredEmail = '';
-  var _enteredPassword = '';
-
   @override
   Widget build(BuildContext context) {
     final loginScreenViewModel = Provider.of<LoginScreenViewModel>(context);
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    double horizontalPadding = screenWidth > 600 ? screenWidth * 0.2 : 30;
 
     return Scaffold(
       appBar: AppBar(
@@ -50,70 +44,73 @@ class _LoginScreenState extends State<LoginScreen> {
                     const AuthImageWidget(
                       imagePath: ImageSrc.loginScreenImage,
                     ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: horizontalPadding),
+                    FractionallySizedBox(
+                      widthFactor: 0.8,
                       child: Form(
                         key: _formKey,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                TranslationEN.login,
-                                style: Styles.signUpLoginStyle,
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 20),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  TranslationEN.login,
+                                  style: Styles.signUpLoginStyle,
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 20),
-                            TextFormField(
-                              decoration: AuthInputDecoration(
-                                labelText: TranslationEN.email,
-                                iconData: Icons.email_outlined,
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: TextFormField(
+                                decoration: AuthInputDecoration(
+                                  labelText: TranslationEN.email,
+                                  iconData: Icons.email_outlined,
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                autocorrect: false,
+                                textCapitalization: TextCapitalization.none,
+                                validator: (value) =>
+                                    loginScreenViewModel.validateEmail(value),
+                                onSaved: (value) {
+                                  loginScreenViewModel.enteredEmail = value!;
+                                },
                               ),
-                              keyboardType: TextInputType.emailAddress,
-                              autocorrect: false,
-                              textCapitalization: TextCapitalization.none,
-                              validator: (value) =>
-                                  loginScreenViewModel.validateEmail(value),
-                              onSaved: (value) {
-                                _enteredEmail = value!;
-                              },
                             ),
-                            const SizedBox(height: 10),
-                            TextFormField(
-                              decoration: AuthInputDecoration(
-                                labelText: TranslationEN.password,
-                                iconData: Icons.lock_outline,
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: TextFormField(
+                                decoration: AuthInputDecoration(
+                                  labelText: TranslationEN.password,
+                                  iconData: Icons.lock_outline,
+                                ),
+                                obscureText: true,
+                                validator: (value) => loginScreenViewModel
+                                    .validatePassword(value),
+                                onSaved: (value) {
+                                  loginScreenViewModel.enteredPassword = value!;
+                                },
                               ),
-                              obscureText: true,
-                              validator: (value) =>
-                                  loginScreenViewModel.validatePassword(value),
-                              onSaved: (value) {
-                                _enteredPassword = value!;
-                              },
                             ),
-                            const SizedBox(height: 20),
-                            CustomElevatedButton(
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                                  final success =
-                                      await loginScreenViewModel.submitLogin(
-                                    _enteredEmail,
-                                    _enteredPassword,
-                                    context,
-                                  );
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: CustomElevatedButton(
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
+                                    final success = await loginScreenViewModel
+                                        .submitLogin(context);
 
-                                  if (success && mounted) {
-                                    loginScreenViewModel
-                                        .goToBaseScreen(context);
+                                    if (success && mounted) {
+                                      loginScreenViewModel
+                                          .goToBaseScreen(context);
+                                    }
                                   }
-                                }
-                              },
-                              text: TranslationEN.login,
+                                },
+                                text: TranslationEN.login,
+                              ),
                             ),
-                            const SizedBox(height: 5),
                             TextButton(
                               onPressed: () {
                                 loginScreenViewModel.goToSignUpScreen(context);

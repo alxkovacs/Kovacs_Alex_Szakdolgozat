@@ -1,3 +1,4 @@
+import 'package:application/model/user_model.dart';
 import 'package:application/service/authentication_service.dart';
 import 'package:application/utils/roots.dart';
 import 'package:application/utils/translation_en.dart';
@@ -5,6 +6,7 @@ import 'package:application/view/screens/base_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreenViewModel extends ChangeNotifier {
+  final UserModel _userModel = UserModel();
   final AuthenticationService _userService = AuthenticationService();
   bool _isLoading = false;
 
@@ -15,11 +17,20 @@ class LoginScreenViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> submitLogin(
-      String enteredEmail, String enteredPassword, BuildContext context) async {
+  set enteredEmail(String value) {
+    _userModel.email = value;
+    notifyListeners();
+  }
+
+  set enteredPassword(String value) {
+    _userModel.password = value;
+    notifyListeners();
+  }
+
+  Future<bool> submitLogin(BuildContext context) async {
     isLoading = true;
 
-    final result = await _userService.loginUser(enteredEmail, enteredPassword);
+    final result = await _userService.loginUser(_userModel);
 
     isLoading = false;
     if (!result) {
