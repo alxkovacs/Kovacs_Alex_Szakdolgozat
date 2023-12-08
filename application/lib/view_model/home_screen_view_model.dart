@@ -1,3 +1,7 @@
+import 'package:application/model/product_dto.dart';
+import 'package:application/model/product_model.dart';
+import 'package:application/model/user_dto.dart';
+import 'package:application/model/user_model.dart';
 import 'package:application/service/home_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:application/utils/translation_en.dart';
@@ -7,7 +11,7 @@ import 'package:application/view/screens/shopping_list_screen.dart';
 class HomeScreenViewModel extends ChangeNotifier {
   final HomeScreenService _homeScreenService = HomeScreenService();
   String userFirstName = TranslationEN.noData;
-  List<Map<String, dynamic>> topViewedProducts = [];
+  List<ProductModel> topViewedProducts = [];
   List<Map<String, dynamic>> menu = [
     {
       'name': TranslationEN.shoppingList,
@@ -24,12 +28,17 @@ class HomeScreenViewModel extends ChangeNotifier {
   }
 
   Future<void> fetchTopViewedProducts() async {
-    topViewedProducts = await _homeScreenService.fetchTopViewedProducts();
+    List<ProductDTO> productDTOs =
+        await _homeScreenService.fetchTopViewedProducts();
+    topViewedProducts =
+        productDTOs.map((dto) => ProductModel.fromProductDTO(dto)).toList();
     notifyListeners();
   }
 
   Future<void> fetchUserData(String userId) async {
-    userFirstName = await _homeScreenService.fetchUserName(userId);
+    UserDTO userDTO = await _homeScreenService.fetchUserName(userId);
+    UserModel user = UserModel.fromUserDTO(userDTO);
+    userFirstName = user.firstName!;
     notifyListeners();
   }
 

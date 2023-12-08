@@ -1,8 +1,9 @@
+import 'package:application/model/product_model.dart';
 import 'package:application/view/widgets/horizontal_product_item.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalList extends StatelessWidget {
-  final List<Map<String, dynamic>> products;
+  final List<ProductModel> products;
 
   const HorizontalList({super.key, required this.products});
 
@@ -30,10 +31,10 @@ class HorizontalList extends StatelessWidget {
             ),
             child: HorizontalProductItem(
               number: index,
-              id: products[index]['id'],
-              product: products[index]['product'],
-              category: products[index]['category'],
-              emoji: products[index]['emoji'],
+              id: products[index].id,
+              product: products[index].product,
+              category: products[index].category,
+              emoji: products[index].emoji,
             ),
           );
         },
