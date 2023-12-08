@@ -97,7 +97,10 @@ class AddProductScreenViewModel extends ChangeNotifier {
       ProductDTO productDTO = _productModel.toProductDTO();
 
       bool result = await _addProductService.addOrUpdateProduct(
-          productDTO, _storeName, _price);
+        productDTO,
+        _storeName,
+        _price,
+      );
 
       isLoading = false;
       return result;
