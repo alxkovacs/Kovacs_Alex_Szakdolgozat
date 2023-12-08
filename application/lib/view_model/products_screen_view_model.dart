@@ -37,15 +37,12 @@ class ProductsScreenViewModel extends ChangeNotifier {
     });
   }
 
-  void navigateToDetails(BuildContext context, ProductModel product) {
+  void navigateToDetails(BuildContext context, ProductModel productModel) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ProductScreen(
-          id: product.id,
-          product: product.product,
-          category: product.category,
-          emoji: product.emoji,
+          productModel: productModel,
         ),
       ),
     );
