@@ -1,76 +1,121 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:application/model/category_model.dart';
+import 'package:application/model/product_dto.dart';
+import 'package:application/model/product_model.dart';
+import 'package:application/service/add_product_screen_service.dart';
+import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 
 class AddProductScreenViewModel extends ChangeNotifier {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final AddProductService _addProductService = AddProductService();
+  final ProductModel _productModel =
+      ProductModel(id: '', product: '', category: '', emoji: '');
+
   bool _isLoading = false;
+  String _storeName = TranslationEN.chooseLocation;
+  int _price = 0;
+  CategoryModel? _selectedCategory =
+      categories.isNotEmpty ? categories.first : null;
+
+  AddProductScreenViewModel() {
+    if (_selectedCategory != null) {
+      _productModel.category = _selectedCategory!.name;
+      _productModel.emoji = _selectedCategory!.emoji;
+    }
+  }
 
   bool get isLoading => _isLoading;
+  String get storeName => _storeName;
+  CategoryModel? get selectedCategory => _selectedCategory;
 
-  void setLoading(bool loading) {
-    _isLoading = loading;
+  set isLoading(bool value) {
+    _isLoading = value;
     notifyListeners();
   }
 
-  Future<bool> addOrUpdateProduct(String productName, String categoryName,
-      String categoryEmoji, String storeName, int price) async {
-    setLoading(true);
+  set enteredProductName(String value) {
+    _productModel.product = value;
+    notifyListeners();
+  }
+
+  set enteredCategoryName(String value) {
+    _productModel.category = value;
+    notifyListeners();
+  }
+
+  set enteredCategoryEmoji(String value) {
+    _productModel.emoji = value;
+    notifyListeners();
+  }
+
+  set enteredStoreName(String value) {
+    _storeName = value;
+    notifyListeners();
+  }
+
+  set enteredPrice(int value) {
+    _price = value;
+    notifyListeners();
+  }
+
+  set selectedCategory(CategoryModel? category) {
+    _selectedCategory = category;
+    if (category != null) {
+      enteredCategoryName = category.name;
+      enteredCategoryEmoji = category.emoji;
+    }
+    notifyListeners();
+  }
+
+  String? validateProductName(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return TranslationEN.productValidator;
+    }
+    return null;
+  }
+
+  String? validateStoreName() {
+    if (_storeName == TranslationEN.chooseLocation || _storeName.isEmpty) {
+      return TranslationEN.chooseLocationFirst;
+    }
+    return null;
+  }
+
+  String? validatePrice(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return TranslationEN.priceValidator;
+    }
+    if (int.tryParse(value.trim()) == null) {
+      return TranslationEN.priceIntValidator;
+    }
+    return null;
+  }
+
+  Future<bool> submitProduct(BuildContext context) async {
+    isLoading = true;
+
     try {
-      var productRef = _db.collection('products').doc();
+      ProductDTO productDTO = _productModel.toProductDTO();
 
-      // Ellenőrizzük, hogy a termék létezik-e már név alapján
-      var productQuery = await _db
-          .collection('products')
-          .where('name', isEqualTo: productName)
-          .get();
-      if (productQuery.docs.isEmpty) {
-        // Ha nem létezik, létrehozunk egy új terméket
-        await productRef.set({
-          'name': productName,
-          'name_lowercase': productName.toLowerCase(),
-          'category': {
-            'name': categoryName,
-            'emoji': categoryEmoji,
-          },
-          'viewCount': 0,
-        });
-      } else {
-        // Ha létezik, megszerezzük a meglévő termék azonosítóját
-        productRef = _db.collection('products').doc(productQuery.docs.first.id);
-      }
+      bool result = await _addProductService.addOrUpdateProduct(
+          productDTO, _storeName, _price);
 
-      // Lekérjük vagy létrehozunk egy új áruház azonosítót
-      var storeRef = _db.collection('stores').doc();
-
-      // Ellenőrizzük, hogy az áruház létezik-e már név alapján
-      var storeQuery = await _db
-          .collection('stores')
-          .where('name', isEqualTo: storeName)
-          .get();
-      if (storeQuery.docs.isEmpty) {
-        // Ha nem létezik, létrehozunk egy új áruházat
-        await storeRef.set({
-          'name': storeName,
-          'name_lowercase': storeName.toLowerCase(),
-        });
-      } else {
-        // Ha létezik, megszerezzük a meglévő áruház azonosítóját
-        storeRef = _db.collection('stores').doc(storeQuery.docs.first.id);
-      }
-
-      // Hozzáadjuk a termék árát a productPrice táblához
-      await _db.collection('productPrices').add({
-        'productId': productRef.id,
-        'storeId': storeRef.id,
-        'price': price,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-
-      setLoading(false);
-      return true; // Sikeres művelet esetén
+      isLoading = false;
+      return result;
     } catch (e) {
-      setLoading(false);
-      return false; // Hiba esetén
+      if (context.findRenderObject() != null) {
+        _showSnackbar(context, TranslationEN.addProductError);
+      }
+      isLoading = false;
+      return false;
+    }
+  }
+
+  void _showSnackbar(BuildContext context, String message) {
+    if (context.findRenderObject() != null) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
     }
   }
 }

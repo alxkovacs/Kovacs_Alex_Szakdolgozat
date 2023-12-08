@@ -5,11 +5,13 @@ import 'package:application/view/screens/loading_screen.dart';
 import 'package:application/view/screens/login_screen.dart';
 import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:application/view/screens/start_screen.dart';
+import 'package:application/view_model/add_product_screen_view_model.dart';
 import 'package:application/view_model/base_screen_view_model.dart';
 import 'package:application/view_model/home_screen_view_model.dart';
 import 'package:application/view_model/login_screen_view_model.dart';
 import 'package:application/view_model/products_screen_view_model.dart';
 import 'package:application/view_model/sign_up_screen_view_model.dart';
+import 'package:application/view_model/store_search_screen_view_model.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +40,8 @@ void main() async {
           ChangeNotifierProvider(create: (_) => BaseScreenViewModel()),
           ChangeNotifierProvider(create: (_) => HomeScreenViewModel()),
           ChangeNotifierProvider(create: (_) => ProductsScreenViewModel()),
+          ChangeNotifierProvider(create: (_) => AddProductScreenViewModel()),
+          ChangeNotifierProvider(create: (_) => StoreSearchScreenViewModel()),
         ],
         child: const MyApp(),
       ),

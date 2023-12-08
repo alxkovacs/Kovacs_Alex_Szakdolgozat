@@ -1,10 +1,10 @@
 import 'package:application/model/product_dto.dart';
 
 class ProductModel {
-  final String id;
-  final String product;
-  final String category;
-  final String emoji;
+  String id;
+  String product;
+  String category;
+  String emoji;
 
   ProductModel({
     required this.id,
