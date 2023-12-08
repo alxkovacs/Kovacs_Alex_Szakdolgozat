@@ -33,15 +33,4 @@ class AuthenticationService {
       return false;
     }
   }
-
-  Future<bool> loginUser(UserModel userModel) async {
-    try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: userModel.email!, password: userModel.password!);
-
-      return true;
-    } on FirebaseAuthException {
-      return false;
-    }
-  }
 }
