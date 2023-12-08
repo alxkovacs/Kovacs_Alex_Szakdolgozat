@@ -24,6 +24,7 @@ class HorizontalList extends StatelessWidget {
         ),
         itemCount: products.length,
         itemBuilder: (context, index) {
+          final productModel = products[index];
           return Container(
             margin: EdgeInsets.only(
               left: index < 3 ? 0 : 0,
@@ -31,10 +32,7 @@ class HorizontalList extends StatelessWidget {
             ),
             child: HorizontalProductItem(
               number: index,
-              id: products[index].id,
-              product: products[index].product,
-              category: products[index].category,
-              emoji: products[index].emoji,
+              productModel: productModel,
             ),
           );
         },

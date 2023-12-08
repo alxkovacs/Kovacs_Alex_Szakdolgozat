@@ -1,21 +1,16 @@
+import 'package:application/model/product_model.dart';
 import 'package:application/utils/styles/styles.dart';
 import 'package:application/view/screens/product_screen.dart';
 import 'package:flutter/material.dart';
 
 class HorizontalProductItem extends StatelessWidget {
   final int number;
-  final String id;
-  final String product;
-  final String category;
-  final String emoji;
+  final ProductModel productModel;
 
   const HorizontalProductItem({
     Key? key,
     required this.number,
-    required this.id,
-    required this.product,
-    required this.category,
-    required this.emoji,
+    required this.productModel,
   }) : super(key: key);
 
   void navigateToDetails(BuildContext context) {
@@ -23,10 +18,7 @@ class HorizontalProductItem extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => ProductScreen(
-          id: id,
-          product: product,
-          category: category,
-          emoji: emoji,
+          productModel: productModel,
         ),
       ),
     );
@@ -49,7 +41,7 @@ class HorizontalProductItem extends StatelessWidget {
                   padding: const EdgeInsets.all(7),
                   decoration: Styles.productBoxDecoration,
                   child: Text(
-                    emoji,
+                    productModel.emoji,
                     style: const TextStyle(fontSize: 24),
                   ),
                 ),
@@ -72,14 +64,14 @@ class HorizontalProductItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      product,
+                      productModel.product,
                       style: const TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.bold),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      category,
+                      productModel.category,
                       style: const TextStyle(fontSize: 12.0),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
