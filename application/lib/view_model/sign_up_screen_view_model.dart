@@ -1,3 +1,4 @@
+import 'package:application/model/user_dto.dart';
 import 'package:application/model/user_model.dart';
 import 'package:application/service/authentication_service.dart';
 import 'package:application/utils/roots.dart';
@@ -35,7 +36,9 @@ class SignUpScreenViewModel extends ChangeNotifier {
   Future<bool> submitSignUp(BuildContext context) async {
     isLoading = true;
 
-    final result = await _userService.createUser(_userModel);
+    UserDTO userDTO = _userModel.toUserDTO();
+
+    final result = await _userService.createUser(userDTO);
 
     isLoading = false;
     if (!result) {

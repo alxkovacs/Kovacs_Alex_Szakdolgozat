@@ -5,7 +5,7 @@ class UserModel {
   String? email;
   String? password;
 
-  UserModel({this.firstName, this.email});
+  UserModel({this.firstName = '', this.email});
 
   factory UserModel.fromUserDTO(UserDTO dto) {
     return UserModel(
@@ -18,6 +18,7 @@ class UserModel {
     return UserDTO(
       firstName: firstName,
       email: email,
+      password: password,
     );
   }
 }

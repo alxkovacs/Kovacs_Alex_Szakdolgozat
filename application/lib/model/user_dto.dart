@@ -1,8 +1,9 @@
 class UserDTO {
   String? firstName;
   String? email;
+  String? password;
 
-  UserDTO({this.firstName, this.email});
+  UserDTO({this.firstName, this.email, this.password});
 
   factory UserDTO.fromFirebaseJson(Map<String, dynamic> json) {
     return UserDTO(
@@ -15,6 +16,7 @@ class UserDTO {
     return {
       'firstname': firstName ?? '',
       'email': email ?? '',
+      'password': password ?? '',
     };
   }
 }
