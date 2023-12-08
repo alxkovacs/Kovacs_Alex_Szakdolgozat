@@ -10,7 +10,7 @@ class AuthenticationService {
     try {
       final userCredentials =
           await _firebaseAuth.createUserWithEmailAndPassword(
-              email: userDTO.email!, password: userDTO.password!);
+              email: userModel.email!, password: userModel.password!);
 
       await _firestore
           .collection('users')
@@ -34,10 +34,10 @@ class AuthenticationService {
     }
   }
 
-  Future<bool> loginUser(UserModel userModel) async {
+  Future<bool> loginUser(UserDTO userDTO) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: userModel.email!, password: userModel.password!);
+          email: userDTO.email!, password: userDTO.password!);
 
       return true;
     } on FirebaseAuthException {
