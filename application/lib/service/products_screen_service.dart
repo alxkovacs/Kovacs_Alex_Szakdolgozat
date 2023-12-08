@@ -1,10 +1,10 @@
+import 'package:application/model/product_dto.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:application/model/product_model.dart';
 
 class ProductsScreenService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Stream<List<ProductModel>> fetchProducts(String searchTerm) {
+  Stream<List<ProductDTO>> fetchProducts(String searchTerm) {
     Stream<QuerySnapshot<Map<String, dynamic>>> stream;
     final lowercaseSearchTerm = searchTerm.toLowerCase();
 
@@ -20,7 +20,7 @@ class ProductsScreenService {
     }
 
     return stream.map((snapshot) => snapshot.docs.map((doc) {
-          return ProductModel.fromProductDTO(doc);
+          return ProductDTO.fromFirebaseJson(doc.data(), doc.id);
         }).toList());
   }
 }

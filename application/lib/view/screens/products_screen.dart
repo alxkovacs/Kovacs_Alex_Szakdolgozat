@@ -33,24 +33,21 @@ class _ProductsScreenState extends State<ProductsScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: CustomSearchBar(
               controller: _searchController,
               viewModel: productsScreenViewModel,
             ),
           ),
-          const SizedBox(height: 5),
+          // const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(bottom: 10, left: 25, right: 25),
               itemCount: productsScreenViewModel.products.length,
               itemBuilder: (context, index) {
-                final product = productsScreenViewModel.products[index];
+                final productModel = productsScreenViewModel.products[index];
                 return ProductCard(
-                  id: product.id,
-                  product: product.product,
-                  category: product.category,
-                  emoji: product.emoji,
+                  productModel: productModel,
                 );
               },
             ),

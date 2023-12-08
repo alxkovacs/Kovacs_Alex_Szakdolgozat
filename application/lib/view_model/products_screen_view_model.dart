@@ -22,21 +22,25 @@ class ProductsScreenViewModel extends ChangeNotifier {
   }
 
   void fetchProducts() {
-    _productService.fetchProducts(_searchTerm).listen((productList) {
-      _products = productList;
+    _productService.fetchProducts(_searchTerm).listen((productDTOList) {
+      _products = productDTOList.map((dto) {
+        return ProductModel(
+          id: dto.id,
+          product: dto.name,
+          category: dto.category,
+          emoji: dto.emoji,
+        );
+      }).toList();
       notifyListeners();
     });
   }
 
-  void navigateToDetails(BuildContext context, ProductModel product) {
+  void navigateToDetails(BuildContext context, ProductModel productModel) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ProductScreen(
-          id: product.id,
-          product: product.product,
-          category: product.category,
-          emoji: product.emoji,
+          productModel: productModel,
         ),
       ),
     );

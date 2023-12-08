@@ -5,17 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
-  final String id;
-  final String product;
-  final String category;
-  final String emoji;
+  final ProductModel productModel;
 
   const ProductCard({
     Key? key,
-    required this.id,
-    required this.product,
-    required this.category,
-    required this.emoji,
+    required this.productModel,
   }) : super(key: key);
 
   @override
@@ -26,8 +20,7 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => productsScreenviewModel.navigateToDetails(
         context,
-        ProductModel(
-            id: id, product: product, category: category, emoji: emoji),
+        productModel,
       ),
       child: Card(
         color: Colors.white,
@@ -38,7 +31,7 @@ class ProductCard extends StatelessWidget {
             padding: const EdgeInsets.all(11),
             decoration: Styles.productBoxDecoration,
             child: Text(
-              emoji,
+              productModel.emoji,
               style: const TextStyle(fontSize: 24),
             ),
           ),
@@ -46,11 +39,11 @@ class ProductCard extends StatelessWidget {
           title: Text(
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            product,
+            productModel.product,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           subtitle: Text(
-            category,
+            productModel.category,
             style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
