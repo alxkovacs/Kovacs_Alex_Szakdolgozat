@@ -2,7 +2,7 @@ import 'package:application/view/screens/home_screen.dart';
 import 'package:application/view/screens/offers_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
 import 'package:application/view/screens/settings_screen.dart';
-import 'package:application/view/widgets/custom_bottom_sheet_scaffold.dart';
+import 'package:application/view/widgets/custom_navigation_sheet_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreenViewModel extends ChangeNotifier {
@@ -31,7 +31,7 @@ class BaseScreenViewModel extends ChangeNotifier {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return const CustomBottomSheetScaffold();
+        return const CustomNavigationSheet();
       },
     );
   }

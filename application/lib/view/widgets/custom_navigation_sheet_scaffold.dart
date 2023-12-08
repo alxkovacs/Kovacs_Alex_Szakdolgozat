@@ -4,8 +4,8 @@ import 'package:application/utils/translation_en.dart';
 import 'package:application/view/screens/add_product_screen.dart';
 import 'package:flutter/material.dart';
 
-class CustomBottomSheetScaffold extends StatelessWidget {
-  const CustomBottomSheetScaffold({Key? key}) : super(key: key);
+class CustomNavigationSheet extends StatelessWidget {
+  const CustomNavigationSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
