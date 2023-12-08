@@ -1,3 +1,4 @@
+import 'package:application/model/user_dto.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:application/model/user_model.dart';
@@ -12,10 +13,12 @@ class AuthenticationService {
           await _firebaseAuth.createUserWithEmailAndPassword(
               email: userModel.email!, password: userModel.password!);
 
+      UserDTO userDTO = userModel.toUserDTO();
+
       await _firestore
           .collection('users')
           .doc(userCredentials.user!.uid)
-          .set(userModel.convertToFirestoreFormat());
+          .set(userDTO.toFirebaseJson());
 
       return true;
     } on FirebaseAuthException {

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:application/model/user_dto.dart';
 
 class UserModel {
   String? firstName;
@@ -7,18 +7,17 @@ class UserModel {
 
   UserModel({this.firstName, this.email});
 
-  factory UserModel.fromFirestore(DocumentSnapshot doc) {
-    Map data = doc.data() as Map<String, dynamic>;
+  factory UserModel.fromUserDTO(UserDTO dto) {
     return UserModel(
-      firstName: data['firstname'],
-      email: data['email'],
+      firstName: dto.firstName,
+      email: dto.email,
     );
   }
 
-  Map<String, dynamic> convertToFirestoreFormat() {
-    return {
-      'firstname': firstName ?? '',
-      'email': email ?? '',
-    };
+  UserDTO toUserDTO() {
+    return UserDTO(
+      firstName: firstName,
+      email: email,
+    );
   }
 }
