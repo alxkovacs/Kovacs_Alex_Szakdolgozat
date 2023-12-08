@@ -20,7 +20,7 @@ class ProductsScreenService {
     }
 
     return stream.map((snapshot) => snapshot.docs.map((doc) {
-          return ProductModel.fromFirestore(doc);
+          return ProductModel.fromProductDTO(doc);
         }).toList());
   }
 }
