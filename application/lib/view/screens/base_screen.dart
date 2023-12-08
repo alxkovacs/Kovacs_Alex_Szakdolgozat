@@ -11,16 +11,7 @@ class BaseScreen extends StatefulWidget {
   State<BaseScreen> createState() => _BaseScreenState();
 }
 
-class _BaseScreenState extends ConsumerState<BaseScreen> {
-  // Itt adunk hozzá minden oldalt, amit a BottomNavigationBar használni fog
-  final List<Widget> _pages = [
-    const HomeScreen(), // A HomeScreen lesz az alapértelmezett oldal
-    const ProductsScreen(),
-    Container(), // Ezt az indexet tartjuk fenn az "Hozzáadás" gomb számára
-    const OffersScreen(),
-    const SettingsScreen(),
-  ];
-
+class _BaseScreenState extends State<BaseScreen> {
   @override
   Widget build(BuildContext context) {
     final baseScreenViewModel = Provider.of<BaseScreenViewModel>(context);
