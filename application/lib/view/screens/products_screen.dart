@@ -33,13 +33,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 15),
             child: CustomSearchBar(
               controller: _searchController,
               viewModel: productsScreenViewModel,
             ),
           ),
-          // const SizedBox(height: 5),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(bottom: 10, left: 25, right: 25),
