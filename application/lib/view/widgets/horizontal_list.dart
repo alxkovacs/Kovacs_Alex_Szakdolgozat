@@ -31,9 +31,9 @@ class HorizontalList extends StatelessWidget {
             child: HorizontalProductItem(
               number: index,
               id: products[index]['id'],
-              product: products[index]['name'],
-              category: products[index]['category']['name'],
-              emoji: products[index]['category']['emoji'],
+              product: products[index]['product'],
+              category: products[index]['category'],
+              emoji: products[index]['emoji'],
             ),
           );
         },

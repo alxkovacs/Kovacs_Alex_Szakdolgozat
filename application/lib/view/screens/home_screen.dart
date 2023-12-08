@@ -147,12 +147,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                if (homeScreenViewModel.topViewedProducts.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 30),
-                    child: HorizontalList(
-                        products: homeScreenViewModel.topViewedProducts),
-                  ),
+                homeScreenViewModel.topViewedProducts.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        child: HorizontalList(
+                            products: homeScreenViewModel.topViewedProducts),
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(bottom: 30),
+                        child: Text(
+                          TranslationEN.noData,
+                        ),
+                      ),
                 const Padding(
                   padding: EdgeInsets.only(bottom: 15),
                   child: Align(
@@ -163,9 +169,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                if (homeScreenViewModel.topViewedProducts.isNotEmpty)
-                  HorizontalList(
-                      products: homeScreenViewModel.topViewedProducts),
+                homeScreenViewModel.topViewedProducts.isNotEmpty
+                    ? HorizontalList(
+                        products: homeScreenViewModel.topViewedProducts)
+                    : const Text(
+                        TranslationEN.noData,
+                      ),
               ],
             ),
           ),
