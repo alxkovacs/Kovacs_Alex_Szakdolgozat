@@ -5,6 +5,7 @@ import 'package:application/view/screens/loading_screen.dart';
 import 'package:application/view/screens/login_screen.dart';
 import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:application/view/screens/start_screen.dart';
+import 'package:application/view_model/login_screen_view_model.dart';
 import 'package:application/view_model/sign_up_screen_view_model.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +31,7 @@ void main() async {
       builder: (context) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => SignUpScreenViewModel()),
+          ChangeNotifierProvider(create: (_) => LoginScreenViewModel()),
         ],
         child: const MyApp(),
       ),
@@ -76,7 +78,7 @@ class MyApp extends StatelessWidget {
         Roots.startScreen: (context) => const StartScreen(),
         Roots.baseScreen: (context) => const BaseScreen(),
         Roots.signUpScreen: (context) => const SignUpScreen(),
-        Roots.logInScreen: (context) => const LogInScreen(),
+        Roots.logInScreen: (context) => const LoginScreen(),
       },
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),

@@ -6,7 +6,7 @@ import 'package:application/utils/translation_en.dart';
 import 'package:application/view/screens/base_screen.dart';
 import 'package:flutter/material.dart';
 
-class SignUpScreenViewModel extends ChangeNotifier {
+class LoginScreenViewModel extends ChangeNotifier {
   final UserModel _userModel = UserModel();
   final AuthenticationService _userService = AuthenticationService();
   bool _isLoading = false;
@@ -15,11 +15,6 @@ class SignUpScreenViewModel extends ChangeNotifier {
 
   set isLoading(bool value) {
     _isLoading = value;
-    notifyListeners();
-  }
-
-  set enteredFirstName(String value) {
-    _userModel.firstName = value;
     notifyListeners();
   }
 
@@ -33,16 +28,15 @@ class SignUpScreenViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> submitSignUp(BuildContext context) async {
+  Future<bool> submitLogin(BuildContext context) async {
     isLoading = true;
 
     UserDTO userDTO = _userModel.toUserDTO();
-
-    final result = await _userService.createUser(userDTO);
+    final result = await _userService.loginUser(userDTO);
 
     isLoading = false;
     if (!result) {
-      _showSnackbar(context, TranslationEN.registrationFailed);
+      _showSnackbar(context, TranslationEN.loginFailed);
     }
     return result;
   }
@@ -54,13 +48,6 @@ class SignUpScreenViewModel extends ChangeNotifier {
         SnackBar(content: Text(message)),
       );
     }
-  }
-
-  String? validateFirstName(String? value) {
-    if ((value?.trim().length ?? 0) < 3) {
-      return TranslationEN.firstNameValidator;
-    }
-    return null;
   }
 
   String? validateEmail(String? value) {
@@ -79,9 +66,9 @@ class SignUpScreenViewModel extends ChangeNotifier {
     return null;
   }
 
-  void goToLogInScreen(BuildContext context) {
+  void goToSignUpScreen(BuildContext context) {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        Roots.logInScreen, (Route<dynamic> route) => false);
+        Roots.signUpScreen, (Route<dynamic> route) => false);
   }
 
   void goToStartScreen(BuildContext context) {
