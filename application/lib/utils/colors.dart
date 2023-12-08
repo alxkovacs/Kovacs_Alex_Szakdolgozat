@@ -6,6 +6,7 @@ class AppColor {
   static const Color mainColor = Color.fromRGBO(67, 153, 182, 1.0);
   static const Color authInputDecorationFillColor =
       Color.fromRGBO(67, 153, 182, 0.05);
+  static const Color lightBackgroundColor = Colors.white;
   static const Gradient linearGradient = LinearGradient(
     begin: Alignment(0.0, 0.0),
     end: Alignment(0.707, -0.707),

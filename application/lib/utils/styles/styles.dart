@@ -5,6 +5,9 @@ class Styles {
   static const String trojanFont = 'Trajan Pro';
   static const String schylerFont = 'Schyler';
 
+  static const screenCenterTitle =
+      TextStyle(fontWeight: FontWeight.bold, fontSize: 22);
+
   static const signUpLoginStyle = TextStyle(
     fontSize: 38,
     fontWeight: FontWeight.bold,
