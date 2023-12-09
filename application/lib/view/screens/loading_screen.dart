@@ -1,4 +1,4 @@
-import 'package:application/utils/translation_en.dart';
+import 'package:application/view/widgets/custom_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -6,13 +6,8 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(TranslationEN.home),
-      ),
-      body: const Center(
-        child: Text('${TranslationEN.loading}...'),
-      ),
+    return const Scaffold(
+      body: CustomCircularProgressIndicator(),
     );
   }
 }

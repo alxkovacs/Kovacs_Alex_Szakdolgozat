@@ -24,4 +24,14 @@ class TranslationEN {
   static const String settings = 'Beállítások';
   static const String addProduct = 'Termék hozzáadása';
   static const String loading = 'Tölt';
+  static const String shoppingList = 'Bevásárlólista';
+  static const String favorites = 'Kedvencek';
+  static const String mostViewedProducts = 'Legtöbbet megtekintett termékek';
+  static const String productsRecommendedForYou = 'Neked ajánlott termékek';
+  static const String error = 'Hiba';
+  static const String numberOfProducts = 'Termékek száma';
+  static const String numberOfStores = 'Üzletek száma';
+  static const String noData = 'N/A';
+  static const String greet = 'Hello';
+  static const String product = 'Termék';
 }
