@@ -36,15 +36,4 @@ class ProductsScreenViewModel extends ChangeNotifier {
       notifyListeners();
     });
   }
-
-  void navigateToDetails(BuildContext context, ProductModel productModel) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ProductScreen(
-          productModel: productModel,
-        ),
-      ),
-    );
-  }
 }
