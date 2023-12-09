@@ -34,6 +34,6 @@ class StoreSearchScreenViewModel extends ChangeNotifier {
 
   String capitalize(String s) {
     if (s.isEmpty) return s;
-    return s[0].toUpperCase() + s.substring(1);
+    return s.replaceFirst(s[0], s[0].toUpperCase());
   }
 }
