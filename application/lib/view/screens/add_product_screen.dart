@@ -131,11 +131,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         CustomElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
+                              String? storeValidationResult =
+                                  addProductScreenViewModel.validateStoreName();
+                              if (storeValidationResult != null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(storeValidationResult)),
+                                );
+                                return;
+                              }
+
                               _formKey.currentState!.save();
 
                               bool success = await addProductScreenViewModel
                                   .submitProduct(context);
-
                               if (success && mounted) {
                                 Navigator.pop(context);
                               }
