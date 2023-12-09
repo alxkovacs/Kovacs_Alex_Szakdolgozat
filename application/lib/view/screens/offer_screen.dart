@@ -1,33 +1,26 @@
-import 'package:application/providers/offer_view_model_provider.dart';
+import 'package:application/model/offer_model.dart';
 import 'package:application/utils/colors.dart';
 import 'package:application/utils/translation_en.dart';
 import 'package:application/view/widgets/description_tab.dart';
 import 'package:application/view/widgets/products_list.dart';
 import 'package:application/view/widgets/store_name.dart';
+import 'package:application/view_model/offer_screen_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
-class OfferScreen extends ConsumerStatefulWidget {
-  final String id;
-  final String name;
-  final String description;
-  final String emoji;
-  final String storeId;
+class OfferScreen extends StatefulWidget {
+  final OfferModel offerModel;
 
   const OfferScreen({
-    super.key,
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.emoji,
-    required this.storeId,
-  });
+    Key? key,
+    required this.offerModel,
+  }) : super(key: key);
 
   @override
   _OfferScreenState createState() => _OfferScreenState();
 }
 
-class _OfferScreenState extends ConsumerState<OfferScreen>
+class _OfferScreenState extends State<OfferScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -36,16 +29,17 @@ class _OfferScreenState extends ConsumerState<OfferScreen>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
 
-    // ViewModel lekérdezések
-    final viewModel = ref.read(offerViewModelProvider.notifier);
-    viewModel.fetchStoreName(widget.storeId);
-    viewModel.fetchOfferProducts(widget.id);
-    viewModel.incrementOfferViewCount(widget.id);
+    Future.microtask(
+      () => Provider.of<OfferScreenViewModel>(context, listen: false).fetchData(
+        widget.offerModel.id,
+        widget.offerModel.storeId,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ref.watch(offerViewModelProvider);
+    final offerScreenViewModel = Provider.of<OfferScreenViewModel>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -55,17 +49,15 @@ class _OfferScreenState extends ConsumerState<OfferScreen>
       backgroundColor: const Color.fromRGBO(208, 229, 236, 1.0),
       body: Column(
         children: <Widget>[
-          // ... Az emoji és a termék nevének megjelenítése
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40),
             child: Center(
               child: Text(
-                widget.emoji,
+                widget.offerModel.emoji,
                 style: const TextStyle(fontSize: 90),
               ),
             ),
           ),
-          const SizedBox(height: 10),
           Expanded(
             child: Container(
               decoration: const BoxDecoration(
@@ -77,7 +69,6 @@ class _OfferScreenState extends ConsumerState<OfferScreen>
               ),
               child: Column(
                 children: <Widget>[
-                  // ... további UI elemek
                   Padding(
                     padding:
                         const EdgeInsets.only(left: 25.0, right: 25.0, top: 25),
@@ -85,7 +76,7 @@ class _OfferScreenState extends ConsumerState<OfferScreen>
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            widget.name,
+                            widget.offerModel.name,
                             style: const TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
@@ -93,8 +84,10 @@ class _OfferScreenState extends ConsumerState<OfferScreen>
                       ],
                     ),
                   ),
-                  StoreName(storeName: viewModel.storeName),
-                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: StoreName(storeName: offerScreenViewModel.storeName),
+                  ),
                   TabBar(
                     dividerColor: AppColor.mainColor.withOpacity(0.5),
                     unselectedLabelColor: Colors.black,
@@ -115,10 +108,8 @@ class _OfferScreenState extends ConsumerState<OfferScreen>
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        // Leírás tab
-                        DescriptionTab(widget.description),
-                        // Termékek tab
-                        ProductsList(products: viewModel.products),
+                        DescriptionTab(widget.offerModel.description),
+                        ProductsList(products: offerScreenViewModel.products),
                       ],
                     ),
                   ),

@@ -12,14 +12,11 @@ class ProductsList extends StatelessWidget {
     return ListView.builder(
       itemCount: products.length,
       itemBuilder: (context, index) {
-        final product = products[index];
+        final productModel = products[index];
         return Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
           child: ProductCard(
-            id: product.id,
-            product: product.product,
-            category: product.category,
-            emoji: product.emoji,
+            productModel: productModel,
           ),
         );
       },
