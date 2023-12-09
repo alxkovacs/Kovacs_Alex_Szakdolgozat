@@ -1,28 +1,23 @@
+import 'package:application/model/offer_model.dart';
+import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 
 class OfferScreen extends StatelessWidget {
-  final String id;
-  final String name;
-  final String description;
-  final String emoji;
-  final String storeId;
+  final OfferModel offerModel;
+
   const OfferScreen({
-    super.key,
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.emoji,
-    required this.storeId,
-  });
+    Key? key,
+    required this.offerModel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product'),
+        title: const Text(TranslationEN.product),
       ),
       body: const Center(
-        child: Text('Product Screen'),
+        child: Text(TranslationEN.product),
       ),
     );
   }

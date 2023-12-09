@@ -53,4 +53,5 @@ class TranslationEN {
   static const String chooseLocationFirst =
       'Kérjük, először válasszon üzletet!';
   static const String chooseCategory = 'Kérjük, válasszon egy kategóriát.';
+  static const String noOffersAvailable = 'Nincs elérhető ajánlat!';
 }

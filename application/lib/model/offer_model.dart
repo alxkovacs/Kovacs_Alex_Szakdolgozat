@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:application/model/offer_dto.dart';
 
 class OfferModel {
   final String id;
@@ -15,30 +15,23 @@ class OfferModel {
     required this.storeId,
   });
 
-  // Egy factory konstruktor, ami létrehoz egy OfferItem példányt egy Firestore dokumentumból
-  factory OfferModel.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-
-    // Itt feltételezzük, hogy minden mező létezik a dokumentumban,
-    // de érdemes lehet kezelni a hiányzó mezők vagy null értékek esetét is.
+  factory OfferModel.fromDTO(OfferDTO dto) {
     return OfferModel(
-      id: doc.id, // Firestore dokumentum azonosító
-      name: data['name'] ??
-          '', // Ha a 'name' mező null, üres string lesz helyette
-      description: data['description'],
-      emoji: data['emoji'] ?? '',
-      storeId: data['storeId'] ?? '',
+      id: dto.id,
+      name: dto.name,
+      description: dto.description,
+      emoji: dto.emoji,
+      storeId: dto.storeId,
     );
   }
 
-  // Egy metódus, ami egy Map-pé konvertálja az OfferItem példányt
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'emoji': emoji,
-      'storeId': storeId,
-    };
+  OfferDTO toDTO() {
+    return OfferDTO(
+      id: id,
+      name: name,
+      description: description,
+      emoji: emoji,
+      storeId: storeId,
+    );
   }
 }
