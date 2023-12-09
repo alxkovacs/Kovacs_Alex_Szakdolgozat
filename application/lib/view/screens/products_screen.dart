@@ -37,7 +37,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 15),
             child: CustomSearchBar(
               controller: _searchController,
-              viewModel: productsScreenViewModel,
+              updateFunction: productsScreenViewModel.updateSearchTerm,
             ),
           ),
           Expanded(

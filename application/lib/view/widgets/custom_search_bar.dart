@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:application/utils/colors.dart';
 import 'package:application/utils/translation_en.dart';
-import 'package:application/view_model/products_screen_view_model.dart';
 
 class CustomSearchBar extends StatelessWidget {
   final TextEditingController controller;
-  final ProductsScreenViewModel viewModel;
+  final Function(String) updateFunction;
 
   const CustomSearchBar({
     Key? key,
     required this.controller,
-    required this.viewModel,
+    required this.updateFunction,
   }) : super(key: key);
 
   @override
@@ -19,7 +18,7 @@ class CustomSearchBar extends StatelessWidget {
       cursorColor: AppColor.mainColor,
       controller: controller,
       onChanged: (value) {
-        viewModel.searchTerm = value;
+        updateFunction(value);
       },
       decoration: InputDecoration(
         isDense: true,
@@ -36,8 +35,8 @@ class CustomSearchBar extends StatelessWidget {
             color: AppColor.mainColor,
           ),
           onPressed: () {
+            updateFunction('');
             controller.clear();
-            viewModel.searchTerm = '';
           },
         ),
         prefixIcon: const Icon(

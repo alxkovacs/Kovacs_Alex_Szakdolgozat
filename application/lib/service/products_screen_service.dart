@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ProductsScreenService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Stream<List<ProductDTO>> fetchProducts(String searchTerm) {
+  Stream<List<ProductDTO>> fetchProductByName(String searchTerm) {
     Stream<QuerySnapshot<Map<String, dynamic>>> stream;
     final lowercaseSearchTerm = searchTerm.toLowerCase();
 

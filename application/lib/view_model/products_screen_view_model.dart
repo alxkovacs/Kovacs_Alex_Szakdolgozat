@@ -1,5 +1,4 @@
 import 'package:application/service/products_screen_service.dart';
-import 'package:application/view/screens/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:application/model/product_model.dart';
 
@@ -17,12 +16,15 @@ class ProductsScreenViewModel extends ChangeNotifier {
 
   set searchTerm(String value) {
     _searchTerm = value;
-    notifyListeners();
     fetchProducts();
   }
 
+  void updateSearchTerm(String value) {
+    searchTerm = value;
+  }
+
   void fetchProducts() {
-    _productService.fetchProducts(_searchTerm).listen((productDTOList) {
+    _productService.fetchProductByName(_searchTerm).listen((productDTOList) {
       _products = productDTOList.map((dto) {
         return ProductModel(
           id: dto.id,
@@ -33,16 +35,5 @@ class ProductsScreenViewModel extends ChangeNotifier {
       }).toList();
       notifyListeners();
     });
-  }
-
-  void navigateToDetails(BuildContext context, ProductModel productModel) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ProductScreen(
-          productModel: productModel,
-        ),
-      ),
-    );
   }
 }
