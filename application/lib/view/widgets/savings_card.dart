@@ -11,51 +11,53 @@ class SavingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.sizeOf(context).width;
-    double padding = screenWidth > 600 ? 24 : 12;
     final viewModel = Provider.of<HomeScreenViewModel>(context, listen: false);
 
-    return Container(
-      decoration: Styles.boxDecorationWithShadow,
-      child: Card(
-        color: Colors.transparent,
-        elevation: 0.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(padding),
-          child: FutureBuilder<List<int>>(
-            future: Future.wait([
-              viewModel.getProductsCount(),
-              viewModel.getStoresCount(),
-            ]),
-            builder: (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CustomCircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return const Text(TranslationEN.error);
-              } else if (snapshot.hasData) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: SavingsInfoRow(
-                        title: '${TranslationEN.numberOfProducts}:',
-                        value: '${snapshot.data![0]} db',
+    return FractionallySizedBox(
+      widthFactor: 1,
+      child: Container(
+        decoration: Styles.boxDecorationWithShadow,
+        child: Card(
+          color: Colors.transparent,
+          elevation: 0.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: FutureBuilder<List<int>>(
+              future: Future.wait([
+                viewModel.getProductsCount(),
+                viewModel.getStoresCount(),
+              ]),
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<int>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CustomCircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return const Text(TranslationEN.error);
+                } else if (snapshot.hasData) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: SavingsInfoRow(
+                          title: '${TranslationEN.numberOfProducts}:',
+                          value: '${snapshot.data![0]} db',
+                        ),
                       ),
-                    ),
-                    SavingsInfoRow(
-                      title: '${TranslationEN.numberOfStores}:',
-                      value: '${snapshot.data![1]} db',
-                    ),
-                  ],
-                );
-              } else {
-                return const Text(TranslationEN.noData);
-              }
-            },
+                      SavingsInfoRow(
+                        title: '${TranslationEN.numberOfStores}:',
+                        value: '${snapshot.data![1]} db',
+                      ),
+                    ],
+                  );
+                } else {
+                  return const Text(TranslationEN.noData);
+                }
+              },
+            ),
           ),
         ),
       ),

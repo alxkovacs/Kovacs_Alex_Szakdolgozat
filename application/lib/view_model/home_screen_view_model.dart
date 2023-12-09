@@ -12,16 +12,16 @@ class HomeScreenViewModel extends ChangeNotifier {
   final HomeScreenService _homeScreenService = HomeScreenService();
   String userFirstName = TranslationEN.noData;
   List<ProductModel> topViewedProducts = [];
-  List<Map<String, dynamic>> menu = [
-    {
-      'name': TranslationEN.shoppingList,
-      'goToPage': () => const ShoppingListScreen(),
-    },
-    {
-      'name': TranslationEN.favorites,
-      'goToPage': () => const FavoritesScreen(),
-    },
-  ];
+  // List<Map<String, dynamic>> menu = [
+  //   {
+  //     'name': TranslationEN.shoppingList,
+  //     'goToPage': () => const ShoppingListScreen(),
+  //   },
+  //   {
+  //     'name': TranslationEN.favorites,
+  //     'goToPage': () => const FavoritesScreen(),
+  //   },
+  // ];
 
   HomeScreenViewModel() {
     notifyListeners();

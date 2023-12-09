@@ -2,6 +2,8 @@ import 'package:application/utils/colors.dart';
 import 'package:application/utils/image_src.dart';
 import 'package:application/utils/styles/styles.dart';
 import 'package:application/utils/translation_en.dart';
+import 'package:application/view/screens/favorites_screen.dart';
+import 'package:application/view/screens/shopping_list_screen.dart';
 import 'package:application/view/widgets/auth_image_widget.dart';
 import 'package:application/view/widgets/horizontal_list.dart';
 import 'package:application/view/widgets/savings_card.dart';
@@ -49,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     '${TranslationEN.greet}, ${homeScreenViewModel.userFirstName}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: MediaQuery.of(context).textScaleFactor * 30,
+                      fontSize: MediaQuery.textScaleFactorOf(context) * 30,
                     ),
                   ),
                 ),
@@ -70,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    homeScreenViewModel.menu[0]['goToPage']()),
+                                    const ShoppingListScreen()),
                           );
                         },
                         child: Container(
@@ -82,11 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             elevation: 0.0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
+                            child: const Padding(
+                              padding: EdgeInsets.all(5.0),
                               child: Center(
                                 child: Text(
-                                  homeScreenViewModel.menu[0]['name'],
+                                  TranslationEN.shoppingList,
                                   textAlign: TextAlign.center,
                                   style: Styles.homeScreenButtons,
                                 ),
@@ -104,8 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => homeScreenViewModel
-                                      .menu[1]['goToPage']()),
+                                  builder: (context) =>
+                                      const FavoritesScreen()),
                             );
                           },
                           child: Container(
@@ -117,11 +119,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               elevation: 0.0,
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
+                              child: const Padding(
+                                padding: EdgeInsets.all(5.0),
                                 child: Center(
                                   child: Text(
-                                    homeScreenViewModel.menu[1]['name'],
+                                    TranslationEN.favorites,
                                     textAlign: TextAlign.center,
                                     style: Styles.homeScreenButtons,
                                   ),
