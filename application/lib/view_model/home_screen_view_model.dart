@@ -5,23 +5,11 @@ import 'package:application/model/user_model.dart';
 import 'package:application/service/home_screen_service.dart';
 import 'package:flutter/material.dart';
 import 'package:application/utils/translation_en.dart';
-import 'package:application/view/screens/favorites_screen.dart';
-import 'package:application/view/screens/shopping_list_screen.dart';
 
 class HomeScreenViewModel extends ChangeNotifier {
   final HomeScreenService _homeScreenService = HomeScreenService();
   String userFirstName = TranslationEN.noData;
   List<ProductModel> topViewedProducts = [];
-  // List<Map<String, dynamic>> menu = [
-  //   {
-  //     'name': TranslationEN.shoppingList,
-  //     'goToPage': () => const ShoppingListScreen(),
-  //   },
-  //   {
-  //     'name': TranslationEN.favorites,
-  //     'goToPage': () => const FavoritesScreen(),
-  //   },
-  // ];
 
   HomeScreenViewModel() {
     notifyListeners();
