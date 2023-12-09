@@ -2,13 +2,16 @@ import 'package:application/utils/translation_en.dart';
 import 'package:flutter/material.dart';
 import 'package:application/view/screens/store_search_screen.dart';
 import 'package:application/utils/colors.dart';
-import 'package:application/view_model/add_product_screen_view_model.dart';
 
-class StoreSelectorWidget extends StatelessWidget {
-  final AddProductScreenViewModel addProductScreenViewModel;
+class StoreSelectorField extends StatelessWidget {
+  final Function(String) onStoreSelected;
+  final String storeName;
 
-  const StoreSelectorWidget({Key? key, required this.addProductScreenViewModel})
-      : super(key: key);
+  const StoreSelectorField({
+    Key? key,
+    required this.onStoreSelected,
+    required this.storeName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class StoreSelectorWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                addProductScreenViewModel.storeName,
+                storeName,
                 style: const TextStyle(fontSize: 16.0),
               ),
               const Icon(Icons.keyboard_arrow_right),
@@ -39,7 +42,7 @@ class StoreSelectorWidget extends StatelessWidget {
               ),
             );
             if (newLocation != null && newLocation is String) {
-              addProductScreenViewModel.enteredStoreName = newLocation;
+              onStoreSelected(newLocation);
             }
           },
           tileColor: AppColor.mainColor.withOpacity(0.05),

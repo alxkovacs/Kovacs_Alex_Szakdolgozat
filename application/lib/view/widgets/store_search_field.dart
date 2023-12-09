@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:application/utils/colors.dart';
-import 'package:application/view_model/store_search_screen_view_model.dart';
 import 'package:application/utils/translation_en.dart';
 
 class StoreSearchField extends StatelessWidget {
-  final StoreSearchScreenViewModel storeSearchScreenViewModel;
+  final Function(String) onSearch;
 
-  const StoreSearchField({Key? key, required this.storeSearchScreenViewModel})
-      : super(key: key);
+  const StoreSearchField({Key? key, required this.onSearch}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +13,7 @@ class StoreSearchField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: TextField(
         cursorColor: AppColor.mainColor,
-        onChanged: (value) =>
-            storeSearchScreenViewModel.performSearch(value.toLowerCase()),
+        onChanged: (value) => onSearch(value.toLowerCase()),
         decoration: InputDecoration(
           isDense: true,
           contentPadding: const EdgeInsets.all(0),

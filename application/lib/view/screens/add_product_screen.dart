@@ -21,6 +21,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      final addProductScreenViewModel =
+          Provider.of<AddProductScreenViewModel>(context, listen: false);
+      addProductScreenViewModel.enteredStoreName = TranslationEN.chooseLocation;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final addProductScreenViewModel =
         Provider.of<AddProductScreenViewModel>(context);
@@ -94,9 +104,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             },
                           ),
                         ),
-                        StoreSelectorWidget(
-                            addProductScreenViewModel:
-                                addProductScreenViewModel),
+                        StoreSelectorField(
+                          storeName: addProductScreenViewModel.storeName,
+                          onStoreSelected: (String storeName) {
+                            addProductScreenViewModel.enteredStoreName =
+                                storeName;
+                          },
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 30),
                           child: TextFormField(

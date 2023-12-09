@@ -20,11 +20,6 @@ class _StoreSearchScreenState extends State<StoreSearchScreen> {
         .loadInitialStores();
   }
 
-  String capitalize(String s) {
-    if (s.isEmpty) return s;
-    return s[0].toUpperCase() + s.substring(1);
-  }
-
   @override
   Widget build(BuildContext context) {
     final storeSearchScreenViewModel =
@@ -37,7 +32,8 @@ class _StoreSearchScreenState extends State<StoreSearchScreen> {
       body: Column(
         children: <Widget>[
           StoreSearchField(
-              storeSearchScreenViewModel: storeSearchScreenViewModel),
+            onSearch: storeSearchScreenViewModel.performSearch,
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: storeSearchScreenViewModel.searchResults.isNotEmpty
@@ -47,12 +43,15 @@ class _StoreSearchScreenState extends State<StoreSearchScreen> {
                 if (storeSearchScreenViewModel.searchResults.isEmpty) {
                   return ListTile(
                     title: Text(
-                        capitalize(storeSearchScreenViewModel.lastSearchTerm)),
+                      storeSearchScreenViewModel.capitalize(
+                          storeSearchScreenViewModel.lastSearchTerm),
+                    ),
                     onTap: () {
                       Navigator.pop(
-                          context,
-                          capitalize(
-                              storeSearchScreenViewModel.lastSearchTerm));
+                        context,
+                        storeSearchScreenViewModel.capitalize(
+                            storeSearchScreenViewModel.lastSearchTerm),
+                      );
                       FocusScope.of(context).unfocus();
                     },
                   );

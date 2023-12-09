@@ -8,18 +8,11 @@ class StoreSearchScreenViewModel extends ChangeNotifier {
   String lastSearchTerm = '';
   bool isInitialLoaded = false;
 
-  void resetAndLoadInitialStores() async {
-    lastSearchTerm = '';
-    _storeSearchService.getInitialStores().listen((stores) {
-      searchResults = stores;
-      notifyListeners();
-    });
-  }
-
   void loadInitialStores() {
     if (!isInitialLoaded) {
-      _storeSearchService.getInitialStores().listen((stores) {
-        searchResults = stores;
+      _storeSearchService.getInitialStores().listen((storeDTOs) {
+        searchResults =
+            storeDTOs.map((dto) => StoreModel.fromDTO(dto)).toList();
         notifyListeners();
       });
       isInitialLoaded = true;
@@ -34,7 +27,13 @@ class StoreSearchScreenViewModel extends ChangeNotifier {
       return;
     }
 
-    searchResults = await _storeSearchService.searchStores(query);
+    var storeDTOs = await _storeSearchService.searchStores(query);
+    searchResults = storeDTOs.map((dto) => StoreModel.fromDTO(dto)).toList();
     notifyListeners();
+  }
+
+  String capitalize(String s) {
+    if (s.isEmpty) return s;
+    return s[0].toUpperCase() + s.substring(1);
   }
 }
