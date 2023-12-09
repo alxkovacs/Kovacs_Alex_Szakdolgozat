@@ -34,4 +34,5 @@ class TranslationEN {
   static const String noData = 'N/A';
   static const String greet = 'Hello';
   static const String product = 'Termék';
+  static const String searchBetweenProducts = 'Keresés a termékek között';
 }

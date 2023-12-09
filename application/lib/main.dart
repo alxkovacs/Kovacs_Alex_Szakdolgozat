@@ -8,6 +8,7 @@ import 'package:application/view/screens/start_screen.dart';
 import 'package:application/view_model/base_screen_view_model.dart';
 import 'package:application/view_model/home_screen_view_model.dart';
 import 'package:application/view_model/login_screen_view_model.dart';
+import 'package:application/view_model/products_screen_view_model.dart';
 import 'package:application/view_model/sign_up_screen_view_model.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,6 +37,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => LoginScreenViewModel()),
           ChangeNotifierProvider(create: (_) => BaseScreenViewModel()),
           ChangeNotifierProvider(create: (_) => HomeScreenViewModel()),
+          ChangeNotifierProvider(create: (_) => ProductsScreenViewModel()),
         ],
         child: const MyApp(),
       ),
