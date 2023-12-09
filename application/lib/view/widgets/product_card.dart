@@ -1,8 +1,7 @@
 import 'package:application/model/product_model.dart';
 import 'package:application/utils/styles/styles.dart';
-import 'package:application/view_model/products_screen_view_model.dart';
+import 'package:application/view/screens/product_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel productModel;
@@ -14,9 +13,6 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productsScreenviewModel =
-        Provider.of<ProductsScreenViewModel>(context, listen: false);
-
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
