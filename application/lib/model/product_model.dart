@@ -1,16 +1,18 @@
 import 'package:application/model/product_dto.dart';
 
 class ProductModel {
-  final String id;
-  final String product;
-  final String category;
-  final String emoji;
+  String id;
+  String product;
+  String category;
+  String emoji;
+  int viewCount;
 
   ProductModel({
     required this.id,
     required this.product,
     required this.category,
     required this.emoji,
+    this.viewCount = 0,
   });
 
   factory ProductModel.fromProductDTO(ProductDTO dto) {
@@ -19,6 +21,7 @@ class ProductModel {
       product: dto.name,
       category: dto.category,
       emoji: dto.emoji,
+      viewCount: dto.viewCount,
     );
   }
 
@@ -28,6 +31,7 @@ class ProductModel {
       name: product,
       category: category,
       emoji: emoji,
+      viewCount: viewCount,
     );
   }
 }

@@ -9,6 +9,11 @@ class TranslationEN {
   static const String emailValidator = 'Kérlek egy létező e-mail címet adj meg';
   static const String passwordValidator =
       'A jelszónak legalább 6 karakter hosszúnak kell lennie.';
+  static const String productValidator =
+      'A terméknek legalább 3 karakter hosszúnak kell lennie.';
+  static const String priceValidator = 'Kérlek valós összeget adj meg.';
+  static const String priceIntValidator =
+      'Kérlek csak előjel nélküli egész számokat adj meg.';
   static const String goToLogInScreen =
       'Ha már van fiókja, jelentkezzen be itt.';
   static const String goToSignUpScreen =
@@ -19,6 +24,9 @@ class TranslationEN {
   static const String password = 'Jelszó';
   static const String home = 'Főoldal';
   static const String products = 'Termékek';
+  static const String product = 'Termék';
+  static const String price = 'Ár';
+  static const String category = 'Kategória';
   static const String add = 'Hozzáadás';
   static const String offers = 'Ajánlatok';
   static const String settings = 'Beállítások';
@@ -29,10 +37,17 @@ class TranslationEN {
   static const String mostViewedProducts = 'Legtöbbet megtekintett termékek';
   static const String productsRecommendedForYou = 'Neked ajánlott termékek';
   static const String error = 'Hiba';
+  static const String addProductError =
+      'Hiba történt a termék hozzáadása közben';
   static const String numberOfProducts = 'Termékek száma';
   static const String numberOfStores = 'Üzletek száma';
+  static const String store = 'Üzlet';
   static const String noData = 'N/A';
   static const String greet = 'Hello';
-  static const String product = 'Termék';
   static const String searchBetweenProducts = 'Keresés a termékek között';
+  static const String searchBetweenStores = 'Keresés az üzletek között';
+  static const String chooseLocation = 'Válasszon helyszínt';
+  static const String chooseLocationFirst =
+      'Kérjük, először válasszon üzletet!';
+  static const String chooseCategory = 'Kérjük, válasszon egy kategóriát.';
 }
