@@ -1,25 +1,22 @@
-import 'package:application/model/favorite_model.dart';
+import 'package:application/model/product_model.dart';
 import 'package:application/utils/styles/styles.dart';
 import 'package:application/view/screens/product_screen.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteItemCard extends StatelessWidget {
+  final ProductModel productModel;
+
   const FavoriteItemCard({
     Key? key,
-    required this.favorite,
+    required this.productModel,
   }) : super(key: key);
-
-  final FavoriteModel favorite;
 
   void navigateToDetails(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => ProductScreen(
-          id: favorite.id,
-          product: favorite.name,
-          category: favorite.category,
-          emoji: favorite.emoji,
+          productModel: productModel,
         ),
       ),
     );
@@ -31,11 +28,11 @@ class FavoriteItemCard extends StatelessWidget {
       onTap: () => navigateToDetails(context),
       child: Container(
         margin: const EdgeInsets.only(
-          bottom: 10, // Növeli az utolsó elem alatti térközt
+          bottom: 10,
           right: 10,
           left: 10,
-          top: 10, // Növeli az első elem feletti térközt
-        ), // Térköz a ListTile-ok között
+          top: 10,
+        ),
         decoration: Styles.favoriteProductBoxDecoration,
         child: Card(
           shadowColor: Colors.transparent,
@@ -57,22 +54,21 @@ class FavoriteItemCard extends StatelessWidget {
                 Expanded(
                   child: Center(
                     child: Text(
-                      favorite.emoji,
+                      productModel.emoji,
                       style: const TextStyle(
-                        fontSize:
-                            70.0, // állítsd be a méretet, hogy illeszkedjen a layout-hoz
+                        fontSize: 70.0,
                       ),
                     ),
                   ),
                 ),
                 Text(
-                  favorite.name, // Termék neve
+                  productModel.product,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  favorite.category, // Termék ára
+                  productModel.category,
                 ),
               ],
             ),

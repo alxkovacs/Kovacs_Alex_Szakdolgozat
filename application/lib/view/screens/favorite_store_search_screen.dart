@@ -1,10 +1,10 @@
-import 'package:application/providers/favorite_stores_provider.dart';
 import 'package:application/utils/styles/styles.dart';
 import 'package:application/utils/translation_en.dart';
+import 'package:application/view_model/favorite_store_search_screen_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
-class FavoriteStoreSearchScreen extends ConsumerStatefulWidget {
+class FavoriteStoreSearchScreen extends StatefulWidget {
   const FavoriteStoreSearchScreen({super.key});
 
   @override
@@ -12,18 +12,20 @@ class FavoriteStoreSearchScreen extends ConsumerStatefulWidget {
       _FavoriteStoreSearchScreenState();
 }
 
-class _FavoriteStoreSearchScreenState
-    extends ConsumerState<FavoriteStoreSearchScreen> {
+class _FavoriteStoreSearchScreenState extends State<FavoriteStoreSearchScreen> {
   @override
   void initState() {
     super.initState();
-    // Kezdeti adatok betöltése
-    ref.read(favoriteStoresProvider.notifier).loadInitialStoresAsync();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<FavoriteStoreScreenViewModel>(context, listen: false)
+          .loadInitialStoresAsync();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ref.watch(favoriteStoresProvider);
+    final favoriteStoreSearchScreenviewModel =
+        Provider.of<FavoriteStoreScreenViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,36 +36,40 @@ class _FavoriteStoreSearchScreenState
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: TextField(
-              onChanged: (value) =>
-                  viewModel.performSearch(value.toLowerCase()),
+              onChanged: (value) => favoriteStoreSearchScreenviewModel
+                  .performSearch(value.toLowerCase()),
               decoration: Styles.storeSearchDecoration,
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: viewModel.searchResults.isNotEmpty
-                  ? viewModel.searchResults.length
-                  : 1,
+              itemCount:
+                  favoriteStoreSearchScreenviewModel.searchResults.isNotEmpty
+                      ? favoriteStoreSearchScreenviewModel.searchResults.length
+                      : 1,
               itemBuilder: (context, index) {
-                if (viewModel.searchResults.isEmpty) {
+                if (favoriteStoreSearchScreenviewModel.searchResults.isEmpty) {
                   return const ListTile(
                     title: Text(TranslationEN.storeNotFound),
                   );
                 }
 
-                final storeMap = viewModel.searchResults[index];
-                final storeId = storeMap['id']!;
-                final isFavorited = viewModel.favoriteStores
-                    .contains(storeId); // Mindig frissítsd ezt
+                final storeMap =
+                    favoriteStoreSearchScreenviewModel.searchResults[index];
+                final storeId = storeMap.id;
+                final isFavorited = favoriteStoreSearchScreenviewModel
+                    .favoriteStores
+                    .contains(storeId);
 
                 return ListTile(
-                  title: Text(storeMap['name']!),
+                  title: Text(storeMap.name),
                   trailing: IconButton(
                     icon: Icon(
                       isFavorited ? Icons.favorite : Icons.favorite_border,
                       color: isFavorited ? Colors.red : null,
                     ),
-                    onPressed: () => viewModel.toggleFavoriteStatus(storeId),
+                    onPressed: () => favoriteStoreSearchScreenviewModel
+                        .toggleFavoriteStatus(storeId),
                   ),
                 );
               },
