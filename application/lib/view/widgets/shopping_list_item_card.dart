@@ -1,20 +1,15 @@
+import 'package:application/model/product_model.dart';
 import 'package:application/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class ShoppingListItemCard extends StatelessWidget {
-  final String id;
-  final String name;
-  final String categoryName;
-  final String emoji;
-  final VoidCallback onRemove; // Hozzáadunk egy új paramétert
+  final ProductModel productModel;
+  final VoidCallback onRemove;
 
   const ShoppingListItemCard({
     Key? key,
-    required this.id,
-    required this.name,
-    required this.categoryName,
-    required this.emoji,
-    required this.onRemove, // Kötelező paraméterként kezeljük
+    required this.productModel,
+    required this.onRemove,
   }) : super(key: key);
 
   @override
@@ -25,41 +20,39 @@ class ShoppingListItemCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       child: ListTile(
         leading: Container(
-          padding:
-              const EdgeInsets.all(11), // A padding beállítása az emoji körül.
+          padding: const EdgeInsets.all(11),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.white, // Zöld háttér beállítása.
-            shape: BoxShape.rectangle, // Kerek forma a konténernek.
+            color: Colors.white,
+            shape: BoxShape.rectangle,
             boxShadow: [
               BoxShadow(
                 color: AppColor.mainColor.withOpacity(0.5),
                 blurRadius: 10.0,
                 spreadRadius: 1.0,
-              ), //BoxShadow
+              ),
               const BoxShadow(
                 color: Colors.white,
                 offset: Offset(0.0, 0.0),
                 blurRadius: 0.0,
                 spreadRadius: 0.0,
-              ), //BoxShadow
+              ),
             ],
           ),
           child: Text(
-            emoji, // Itt helyezze el az emojit.
-            style: const TextStyle(fontSize: 24), // Emoji méretének beállítása.
+            productModel.emoji,
+            style: const TextStyle(fontSize: 24),
           ),
         ),
-        contentPadding: const EdgeInsets.symmetric(
-            horizontal: 25.0), // Állítsd be a ListTile paddingját
+        contentPadding: const EdgeInsets.symmetric(horizontal: 25.0),
         title: Text(
           maxLines: 1,
-          overflow: TextOverflow.ellipsis, // Több sor esetén pontokkal zárul
-          name,
+          overflow: TextOverflow.ellipsis,
+          productModel.product,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
         ),
         subtitle: Text(
-          categoryName,
+          productModel.category,
           style: const TextStyle(
               fontSize: 13, fontWeight: FontWeight.w500, color: Colors.black54),
         ),
@@ -68,7 +61,7 @@ class ShoppingListItemCard extends StatelessWidget {
             Icons.close,
             size: 30,
           ),
-          onPressed: onRemove, // Itt adjuk hozzá az eseménykezelőt
+          onPressed: onRemove,
         ),
       ),
     );

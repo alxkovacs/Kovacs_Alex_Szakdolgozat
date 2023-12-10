@@ -40,12 +40,11 @@ class TranslationEN {
   static const String shoppingList = 'Bevásárlólista';
   static const String favoriteStores = 'Kedvenc áruház(ak)';
   static const String cheapestStore = 'Legolcsóbb áruház';
-  static const String noData = 'Nincs adat';
   static const String noStoreAvailable = 'Nincs elérhető áruház';
   static const String noStoreEveryProductAvailable =
       'Nincs áruház, ahol minden termék elérhető';
   static const String noAdditionalData = 'Nincsenek további adatok';
-  static const String emptyShoppingList = 'Üres bevásárlólista';
+  static const String emptyShoppingList = 'Üres bevásárlólista!';
   static const String addToShoppingList = 'Add a bevásárlólistához';
   static const String description = 'Leírás';
   static const String favorites = 'Kedvencek';
