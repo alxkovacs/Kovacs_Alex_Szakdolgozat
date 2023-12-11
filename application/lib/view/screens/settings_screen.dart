@@ -1,5 +1,6 @@
 import 'package:application/utils/colors.dart';
 import 'package:application/utils/translation_en.dart';
+import 'package:application/view_model/base_screen_view_model.dart';
 import 'package:application/view_model/settings_screen_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
