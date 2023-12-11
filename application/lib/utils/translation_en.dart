@@ -88,4 +88,7 @@ class TranslationEN {
   static const String noOffersAvailable = 'Nincs elérhető ajánlat!';
   static const String priceAdded = 'Ár sikeresen hozzáadva!';
   static const String noPricesAvailable = 'Nincs elérhető ár!';
+  static const String manageAccount = 'Felhasználó kezelése';
+  static const String profile = 'Profil';
+  static const String signOut = 'Kijelentkezés';
 }

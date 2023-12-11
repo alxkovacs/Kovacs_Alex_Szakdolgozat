@@ -1,4 +1,5 @@
 import 'package:application/utils/roots.dart';
+import 'package:application/utils/translation_en.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text(TranslationEN.profile),
         actions: [
           IconButton(
             onPressed: () {
@@ -22,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
       body: const Center(
-        child: Text('Profile Screen'),
+        child: Text(TranslationEN.profile),
       ),
     );
   }
