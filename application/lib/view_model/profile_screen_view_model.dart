@@ -1,17 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:application/service/profile_screen_service.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreenViewModel extends ChangeNotifier {
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  User? user = FirebaseAuth.instance.currentUser;
+  final ProfileScreenService _service = ProfileScreenService();
   String firstName = '';
   bool isLoading = false;
 
   ProfileScreenViewModel() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      this.user = user;
+    _service.authStateChanges().listen((user) {
       if (user != null) {
         loadUserData();
       }
@@ -19,25 +15,27 @@ class ProfileScreenViewModel extends ChangeNotifier {
   }
 
   Future<void> loadUserData() async {
-    if (user != null) {
-      // Adatlekérés Firestore-ból
-      DocumentSnapshot userData =
-          await _firestore.collection('users').doc(user!.uid).get();
-      firstName = userData['firstname'];
-      notifyListeners();
+    isLoading = true;
+    notifyListeners();
+
+    var userData = await _service.getUserData(_service.currentUser!.uid);
+    if (userData != null) {
+      firstName = userData['firstname'] ?? '';
     }
+
+    isLoading = false;
+    notifyListeners();
   }
 
   Future<void> updateFirstName(String newFirstName) async {
     if (newFirstName.length >= 3) {
       isLoading = true;
       notifyListeners();
-      // Adatfrissítés Firestore-ban
-      await _firestore
-          .collection('users')
-          .doc(user!.uid)
-          .update({'firstname': newFirstName});
+
+      await _service.updateUserData(
+          _service.currentUser!.uid, {'firstname': newFirstName});
       firstName = newFirstName;
+
       isLoading = false;
       notifyListeners();
     }
