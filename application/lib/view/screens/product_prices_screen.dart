@@ -1,11 +1,11 @@
-import 'package:application/providers/product_prices_view_model_provider.dart';
+import 'package:application/view_model/product_prices_screen_view_model.dart';
 import 'package:application/utils/translation_en.dart';
 import 'package:application/view/widgets/custom_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-class ProductPricesScreen extends ConsumerStatefulWidget {
+class ProductPricesScreen extends StatefulWidget {
   final String productId;
   final String storeId;
   final String storeName;
@@ -18,24 +18,24 @@ class ProductPricesScreen extends ConsumerStatefulWidget {
   }) : super(key: key);
 
   @override
-  ConsumerState<ProductPricesScreen> createState() =>
-      _ProductPricesScreenState();
+  _ProductPricesScreenState createState() => _ProductPricesScreenState();
 }
 
-class _ProductPricesScreenState extends ConsumerState<ProductPricesScreen> {
+class _ProductPricesScreenState extends State<ProductPricesScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => ref.read(productPricesViewModelProvider.notifier).fetchPrices(
-              widget.productId,
-              widget.storeId,
-            ));
+    Future.microtask(() =>
+        Provider.of<ProductPricesScreenViewModel>(context, listen: false)
+            .fetchPrices(
+          widget.productId,
+          widget.storeId,
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = ref.watch(productPricesViewModelProvider);
+    final viewModel = Provider.of<ProductPricesScreenViewModel>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,

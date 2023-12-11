@@ -86,4 +86,6 @@ class TranslationEN {
       'Kérjük, először válasszon üzletet!';
   static const String chooseCategory = 'Kérjük, válasszon egy kategóriát.';
   static const String noOffersAvailable = 'Nincs elérhető ajánlat!';
+  static const String priceAdded = 'Ár sikeresen hozzáadva!';
+  static const String noPricesAvailable = 'Nincs elérhető ár!';
 }

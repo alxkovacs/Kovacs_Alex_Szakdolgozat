@@ -1,5 +1,4 @@
-import 'package:application/model/price_and_store_model.dart';
-import 'package:application/providers/product_view_model_provider.dart';
+import 'package:application/model/product_model.dart';
 import 'package:application/utils/colors.dart';
 import 'package:application/utils/translation_en.dart';
 import 'package:application/view/screens/store_search_screen.dart';
@@ -10,58 +9,52 @@ import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view_model/product_screen_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
-class ProductScreen extends ConsumerStatefulWidget {
-  final String id;
-  final String product;
-  final String category;
-  final String emoji;
+class ProductScreen extends StatefulWidget {
+  final ProductModel productModel;
 
   const ProductScreen({
-    super.key,
-    required this.id,
-    required this.product,
-    required this.category,
-    required this.emoji,
-  });
+    Key? key,
+    required this.productModel,
+  }) : super(key: key);
 
   @override
-  ConsumerState<ProductScreen> createState() => _ProductScreenState();
+  _ProductScreenState createState() => _ProductScreenState();
 }
 
-class _ProductScreenState extends ConsumerState<ProductScreen>
+class _ProductScreenState extends State<ProductScreen>
     with SingleTickerProviderStateMixin {
   final _form = GlobalKey<FormState>();
   late TabController _tabController;
 
   int _enteredPrice = 0;
-  String selectedLocation =
-      ''; // Egy kezdeti érték, ami látható lesz.; // Kezdeti érték
+  String _selectedLocation = '';
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    final viewModel = ref.read(productViewModelProvider);
-    viewModel.onProductAddedToShoppingList = (message) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(message)));
-    };
-    viewModel.incrementProductViewCount(widget.id);
-    viewModel.checkFavoriteStatus(
-        widget.id, FirebaseAuth.instance.currentUser?.uid);
+
+    final viewModel =
+        Provider.of<ProductScreenViewModel>(context, listen: false);
+    Future.delayed(Duration.zero, () async {
+      viewModel.incrementViewCount(widget.productModel.id);
+      viewModel.checkFavoriteStatus(
+          widget.productModel.id, FirebaseAuth.instance.currentUser!.uid);
+      viewModel.fetchPrices(widget.productModel.id);
+    });
   }
 
   void updateLocation(String newLocation) {
     setState(() {
-      selectedLocation = newLocation;
+      _selectedLocation = newLocation;
     });
   }
 
   void resetSelectedLocation() {
     setState(() {
-      selectedLocation = TranslationEN.chooseLocation;
+      _selectedLocation = TranslationEN.chooseLocation;
     });
   }
 
@@ -71,11 +64,127 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
     super.dispose();
   }
 
+  Widget _buildAddPriceTab(ProductScreenViewModel viewModel) {
+    return Center(
+      child: viewModel.isLoading
+          ? const CustomCircularProgressIndicator()
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Form(
+                  key: _form,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: ListTile(
+                            title: const Text(
+                              TranslationEN.store,
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            contentPadding:
+                                const EdgeInsets.only(left: 15.0, right: 5.0),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  _selectedLocation,
+                                  style: const TextStyle(fontSize: 16.0),
+                                ),
+                                const Icon(Icons.keyboard_arrow_right),
+                              ],
+                            ),
+                            onTap: () async {
+                              final newLocation =
+                                  await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const StoreSearchScreen(),
+                                ),
+                              );
+                              if (newLocation != null) {
+                                updateLocation(newLocation);
+                              }
+                            },
+                            tileColor: AppColor.mainColor.withOpacity(0.05),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: const BorderSide(color: AppColor.mainColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 30),
+                        child: TextFormField(
+                          decoration: AuthInputDecoration(
+                            labelText: TranslationEN.price,
+                            iconData: Icons.attach_money,
+                          ),
+                          autocorrect: true,
+                          keyboardType: TextInputType.number,
+                          textCapitalization: TextCapitalization.none,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return TranslationEN.addPriceValidator;
+                            }
+                            if (int.tryParse(value.trim()) == null) {
+                              return TranslationEN.priceIntValidator;
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            _enteredPrice = int.parse(value!.trim());
+                          },
+                        ),
+                      ),
+                      CustomElevatedButton(
+                        onPressed: () async {
+                          if (_form.currentState!.validate()) {
+                            _form.currentState!.save();
+                            bool result = await viewModel.addPrice(
+                              widget.productModel.id,
+                              _selectedLocation,
+                              _enteredPrice,
+                            );
+                            if (result) {
+                              resetSelectedLocation();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(TranslationEN.priceAdded),
+                                ),
+                              );
+                              if (mounted) {
+                                _tabController.animateTo(0);
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('${TranslationEN.addPriceError}'),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                        text: TranslationEN.add,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final viewModel = ref.watch(productViewModelProvider);
-    AsyncValue<List<PriceAndStoreModel>> priceAndStore =
-        ref.watch(priceAndStoreProvider(widget.id));
+    final viewModel = Provider.of<ProductScreenViewModel>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -90,7 +199,7 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
               color: viewModel.isFavorite ? Colors.red : Colors.black,
             ),
             onPressed: () => viewModel.toggleFavorite(
-                widget.id, FirebaseAuth.instance.currentUser?.uid),
+                widget.productModel.id, FirebaseAuth.instance.currentUser!.uid),
           ),
         ],
       ),
@@ -98,12 +207,12 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 40),
+            padding: const EdgeInsets.symmetric(vertical: 50),
             child: Center(
-              child: Text(widget.emoji, style: const TextStyle(fontSize: 125)),
+              child: Text(widget.productModel.emoji,
+                  style: const TextStyle(fontSize: 125)),
             ),
           ),
-          const SizedBox(height: 15),
           Expanded(
             child: Container(
               decoration: const BoxDecoration(
@@ -122,19 +231,16 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            widget.product,
+                            widget.productModel.product,
                             style: const TextStyle(
                                 fontSize: 26, fontWeight: FontWeight.bold),
                           ),
                         ),
                         IconButton(
-                          icon: const Icon(
-                            Icons.shopping_cart_outlined,
-                            size: 45,
-                            color: Colors.black,
-                          ),
+                          icon: const Icon(Icons.shopping_cart_outlined,
+                              size: 45, color: Colors.black),
                           onPressed: () => viewModel.addProductToShoppingList(
-                              widget.id,
+                              widget.productModel.id,
                               FirebaseAuth.instance.currentUser!.uid),
                         ),
                       ],
@@ -142,11 +248,11 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 25, vertical: 0),
+                        const EdgeInsets.only(left: 25, right: 25, bottom: 30),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        widget.category,
+                        widget.productModel.category,
                         style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -154,8 +260,8 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
                   TabBar(
+                    controller: _tabController,
                     dividerColor: AppColor.mainColor.withOpacity(0.5),
                     unselectedLabelColor: Colors.black,
                     indicatorSize: TabBarIndicatorSize.tab,
@@ -165,7 +271,6 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
                         fontSize: 16, fontWeight: FontWeight.w500),
                     labelStyle: const TextStyle(
                         fontSize: 17, fontWeight: FontWeight.bold),
-                    controller: _tabController,
                     tabs: const [
                       Tab(text: TranslationEN.bestOffers),
                       Tab(text: TranslationEN.addPrice),
@@ -175,206 +280,13 @@ class _ProductScreenState extends ConsumerState<ProductScreen>
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        BestOffersTab(
-                            priceAndStore: priceAndStore, productId: widget.id),
-                        Center(
-                          child: viewModel.isLoading
-                              ? const CustomCircularProgressIndicator()
-                              : SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(20),
-                                        child: Form(
-                                          key: _form,
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Material(
-                                                color: Colors.transparent,
-                                                child: ListTile(
-                                                  title: const Text(
-                                                    TranslationEN.store,
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                  contentPadding:
-                                                      const EdgeInsets.only(
-                                                    left: 15.0,
-                                                    right:
-                                                        5.0, // Csökkentett jobb oldali padding
-                                                  ),
-                                                  trailing: Row(
-                                                    mainAxisSize: MainAxisSize
-                                                        .min, // Ez szükséges, hogy a Row ne foglaljon el túl sok helyet
-                                                    children: [
-                                                      Text(
-                                                        selectedLocation, // A kiválasztott helyszín megjelenítése
-                                                        style: const TextStyle(
-                                                          fontSize:
-                                                              16.0, // Állítsd be a kívánt betűméretet
-                                                        ),
-                                                      ),
-                                                      const Icon(Icons
-                                                          .keyboard_arrow_right),
-                                                    ],
-                                                  ),
-                                                  onTap: () async {
-                                                    final newLocation =
-                                                        await Navigator.of(
-                                                                context)
-                                                            .push(
-                                                      MaterialPageRoute(
-                                                        // A keresés oldalán valószínűleg valamilyen visszatérési értéket adunk át
-                                                        builder: (context) =>
-                                                            const StoreSearchScreen(),
-                                                      ),
-                                                    );
-                                                    if (newLocation != null) {
-                                                      updateLocation(
-                                                          newLocation); // Frissítjük a kiválasztott helyszínt
-                                                    }
-                                                  },
-                                                  tileColor: AppColor.mainColor
-                                                      .withOpacity(
-                                                          0.05), // Háttérszín beállítása
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    side: const BorderSide(
-                                                      color: AppColor.mainColor,
-                                                    ),
-                                                  ), // Border beállítása hasonlóan az AuthInputDecoration-höz
-                                                ),
-                                              ),
-                                              // ... További widget-ek, mint például gombok
-                                              const SizedBox(height: 15),
-                                              TextFormField(
-                                                decoration: AuthInputDecoration(
-                                                  labelText:
-                                                      TranslationEN.price,
-                                                  iconData: Icons.attach_money,
-                                                ),
-                                                autocorrect: true,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                textCapitalization:
-                                                    TextCapitalization.none,
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.trim().isEmpty) {
-                                                    return TranslationEN
-                                                        .addPriceValidator;
-                                                  }
-                                                  if (int.tryParse(
-                                                          value.trim()) ==
-                                                      null) {
-                                                    // Ellenőrzi, hogy az érték konvertálható-e int-té
-                                                    return TranslationEN
-                                                        .priceIntValidator;
-                                                  }
-
-                                                  return null;
-                                                },
-                                                onSaved: (value) {
-                                                  _enteredPrice =
-                                                      int.parse(value!.trim());
-                                                },
-                                              ),
-                                              const SizedBox(height: 30),
-                                              CustomElevatedButton(
-                                                onPressed: () async {
-                                                  ScaffoldMessenger.of(context)
-                                                      .clearSnackBars();
-
-                                                  if (selectedLocation ==
-                                                          TranslationEN
-                                                              .chooseLocation ||
-                                                      selectedLocation
-                                                          .isEmpty) {
-                                                    // Ha igen, megjelenítünk egy Snackbar üzenetet, ami jelzi, hogy először üzletet kell választani
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      const SnackBar(
-                                                        content: Text(
-                                                          TranslationEN
-                                                              .chooseLocationFirst,
-                                                        ),
-                                                        backgroundColor: Colors
-                                                            .red, // opcionális: piros háttér a figyelemfelkeltéshez
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    // Ellenkező esetben folytatjuk az űrlap ellenőrzését
-                                                    if (_form.currentState!
-                                                        .validate()) {
-                                                      _form.currentState!
-                                                          .save();
-
-                                                      // Itt folytatódik az adatok feldolgozása...
-                                                      if (_form.currentState!
-                                                          .validate()) {
-                                                        _form.currentState!
-                                                            .save();
-
-                                                        // Adatok megszerzése az űrlapból
-
-                                                        String storeName =
-                                                            selectedLocation; // A store nevét az űrlapból kell kiszedni
-                                                        int price =
-                                                            _enteredPrice; // Már int-ként van tárolva
-
-                                                        try {
-                                                          // Termék hozzáadása vagy frissítése az adatbázisban
-                                                          await viewModel
-                                                              .addPriceWithTimestamp(
-                                                            widget.id,
-                                                            storeName,
-                                                            price, // Átadjuk az int-ként tárolt árat
-                                                          );
-                                                          resetSelectedLocation(); // Az új függvény hívása, hogy visszaállítsuk az értéket
-
-                                                          // Sikeres hozzáadás esetén visszanavigálunk
-                                                          if (mounted) {
-                                                            _tabController
-                                                                .animateTo(0);
-                                                          }
-                                                        } catch (e) {
-                                                          // Hiba esetén megjelenítünk egy Snackbar üzenetet
-                                                          if (mounted) {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .clearSnackBars();
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                              SnackBar(
-                                                                content: Text(
-                                                                    '${TranslationEN.addPriceError}: $e'),
-                                                              ),
-                                                            );
-                                                          }
-                                                        } finally {
-                                                          // Végül frissítjük az _isLoading állapotot függetlenül a sikertől
-                                                        }
-                                                      }
-                                                    }
-                                                  }
-                                                },
-                                                text: TranslationEN.add,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                        ),
+                        viewModel.isDataLoaded
+                            ? BestOffersTab(
+                                priceAndStoreList: viewModel.prices,
+                                productId: widget.productModel.id,
+                                isLoading: viewModel.isLoading)
+                            : const CustomCircularProgressIndicator(),
+                        _buildAddPriceTab(viewModel),
                       ],
                     ),
                   ),

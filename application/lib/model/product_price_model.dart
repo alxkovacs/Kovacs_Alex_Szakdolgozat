@@ -8,7 +8,6 @@ class ProductPriceModel {
   ProductPriceModel(
       {required this.productId, required this.price, required this.timestamp});
 
-  // Firestore dokumentumból történő létrehozás
   factory ProductPriceModel.fromFirestore(Map<String, dynamic> firestoreData) {
     return ProductPriceModel(
       productId: firestoreData['productId'],

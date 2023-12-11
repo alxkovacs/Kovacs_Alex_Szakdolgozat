@@ -1,35 +1,32 @@
-import 'package:application/model/product_price_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:application/model/product_price_model.dart';
+import 'package:application/service/product_prices_screen_service.dart';
 
 class ProductPricesScreenViewModel extends ChangeNotifier {
+  final ProductPricesScreenService _service = ProductPricesScreenService();
   List<ProductPriceModel> prices = [];
-  bool isLoading = true; // Betöltési állapot kezdeti értéke
-  bool hasError = false; // Hibakezelés alapállapota
-  String errorMessage = ''; // Hibakezeléshez szükséges üzenet
+  bool isLoading = true;
+  bool hasError = false;
+  String errorMessage = '';
 
-  Future<void> fetchPrices(String productId, String storeId) async {
-    try {
-      isLoading = true;
-      notifyListeners(); // Fontos, hogy azonnal értesítse a hallgatókat
+  void fetchPrices(String productId, String storeId) {
+    isLoading = true;
+    hasError = false;
+    errorMessage = '';
+    notifyListeners();
 
-      var snapshot = await FirebaseFirestore.instance
-          .collection('productPrices')
-          .where('productId', isEqualTo: productId)
-          .where('storeId', isEqualTo: storeId)
-          .get();
-
-      prices = snapshot.docs
-          .map((doc) => ProductPriceModel.fromFirestore(
-              doc.data() as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      hasError = true;
-      errorMessage = e.toString();
-      notifyListeners(); // Frissítse a felületet a hiba állapotával
-    } finally {
-      isLoading = false;
-      notifyListeners(); // Biztosítja, hogy a betöltési állapot frissüljön
-    }
+    _service.fetchPrices(productId, storeId).listen(
+      (priceList) {
+        prices = priceList;
+        isLoading = false;
+        notifyListeners();
+      },
+      onError: (error) {
+        hasError = true;
+        errorMessage = error.toString();
+        isLoading = false;
+        notifyListeners();
+      },
+    );
   }
 }
