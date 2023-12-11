@@ -8,30 +8,19 @@
 
 Ez a projekt az MVVM (Model-View-ViewModel) architektúrát használja. Az alábbiakban bemutatom a projekt szerkezetét és annak főbb részeit.
 
-- [`lib/`](./lib/)
-  - [`models/`](./lib/models/) - Az alkalmazás adatmodelljeit tartalmazó mappa.
-    - [`user.dart`](./lib/models/user.dart)
-    - [`post.dart`](./lib/models/post.dart)
-    - ... (további modellek)
-  - [`views/`](./lib/views/) - A felhasználói felület különböző oldalait tartalmazó mappa.
-    - [`login_page.dart`](./lib/views/login_page.dart)
-    - [`home_page.dart`](./lib/views/home_page.dart)
-    - ... (további nézetek)
-  - [`viewmodels/`](./lib/viewmodels/) - Az üzleti logikát kezelő osztályokat tartalmazó mappa.
-    - [`login_viewmodel.dart`](./lib/viewmodels/login_viewmodel.dart)
-    - [`home_viewmodel.dart`](./lib/viewmodels/home_viewmodel.dart)
-    - ... (további viewmodellek)
-  - [`services/`](./lib/services/) - Szolgáltatások, mint az API hozzáférés vagy hitelesítés.
-    - [`api_service.dart`](./lib/services/api_service.dart)
-    - ... (további szolgáltatások)
-  - [`utils/`](./lib/utils/) - Segédfunkciók és konstansok.
-    - [`constants.dart`](./lib/utils/constants.dart)
-    - ... (további eszközök)
+- [`lib/`](application/lib/)
+  - [`model/`](application/lib/model/) - Az alkalmazás adatmodelljeit tartalmazó mappa.
+  - [`view/`](application/lib/view/) - A felhasználói felület különböző oldalait tartalmazó mappa.
+    - [`screens/`](application/lib/view/screens/)
+    - [`widgets/`](application/lib/view/widgets/)
+  - [`view_model/`](application/lib/view_model/) - Az üzleti logikát kezelő osztályokat tartalmazó mappa.
+  - [`service/`](application/lib/service/) - Szolgáltatások, mint az API hozzáférés vagy hitelesítés.
+  - [`utils/`](application/lib/utils/) - Segédfunkciók és konstansok.
+    - [`styles/`](application/lib/utils/styles/)
 
 
 ## Adatbázis tervek
 - [`database/`](./database/) - Az adatbázis terveket tartalmazó mappa.
-  - [`Kovacs_Alex_Szakdolgozat_Adatbazis_Dokumentacio.pdf`](./database/Kovacs_Alex_Szakdolgozat_Adatbazis_Dokumentacio.pdf) - Teljes adatbázis dokumentáció(EK diagram, Leképezés adatbázissémákra, Normalizálás(1NF, 2NF, 3NF), Tábla tervek).
   - [`Kovacs_Alex_Szakdolgozat_Adatbazis_Oldal.pdf`](./database/Kovacs_Alex_Szakdolgozat_Oldal.png) - Elkészült EK diagram.
 
 
@@ -46,4 +35,3 @@ Ez a projekt az MVVM (Model-View-ViewModel) architektúrát használja. Az aláb
 2. Klónozd le a repót: `git clone [repo_url]`.
 3. Futtasd a `flutter pub get` parancsot a projekt gyökérkönyvtárában.
 4. Indítsd el a projektet a `flutter run` parancs segítségével.
-
