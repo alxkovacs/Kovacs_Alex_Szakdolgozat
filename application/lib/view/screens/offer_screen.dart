@@ -33,7 +33,6 @@ class _OfferScreenState extends State<OfferScreen>
     Future.microtask(() {
       final offerScreenViewModel =
           Provider.of<OfferScreenViewModel>(context, listen: false);
-      offerScreenViewModel.isLoading = true;
       offerScreenViewModel.fetchData(
           widget.offerModel.id, widget.offerModel.storeId);
     });
