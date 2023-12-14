@@ -1,6 +1,7 @@
 import 'package:application/model/offer_model.dart';
 import 'package:application/utils/colors.dart';
 import 'package:application/utils/translation_en.dart';
+import 'package:application/view/widgets/custom_circular_progress_indicator.dart';
 import 'package:application/view/widgets/description_tab.dart';
 import 'package:application/view/widgets/products_list.dart';
 import 'package:application/view/widgets/store_name.dart';
@@ -29,17 +30,25 @@ class _OfferScreenState extends State<OfferScreen>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
 
-    Future.microtask(
-      () => Provider.of<OfferScreenViewModel>(context, listen: false).fetchData(
-        widget.offerModel.id,
-        widget.offerModel.storeId,
-      ),
-    );
+    Future.microtask(() {
+      final offerScreenViewModel =
+          Provider.of<OfferScreenViewModel>(context, listen: false);
+      offerScreenViewModel.isLoading =
+          true; // Beállítjuk a töltés állapotát true-ra
+      offerScreenViewModel.fetchData(
+          widget.offerModel.id, widget.offerModel.storeId);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final offerScreenViewModel = Provider.of<OfferScreenViewModel>(context);
+
+    if (offerScreenViewModel.isLoading) {
+      return const Scaffold(
+          backgroundColor: Color.fromRGBO(208, 229, 236, 1.0),
+          body: CustomCircularProgressIndicator());
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
