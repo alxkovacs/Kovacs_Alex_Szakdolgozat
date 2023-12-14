@@ -12,8 +12,8 @@ class OfferScreenViewModel extends ChangeNotifier {
 
   void fetchData(String offerId, String storeId) async {
     isLoading = true;
-    storeName = ''; // Alaphelyzetbe állítás
-    products = []; // Alaphelyzetbe állítás
+    storeName = '';
+    products = [];
     notifyListeners();
 
     await fetchStoreName(storeId);
@@ -26,7 +26,6 @@ class OfferScreenViewModel extends ChangeNotifier {
 
   Future<void> fetchStoreName(String storeId) async {
     storeName = await _offerService.fetchStoreName(storeId);
-    // notifyListeners();
   }
 
   Future<void> fetchOfferProducts(String offerId) async {
@@ -34,11 +33,9 @@ class OfferScreenViewModel extends ChangeNotifier {
         await _offerService.fetchOfferProducts(offerId);
     products =
         productDTOs.map((dto) => ProductModel.fromProductDTO(dto)).toList();
-    // notifyListeners();
   }
 
   Future<void> incrementOfferViewCount(String offerId) async {
     await _offerService.incrementOfferViewCount(offerId);
-    // notifyListeners();
   }
 }
