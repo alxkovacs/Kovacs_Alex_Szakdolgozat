@@ -7,6 +7,8 @@ import 'package:application/view/screens/sign_up_screen.dart';
 import 'package:application/view/screens/start_screen.dart';
 import 'package:application/view_model/add_product_screen_view_model.dart';
 import 'package:application/view_model/base_screen_view_model.dart';
+import 'package:application/view_model/favorite_store_search_screen_view_model.dart';
+import 'package:application/view_model/favorites_screen_view_model.dart';
 import 'package:application/view_model/home_screen_view_model.dart';
 import 'package:application/view_model/login_screen_view_model.dart';
 import 'package:application/view_model/offer_screen_view_model.dart';
@@ -46,6 +48,8 @@ void main() async {
           ChangeNotifierProvider(create: (_) => StoreSearchScreenViewModel()),
           ChangeNotifierProvider(create: (_) => OffersScreenViewModel()),
           ChangeNotifierProvider(create: (_) => OfferScreenViewModel()),
+          ChangeNotifierProvider(create: (_) => FavoritesScreenViewModel()),
+          ChangeNotifierProvider(create: (_) => FavoriteStoreScreenViewModel()),
         ],
         child: const MyApp(),
       ),
