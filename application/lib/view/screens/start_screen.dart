@@ -1,5 +1,4 @@
 import 'package:application/utils/image_src.dart';
-import 'package:application/utils/styles/styles.dart';
 import 'package:application/utils/translation_en.dart';
 import 'package:application/view/widgets/custom_elevated_button.dart';
 import 'package:application/view_model/start_screen_view_model.dart';
@@ -18,31 +17,37 @@ class StartScreen extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset(
-              ImageSrc.startScreenImage,
-              fit: BoxFit.cover,
+              ImageSrc.homeScreenSquareImage,
+              fit: BoxFit.contain,
             ),
           ),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 300),
-                  child: Text(
-                    TranslationEN.applicationName,
-                    style: Styles.headerStyle,
-                  ),
-                ),
                 Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: CustomElevatedButton(
-                    onPressed: () {
-                      viewModel.goToNextScreen(context);
+                  padding:
+                      const EdgeInsets.only(left: 40, right: 40, bottom: 50),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      double buttonWidth =
+                          constraints.maxWidth > 600 ? 500 : double.infinity;
+
+                      return Align(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          width: buttonWidth,
+                          child: CustomElevatedButton(
+                            onPressed: () {
+                              viewModel.goToNextScreen(context);
+                            },
+                            text: TranslationEN.continueButton,
+                          ),
+                        ),
+                      );
                     },
-                    text: TranslationEN.continueButton,
                   ),
                 ),
-                const SizedBox(height: 20)
               ],
             ),
           ),
