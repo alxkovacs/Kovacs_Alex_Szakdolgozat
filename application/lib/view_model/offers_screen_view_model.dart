@@ -10,17 +10,18 @@ class OffersScreenViewModel extends ChangeNotifier {
   void fetchData() {
     loadMostViewedOffers();
     loadOffers();
+    notifyListeners();
   }
 
   Future<void> loadMostViewedOffers() async {
-    final offerDTOs = await _offerService.fetchOffers(orderByViewCount: true);
+    final offerDTOs =
+        await _offerService.fetchOffers(isOrderRequiredByViewCount: true);
     mostViewedOffers = offerDTOs.map((dto) => OfferModel.fromDTO(dto)).toList();
-    notifyListeners();
   }
 
   Future<void> loadOffers() async {
-    final offerDTOs = await _offerService.fetchOffers(orderByViewCount: false);
+    final offerDTOs =
+        await _offerService.fetchOffers(isOrderRequiredByViewCount: false);
     offers = offerDTOs.map((dto) => OfferModel.fromDTO(dto)).toList();
-    notifyListeners();
   }
 }

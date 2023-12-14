@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 
 class OffersHorizontalList extends StatelessWidget {
   final List<OfferModel> offers;
+  final bool isSmallSizeRequired;
 
-  const OffersHorizontalList({super.key, required this.offers});
+  const OffersHorizontalList(
+      {super.key, required this.offers, required this.isSmallSizeRequired});
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,8 @@ class OffersHorizontalList extends StatelessWidget {
               child: OfferItem(
                 title: offerModel.name,
                 emoji: offerModel.emoji,
+                width: isSmallSizeRequired ? 150 : 300,
+                fontSize: isSmallSizeRequired ? 30 : 60,
               ),
             ),
           );

@@ -4,10 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OffersScreenService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<List<OfferDTO>> fetchOffers({bool orderByViewCount = false}) async {
+  Future<List<OfferDTO>> fetchOffers(
+      {bool isOrderRequiredByViewCount = false}) async {
     Query query = _db.collection('offers');
-    if (orderByViewCount) {
-      query = query.orderBy('viewCount', descending: orderByViewCount);
+    if (isOrderRequiredByViewCount) {
+      query =
+          query.orderBy('viewCount', descending: isOrderRequiredByViewCount);
     }
 
     final querySnapshot = await query.get();

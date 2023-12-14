@@ -1,7 +1,6 @@
 import 'package:application/utils/translation_en.dart';
 import 'package:application/utils/styles/styles.dart';
 import 'package:application/view/widgets/offers_horizontal_list.dart';
-import 'package:application/view/widgets/offers_horizontal_list_smaller.dart';
 import 'package:application/view_model/offers_screen_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +52,10 @@ class _OffersScreenState extends State<OffersScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: OffersHorizontalList(offers: offersScreenViewModel.offers),
+              child: OffersHorizontalList(
+                offers: offersScreenViewModel.offers,
+                isSmallSizeRequired: false,
+              ),
             ),
             const Padding(
               padding: EdgeInsets.all(16.0),
@@ -65,8 +67,10 @@ class _OffersScreenState extends State<OffersScreen> {
                 ),
               ),
             ),
-            OffersHorizontalListSmaller(
-                offers: offersScreenViewModel.mostViewedOffers),
+            OffersHorizontalList(
+              offers: offersScreenViewModel.mostViewedOffers,
+              isSmallSizeRequired: true,
+            )
           ],
         ),
       ),

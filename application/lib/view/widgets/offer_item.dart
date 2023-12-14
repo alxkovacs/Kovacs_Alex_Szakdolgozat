@@ -6,11 +6,13 @@ class OfferItem extends OfferItemBase {
     Key? key,
     required String title,
     required String emoji,
+    required double width,
+    required double fontSize,
   }) : super(
           key: key,
           title: title,
           emoji: emoji,
-          width: 300.0,
-          fontSize: 60.0,
+          width: width,
+          fontSize: fontSize,
         );
 }
