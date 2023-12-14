@@ -27,6 +27,7 @@ class TranslationEN {
   static const String product = 'Termék';
   static const String price = 'Ár';
   static const String category = 'Kategória';
+  static const String unknownCategory = 'Ismeretlen kategória';
   static const String add = 'Hozzáadás';
   static const String offers = 'Ajánlatok';
   static const String myOffers = 'Ajánlataim';
@@ -36,10 +37,16 @@ class TranslationEN {
   static const String addProduct = 'Termék hozzáadása';
   static const String loading = 'Tölt';
   static const String shoppingList = 'Bevásárlólista';
+  static const String addToShoppingList = 'Add a bevásárlólistához';
+  static const String description = 'Leírás';
   static const String favorites = 'Kedvencek';
   static const String mostViewedProducts = 'Legtöbbet megtekintett termékek';
   static const String productsRecommendedForYou = 'Neked ajánlott termékek';
   static const String error = 'Hiba';
+  static const String errorStoreQuery =
+      'Hiba történt az áruház lekérdezése közben';
+  static const String errorProductQuery =
+      'Hiba történt a termékek lekérdezése közben';
   static const String addProductError =
       'Hiba történt a termék hozzáadása közben';
   static const String numberOfProducts = 'Termékek száma';
@@ -47,6 +54,7 @@ class TranslationEN {
   static const String store = 'Üzlet';
   static const String noData = 'N/A';
   static const String greet = 'Hello';
+  static const String unknownStore = 'Ismeretlen áruház';
   static const String searchBetweenProducts = 'Keresés a termékek között';
   static const String searchBetweenStores = 'Keresés az üzletek között';
   static const String chooseLocation = 'Válasszon helyszínt';
