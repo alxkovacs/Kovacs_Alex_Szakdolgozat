@@ -29,6 +29,9 @@ class TranslationEN {
   static const String category = 'Kategória';
   static const String add = 'Hozzáadás';
   static const String offers = 'Ajánlatok';
+  static const String myOffers = 'Ajánlataim';
+  static const String specialOffers = 'Különleges ajánlatok';
+  static const String mostViewedOffers = 'Legtöbbet megtekintett ajánlatok';
   static const String settings = 'Beállítások';
   static const String addProduct = 'Termék hozzáadása';
   static const String loading = 'Tölt';
@@ -50,4 +53,5 @@ class TranslationEN {
   static const String chooseLocationFirst =
       'Kérjük, először válasszon üzletet!';
   static const String chooseCategory = 'Kérjük, válasszon egy kategóriát.';
+  static const String noOffersAvailable = 'Nincs elérhető ajánlat!';
 }

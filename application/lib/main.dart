@@ -9,6 +9,7 @@ import 'package:application/view_model/add_product_screen_view_model.dart';
 import 'package:application/view_model/base_screen_view_model.dart';
 import 'package:application/view_model/home_screen_view_model.dart';
 import 'package:application/view_model/login_screen_view_model.dart';
+import 'package:application/view_model/offers_screen_view_model.dart';
 import 'package:application/view_model/products_screen_view_model.dart';
 import 'package:application/view_model/sign_up_screen_view_model.dart';
 import 'package:application/view_model/store_search_screen_view_model.dart';
@@ -42,6 +43,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => ProductsScreenViewModel()),
           ChangeNotifierProvider(create: (_) => AddProductScreenViewModel()),
           ChangeNotifierProvider(create: (_) => StoreSearchScreenViewModel()),
+          ChangeNotifierProvider(create: (_) => OffersScreenViewModel()),
         ],
         child: const MyApp(),
       ),
