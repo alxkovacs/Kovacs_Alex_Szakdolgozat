@@ -6,6 +6,16 @@ import 'package:application/model/store_dto.dart';
 class ShoppingListScreenService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  Stream<List<Map<String, dynamic>>> listenToFavoritesChanges(String userId) {
+    return _db
+        .collection('favoriteStores')
+        .where('userId', isEqualTo: userId)
+        .snapshots()
+        .asyncMap((snapshot) async {
+      return await getFavoriteStoresTotal(userId);
+    });
+  }
+
   Stream<List<ProductDTO>> getShoppingListStream(String userId) async* {
     var shoppingListSnapshot = await _db
         .collection('shoppingLists')

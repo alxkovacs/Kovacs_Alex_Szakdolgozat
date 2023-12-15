@@ -23,7 +23,12 @@ class ShoppingListScreenViewModel extends ChangeNotifier {
     final userId = FirebaseAuth.instance.currentUser?.uid;
     if (userId != null) {
       updateShoppingListItems(userId);
-      updateFavoriteStoresTotals(userId);
+      _shoppingListService
+          .listenToFavoritesChanges(userId)
+          .listen((favoritesTotals) {
+        favoriteStoresTotals = favoritesTotals;
+        notifyListeners();
+      });
       updateCheapestStoreTotal(userId);
     } else {
       clearData();
