@@ -1,3 +1,4 @@
+import 'package:application/model/price_and_store_dto.dart';
 import 'package:application/model/price_and_store_model.dart';
 import 'package:application/service/product_screen_service.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +32,34 @@ class ProductScreenViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      prices = await _service.getPriceAndStoreList(productId);
+      List<PriceAndStoreDTO> dtoList =
+          await _service.getPriceAndStoreListDTO(productId);
+      prices = dtoList
+          .map((dto) => PriceAndStoreModel(
+                storeId: dto.storeId,
+                storeName: dto.storeName,
+                price: _calculateMedian(dto.prices),
+                priceCount: dto.prices.length,
+              ))
+          .toList();
+
+      prices.sort((a, b) => a.price.compareTo(b.price));
+
       isDataLoaded = true;
     } catch (e) {
     } finally {
       isLoading = false;
       notifyListeners();
+    }
+  }
+
+  int _calculateMedian(List<int> prices) {
+    prices.sort();
+    int middle = prices.length ~/ 2;
+    if (prices.length % 2 == 1) {
+      return prices[middle];
+    } else {
+      return ((prices[middle - 1] + prices[middle]) / 2).round();
     }
   }
 

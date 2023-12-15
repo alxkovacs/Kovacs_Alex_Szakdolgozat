@@ -16,8 +16,8 @@ class ProductPricesScreenViewModel extends ChangeNotifier {
     notifyListeners();
 
     _service.fetchPrices(productId, storeId).listen(
-      (priceList) {
-        prices = priceList;
+      (dtoList) {
+        prices = dtoList.map((dto) => ProductPriceModel.fromDTO(dto)).toList();
         isLoading = false;
         notifyListeners();
       },

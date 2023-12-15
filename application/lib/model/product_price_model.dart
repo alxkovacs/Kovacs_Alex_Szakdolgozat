@@ -1,18 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:application/model/product_price_dto.dart';
 
 class ProductPriceModel {
   final String productId;
   final int price;
   final DateTime timestamp;
 
-  ProductPriceModel(
-      {required this.productId, required this.price, required this.timestamp});
+  ProductPriceModel({
+    required this.productId,
+    required this.price,
+    required this.timestamp,
+  });
 
-  factory ProductPriceModel.fromFirestore(Map<String, dynamic> firestoreData) {
+  factory ProductPriceModel.fromDTO(ProductPriceDTO dto) {
     return ProductPriceModel(
-      productId: firestoreData['productId'],
-      price: firestoreData['price'],
-      timestamp: (firestoreData['timestamp'] as Timestamp).toDate(),
+      productId: dto.productId,
+      price: dto.price,
+      timestamp: dto.timestamp.toDate(),
     );
   }
 }

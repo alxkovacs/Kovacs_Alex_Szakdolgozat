@@ -50,119 +50,115 @@ class _ProductScreenState extends State<ProductScreen>
   }
 
   Widget _buildAddPriceTab(ProductScreenViewModel viewModel) {
-    return Center(
-      child: viewModel.isLoading
-          ? const CustomCircularProgressIndicator()
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Form(
-                  key: _form,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: ListTile(
-                            title: const Text(
-                              TranslationEN.store,
-                              style: TextStyle(
-                                color: Colors.black,
+    return viewModel.isLoading
+        ? const CustomCircularProgressIndicator()
+        : SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              child: Form(
+                key: _form,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: ListTile(
+                          title: const Text(
+                            TranslationEN.store,
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          contentPadding:
+                              const EdgeInsets.only(left: 15.0, right: 5.0),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                viewModel.selectedLocation,
+                                style: const TextStyle(fontSize: 16.0),
                               ),
-                            ),
-                            contentPadding:
-                                const EdgeInsets.only(left: 15.0, right: 5.0),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  viewModel.selectedLocation,
-                                  style: const TextStyle(fontSize: 16.0),
-                                ),
-                                const Icon(Icons.keyboard_arrow_right),
-                              ],
-                            ),
-                            onTap: () async {
-                              final newLocation =
-                                  await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const StoreSearchScreen(),
-                                ),
-                              );
-                              if (newLocation != null) {
-                                viewModel.selectedLocation = newLocation;
-                              }
-                            },
-                            tileColor: AppColor.mainColor.withOpacity(0.05),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              side: const BorderSide(color: AppColor.mainColor),
-                            ),
+                              const Icon(Icons.keyboard_arrow_right),
+                            ],
+                          ),
+                          onTap: () async {
+                            final newLocation =
+                                await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const StoreSearchScreen(),
+                              ),
+                            );
+                            if (newLocation != null) {
+                              viewModel.selectedLocation = newLocation;
+                            }
+                          },
+                          tileColor: AppColor.mainColor.withOpacity(0.05),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: const BorderSide(color: AppColor.mainColor),
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 30),
-                        child: TextFormField(
-                          decoration: AuthInputDecoration(
-                            labelText: TranslationEN.price,
-                            iconData: Icons.attach_money,
-                          ),
-                          autocorrect: true,
-                          keyboardType: TextInputType.number,
-                          textCapitalization: TextCapitalization.none,
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return TranslationEN.addPriceValidator;
-                            }
-                            if (int.tryParse(value.trim()) == null) {
-                              return TranslationEN.priceIntValidator;
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            viewModel.enteredPrice = int.parse(value!.trim());
-                          },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30),
+                      child: TextFormField(
+                        decoration: AuthInputDecoration(
+                          labelText: TranslationEN.price,
+                          iconData: Icons.attach_money,
                         ),
-                      ),
-                      CustomElevatedButton(
-                        onPressed: () async {
-                          if (_form.currentState!.validate()) {
-                            _form.currentState!.save();
-                            bool result = await viewModel
-                                .addPrice(widget.productModel.id);
-                            if (result) {
-                              viewModel.selectedLocation =
-                                  TranslationEN.chooseLocation;
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(TranslationEN.priceAdded),
-                                ),
-                              );
-                              if (mounted) {
-                                _tabController.animateTo(0);
-                              }
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text('${TranslationEN.addPriceError}'),
-                                ),
-                              );
-                            }
+                        autocorrect: true,
+                        keyboardType: TextInputType.number,
+                        textCapitalization: TextCapitalization.none,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return TranslationEN.addPriceValidator;
                           }
+                          if (int.tryParse(value.trim()) == null) {
+                            return TranslationEN.priceIntValidator;
+                          }
+                          return null;
                         },
-                        text: TranslationEN.add,
+                        onSaved: (value) {
+                          viewModel.enteredPrice = int.parse(value!.trim());
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                    CustomElevatedButton(
+                      onPressed: () async {
+                        if (_form.currentState!.validate()) {
+                          _form.currentState!.save();
+                          bool result =
+                              await viewModel.addPrice(widget.productModel.id);
+                          if (result) {
+                            viewModel.selectedLocation =
+                                TranslationEN.chooseLocation;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(TranslationEN.priceAdded),
+                              ),
+                            );
+                            if (mounted) {
+                              _tabController.animateTo(0);
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('${TranslationEN.addPriceError}'),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      text: TranslationEN.add,
+                    ),
+                  ],
                 ),
               ),
             ),
-    );
+          );
   }
 
   @override
@@ -190,10 +186,10 @@ class _ProductScreenState extends State<ProductScreen>
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: Center(
               child: Text(widget.productModel.emoji,
-                  style: const TextStyle(fontSize: 125)),
+                  style: const TextStyle(fontSize: 100)),
             ),
           ),
           Expanded(
@@ -231,7 +227,7 @@ class _ProductScreenState extends State<ProductScreen>
                   ),
                   Padding(
                     padding:
-                        const EdgeInsets.only(left: 25, right: 25, bottom: 30),
+                        const EdgeInsets.only(left: 25, right: 25, bottom: 15),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(

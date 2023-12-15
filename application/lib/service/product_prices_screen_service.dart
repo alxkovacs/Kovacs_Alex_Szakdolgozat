@@ -1,11 +1,10 @@
+import 'package:application/model/product_price_dto.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:application/model/product_price_model.dart';
 
 class ProductPricesScreenService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Stream<List<ProductPriceModel>> fetchPrices(
-      String productId, String storeId) {
+  Stream<List<ProductPriceDTO>> fetchPrices(String productId, String storeId) {
     return _db
         .collection('productPrices')
         .where('productId', isEqualTo: productId)
@@ -13,7 +12,7 @@ class ProductPricesScreenService {
         .orderBy('timestamp', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs
-            .map((doc) => ProductPriceModel.fromFirestore(
+            .map((doc) => ProductPriceDTO.fromFirestore(
                 doc.data() as Map<String, dynamic>))
             .toList());
   }

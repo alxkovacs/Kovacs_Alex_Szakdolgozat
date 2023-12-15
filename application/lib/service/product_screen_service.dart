@@ -1,51 +1,36 @@
-import 'package:application/model/price_and_store_model.dart';
+import 'package:application/model/price_and_store_dto.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductScreenService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<List<PriceAndStoreModel>> getPriceAndStoreList(
+  Future<List<PriceAndStoreDTO>> getPriceAndStoreListDTO(
       String productId) async {
     Map<String, List<int>> storePrices = {};
 
-    var snapshot = await _db
+    var productPriceSnapshot = await _db
         .collection('productPrices')
         .where('productId', isEqualTo: productId)
         .get();
-    for (var doc in snapshot.docs) {
+    for (var doc in productPriceSnapshot.docs) {
       String storeId = doc['storeId'];
       int price = doc['price'];
       storePrices.putIfAbsent(storeId, () => []).add(price);
     }
 
-    List<PriceAndStoreModel> priceAndStores = [];
+    List<PriceAndStoreDTO> priceAndStoreDTOs = [];
     for (var storeId in storePrices.keys) {
       var storeSnapshot = await _db.collection('stores').doc(storeId).get();
-      String storeName = storeSnapshot['name'];
+      String storeName = storeSnapshot.data()?['name'] ?? '';
 
-      List<int> prices = storePrices[storeId]!;
-      int medianPrice = _calculateMedian(prices);
-
-      priceAndStores.add(PriceAndStoreModel(
+      priceAndStoreDTOs.add(PriceAndStoreDTO(
         storeId: storeId,
         storeName: storeName,
-        price: medianPrice,
-        priceCount: prices.length,
+        prices: storePrices[storeId]!,
       ));
     }
 
-    priceAndStores.sort((a, b) => a.price.compareTo(b.price));
-    return priceAndStores;
-  }
-
-  int _calculateMedian(List<int> prices) {
-    prices.sort();
-    int middle = prices.length ~/ 2;
-    if (prices.length % 2 == 1) {
-      return prices[middle];
-    } else {
-      return ((prices[middle - 1] + prices[middle]) / 2).round();
-    }
+    return priceAndStoreDTOs;
   }
 
   Future<void> addProductToShoppingList(String productId, String userId) async {
