@@ -46,12 +46,12 @@ class BestOffersTab extends StatelessWidget {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                '${priceAndStoreItem.priceCount} ${TranslationEN.pricePerUnit}',
-                style: const TextStyle(fontSize: 11),
-              ),
-              const SizedBox(
-                width: 5,
+              Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: Text(
+                  '${priceAndStoreItem.priceCount} ${TranslationEN.pricePerUnit}',
+                  style: const TextStyle(fontSize: 11),
+                ),
               ),
               const Icon(
                 Icons.arrow_forward_ios,

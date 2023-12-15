@@ -28,9 +28,6 @@ class _ProductScreenState extends State<ProductScreen>
   final _form = GlobalKey<FormState>();
   late TabController _tabController;
 
-  int _enteredPrice = 0;
-  String _selectedLocation = '';
-
   @override
   void initState() {
     super.initState();
@@ -43,18 +40,6 @@ class _ProductScreenState extends State<ProductScreen>
       viewModel.checkFavoriteStatus(
           widget.productModel.id, FirebaseAuth.instance.currentUser!.uid);
       viewModel.fetchPrices(widget.productModel.id);
-    });
-  }
-
-  void updateLocation(String newLocation) {
-    setState(() {
-      _selectedLocation = newLocation;
-    });
-  }
-
-  void resetSelectedLocation() {
-    setState(() {
-      _selectedLocation = TranslationEN.chooseLocation;
     });
   }
 
@@ -93,7 +78,7 @@ class _ProductScreenState extends State<ProductScreen>
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  _selectedLocation,
+                                  viewModel.selectedLocation,
                                   style: const TextStyle(fontSize: 16.0),
                                 ),
                                 const Icon(Icons.keyboard_arrow_right),
@@ -108,7 +93,7 @@ class _ProductScreenState extends State<ProductScreen>
                                 ),
                               );
                               if (newLocation != null) {
-                                updateLocation(newLocation);
+                                viewModel.selectedLocation = newLocation;
                               }
                             },
                             tileColor: AppColor.mainColor.withOpacity(0.05),
@@ -139,7 +124,7 @@ class _ProductScreenState extends State<ProductScreen>
                             return null;
                           },
                           onSaved: (value) {
-                            _enteredPrice = int.parse(value!.trim());
+                            viewModel.enteredPrice = int.parse(value!.trim());
                           },
                         ),
                       ),
@@ -147,13 +132,11 @@ class _ProductScreenState extends State<ProductScreen>
                         onPressed: () async {
                           if (_form.currentState!.validate()) {
                             _form.currentState!.save();
-                            bool result = await viewModel.addPrice(
-                              widget.productModel.id,
-                              _selectedLocation,
-                              _enteredPrice,
-                            );
+                            bool result = await viewModel
+                                .addPrice(widget.productModel.id);
                             if (result) {
-                              resetSelectedLocation();
+                              viewModel.selectedLocation =
+                                  TranslationEN.chooseLocation;
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text(TranslationEN.priceAdded),

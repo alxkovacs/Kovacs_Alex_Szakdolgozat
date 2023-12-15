@@ -9,6 +9,22 @@ class ProductScreenViewModel extends ChangeNotifier {
   bool isFavorite = false;
   bool isDataLoaded = false;
 
+  int _enteredPrice = 0;
+  String _selectedLocation = '';
+
+  int get enteredPrice => _enteredPrice;
+  String get selectedLocation => _selectedLocation;
+
+  set enteredPrice(int newValue) {
+    _enteredPrice = newValue;
+    notifyListeners();
+  }
+
+  set selectedLocation(String newValue) {
+    _selectedLocation = newValue;
+    notifyListeners();
+  }
+
   Future<void> fetchPrices(String productId) async {
     isLoading = true;
     isDataLoaded = false;
@@ -61,12 +77,12 @@ class ProductScreenViewModel extends ChangeNotifier {
     await _service.incrementProductViewCount(productId);
   }
 
-  Future<bool> addPrice(String productId, String storeName, int price) async {
+  Future<bool> addPrice(String productId) async {
     isLoading = true;
     notifyListeners();
     try {
-      bool result =
-          await _service.addPriceWithTimestamp(productId, storeName, price);
+      bool result = await _service.addPriceWithTimestamp(
+          productId, selectedLocation, enteredPrice);
       if (result) {
         await fetchPrices(productId);
       }

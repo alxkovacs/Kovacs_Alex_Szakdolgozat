@@ -10,6 +10,7 @@ class ProductPricesScreenService {
         .collection('productPrices')
         .where('productId', isEqualTo: productId)
         .where('storeId', isEqualTo: storeId)
+        .orderBy('timestamp', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs
             .map((doc) => ProductPriceModel.fromFirestore(
