@@ -26,6 +26,7 @@ class TranslationEN {
   static const String products = 'Termékek';
   static const String product = 'Termék';
   static const String price = 'Ár';
+  static const String currencyHUF = 'Ft';
   static const String category = 'Kategória';
   static const String unknownCategory = 'Ismeretlen kategória';
   static const String add = 'Hozzáadás';
@@ -37,6 +38,13 @@ class TranslationEN {
   static const String addProduct = 'Termék hozzáadása';
   static const String loading = 'Tölt';
   static const String shoppingList = 'Bevásárlólista';
+  static const String favoriteStores = 'Kedvenc áruház(ak)';
+  static const String cheapestStore = 'Legolcsóbb áruház';
+  static const String noStoreAvailable = 'Nincs elérhető áruház';
+  static const String noStoreEveryProductAvailable =
+      'Nincs áruház, ahol minden termék elérhető';
+  static const String noAdditionalData = 'Nincsenek további adatok';
+  static const String emptyShoppingList = 'Üres bevásárlólista!';
   static const String addToShoppingList = 'Add a bevásárlólistához';
   static const String description = 'Leírás';
   static const String favorites = 'Kedvencek';

@@ -13,6 +13,18 @@ class Styles {
   static const TextStyle favoritesScreenTitle =
       TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
 
+  static const TextStyle shoppingListSubtitle =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+
+  static const TextStyle shoppingListPrice =
+      TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
+
+  static TextStyle shoppingListStoreName = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 18,
+    color: Colors.black.withOpacity(0.65),
+  );
+
   static const offersScreenHorizontalListSubtitle = TextStyle(
       fontWeight: FontWeight.bold, fontSize: 22, color: AppColor.mainColor);
 
