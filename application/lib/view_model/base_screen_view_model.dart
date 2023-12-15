@@ -17,6 +17,11 @@ class BaseScreenViewModel extends ChangeNotifier {
 
   int get selectedIndex => _selectedIndex;
 
+  set selectedIndex(int newValue) {
+    _selectedIndex = newValue;
+    notifyListeners();
+  }
+
   void selectTab(int index, BuildContext context) {
     if (index == 2) {
       _openBottomSheet(context);
@@ -24,11 +29,6 @@ class BaseScreenViewModel extends ChangeNotifier {
       _selectedIndex = index;
       notifyListeners();
     }
-  }
-
-  void resetSelectedIndex() {
-    _selectedIndex = 0;
-    notifyListeners();
   }
 
   void _openBottomSheet(BuildContext context) {

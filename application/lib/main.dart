@@ -16,6 +16,7 @@ import 'package:application/view_model/offers_screen_view_model.dart';
 import 'package:application/view_model/product_prices_screen_view_model.dart';
 import 'package:application/view_model/product_screen_view_model.dart';
 import 'package:application/view_model/products_screen_view_model.dart';
+import 'package:application/view_model/settings_screen_view_model.dart';
 import 'package:application/view_model/shopping_list_screen_view_model.dart';
 import 'package:application/view_model/sign_up_screen_view_model.dart';
 import 'package:application/view_model/store_search_screen_view_model.dart';
@@ -56,6 +57,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => ShoppingListScreenViewModel()),
           ChangeNotifierProvider(create: (_) => ProductScreenViewModel()),
           ChangeNotifierProvider(create: (_) => ProductPricesScreenViewModel()),
+          ChangeNotifierProvider(create: (_) => SettingsScreenViewModel()),
         ],
         child: const MyApp(),
       ),

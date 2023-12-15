@@ -1,6 +1,5 @@
 import 'package:application/utils/colors.dart';
 import 'package:application/utils/translation_en.dart';
-import 'package:application/view_model/base_screen_view_model.dart';
 import 'package:application/view_model/settings_screen_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,8 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    SettingsScreenViewModel viewModel = SettingsScreenViewModel();
+    final settingsScreenViewModel =
+        Provider.of<SettingsScreenViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -69,7 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: AppColor.mainColor.withOpacity(0.75),
                   ),
                   onTap: () {
-                    viewModel.goToProfileScreen(context);
+                    settingsScreenViewModel.goToProfileScreen(context);
                   },
                 ),
               ),
@@ -79,11 +79,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 await FirebaseAuth.instance.signOut();
 
                 if (mounted) {
-                  viewModel.goToStartScreen(context);
+                  settingsScreenViewModel.goToStartScreen(context);
+                  settingsScreenViewModel.resetSelectedIndex(context);
                 }
-
-                Provider.of<BaseScreenViewModel>(context, listen: false)
-                    .resetSelectedIndex();
               },
               child: const Text(
                 TranslationEN.signOut,
