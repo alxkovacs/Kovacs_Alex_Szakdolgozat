@@ -16,7 +16,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final settingsScreenViewModel =
-        Provider.of<SettingsScreenViewModel>(context);
+        Provider.of<SettingsScreenViewModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -80,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                 if (mounted) {
                   settingsScreenViewModel.goToStartScreen(context);
-                  settingsScreenViewModel.resetSelectedIndex(context);
+                  settingsScreenViewModel.resetSelectedIndex();
                 }
               },
               child: const Text(

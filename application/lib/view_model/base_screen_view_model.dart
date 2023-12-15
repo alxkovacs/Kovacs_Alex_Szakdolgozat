@@ -3,9 +3,10 @@ import 'package:application/view/screens/offers_screen.dart';
 import 'package:application/view/screens/products_screen.dart';
 import 'package:application/view/screens/settings_screen.dart';
 import 'package:application/view/widgets/custom_navigation_sheet_scaffold.dart';
+import 'package:application/view_model/base_view_model.dart';
 import 'package:flutter/material.dart';
 
-class BaseScreenViewModel extends ChangeNotifier {
+class BaseScreenViewModel extends BaseViewModel {
   final List<Widget> pages = [
     const HomeScreen(),
     const ProductsScreen(),
@@ -13,21 +14,12 @@ class BaseScreenViewModel extends ChangeNotifier {
     const OffersScreen(),
     const SettingsScreen(),
   ];
-  int _selectedIndex = 0;
-
-  int get selectedIndex => _selectedIndex;
-
-  set selectedIndex(int newValue) {
-    _selectedIndex = newValue;
-    notifyListeners();
-  }
 
   void selectTab(int index, BuildContext context) {
     if (index == 2) {
       _openBottomSheet(context);
     } else {
-      _selectedIndex = index;
-      notifyListeners();
+      selectedIndex = index;
     }
   }
 
