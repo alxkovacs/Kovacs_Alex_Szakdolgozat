@@ -80,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                 if (mounted) {
                   settingsScreenViewModel.goToStartScreen(context);
-                  settingsScreenViewModel.resetSelectedIndex();
+                  settingsScreenViewModel.updateIndexes();
                 }
               },
               child: const Text(
