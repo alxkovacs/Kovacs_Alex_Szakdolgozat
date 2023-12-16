@@ -21,7 +21,7 @@ Ez a projekt az MVVM (Model-View-ViewModel) architektúrát használja. Az aláb
 
 ## Adatbázis tervek
 - [`database/`](./database/) - Az adatbázis terveket tartalmazó mappa.
-  - [`Kovacs_Alex_Szakdolgozat_Adatbazis_Oldal.pdf`](./database/Kovacs_Alex_Szakdolgozat_Oldal.png) - Elkészült EK diagram.
+  - [`Kovacs_Alex_Szakdolgozat_Oldal.png`](./database/Kovacs_Alex_Szakdolgozat_Oldal.png) - Elkészült EK diagram.
 
 
 ## Képernyőtervek
