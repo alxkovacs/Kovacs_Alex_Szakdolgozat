@@ -23,11 +23,6 @@ class BaseScreenViewModel extends BaseViewModel {
     }
   }
 
-  void resetSelectedIndex() {
-    _selectedIndex = 0;
-    notifyListeners();
-  }
-
   void _openBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
