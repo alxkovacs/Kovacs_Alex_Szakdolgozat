@@ -23,11 +23,6 @@ class BaseScreenViewModel extends BaseViewModel {
     }
   }
 
-  void resetSelectedIndex() {
-    _selectedIndex = 0; // Visszaállítja az alapértelmezett értékre
-    notifyListeners(); // Frissíti a UI-t
-  }
-
   void _openBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
