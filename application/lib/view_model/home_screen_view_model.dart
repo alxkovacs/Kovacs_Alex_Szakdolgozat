@@ -3,6 +3,7 @@ import 'package:application/model/product_model.dart';
 import 'package:application/model/user_dto.dart';
 import 'package:application/model/user_model.dart';
 import 'package:application/service/home_screen_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:application/utils/translation_en.dart';
 
@@ -41,5 +42,12 @@ class HomeScreenViewModel extends ChangeNotifier {
 
   Future<int> getStoresCount() async {
     return _homeScreenService.getDocumentCount('stores');
+  }
+
+  void refreshUserName() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      await fetchUserData(currentUser.uid);
+    }
   }
 }

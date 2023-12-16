@@ -4,6 +4,7 @@ class TranslationEN {
   static const String signUp = 'Regisztráció';
   static const String login = 'Bejelentkezés';
   static const String firstName = 'Keresztnév';
+  static const String changeFirstName = 'Keresztnév megváltoztatása';
   static const String firstNameValidator =
       'A névnek legalább 3 karakter hosszúnak kell lennie.';
   static const String emailValidator = 'Kérlek egy létező e-mail címet adj meg';
@@ -33,6 +34,7 @@ class TranslationEN {
   static const String category = 'Kategória';
   static const String unknownCategory = 'Ismeretlen kategória';
   static const String add = 'Hozzáadás';
+  static const String save = 'Mentés';
   static const String bestOffers = 'Legjobb Ajánlatok';
   static const String offers = 'Ajánlatok';
   static const String myOffers = 'Ajánlataim';
