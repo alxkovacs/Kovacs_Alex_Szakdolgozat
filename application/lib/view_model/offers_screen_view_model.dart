@@ -7,9 +7,9 @@ class OffersScreenViewModel extends ChangeNotifier {
   List<OfferModel> mostViewedOffers = [];
   List<OfferModel> offers = [];
 
-  void fetchData() {
-    loadMostViewedOffers();
-    loadOffers();
+  void fetchData() async {
+    await loadMostViewedOffers();
+    await loadOffers();
     notifyListeners();
   }
 

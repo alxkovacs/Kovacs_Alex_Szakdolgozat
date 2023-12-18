@@ -32,13 +32,12 @@ class Styles {
       TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
 
   static InputDecoration storeSearchDecoration = InputDecoration(
-    isDense: true, // Added this
+    isDense: true,
     contentPadding: const EdgeInsets.all(0),
     hintText: TranslationEN.searchBetweenStores,
     hintStyle: TextStyle(color: AppColor.mainColor.withOpacity(0.75)),
-    filled: true, // Ez engedélyezi a háttérszín beállítását
-    fillColor: AppColor.mainColor
-        .withOpacity(0.20), // A háttérszín beállítása kék színre
+    filled: true,
+    fillColor: AppColor.mainColor.withOpacity(0.20),
     prefixIcon: const Icon(
       Icons.search,
       color: AppColor.mainColor,
@@ -47,15 +46,14 @@ class Styles {
       borderRadius: BorderRadius.circular(10.0),
       borderSide: BorderSide(
         color: AppColor.mainColor.withOpacity(0.15),
-      ), // A szegély színe piros
+      ),
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10.0),
       borderSide: BorderSide(
         color: AppColor.mainColor.withOpacity(0.15),
-      ), // A szegély színe piros
+      ),
     ),
-    // Beállítja a fókuszált szegély színét is pirosra
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10.0),
       borderSide: BorderSide(
@@ -65,8 +63,8 @@ class Styles {
   );
 
   static BoxDecoration favoriteProductBoxDecoration = BoxDecoration(
-    color: Colors.white, // Háttérszín beállítása
-    borderRadius: BorderRadius.circular(30.0), // Keret lekerekítése
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(30.0),
     boxShadow: [
       BoxShadow(
         color: AppColor.mainColor.withOpacity(0.5),
@@ -76,13 +74,13 @@ class Styles {
         ),
         blurRadius: 15.0,
         spreadRadius: 1.0,
-      ), //BoxShadow
+      ),
       const BoxShadow(
         color: Colors.white,
         offset: Offset(0.0, 0.0),
         blurRadius: 0.0,
         spreadRadius: 0.0,
-      ), //BoxShadow
+      ),
     ],
   );
 

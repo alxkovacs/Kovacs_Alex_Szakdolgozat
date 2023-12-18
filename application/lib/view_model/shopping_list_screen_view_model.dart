@@ -58,6 +58,8 @@ class ShoppingListScreenViewModel extends ChangeNotifier {
     shoppingListItems =
         productDTOs.map((dto) => ProductModel.fromProductDTO(dto)).toList();
     notifyListeners();
+
+    updateFavoriteStoresTotals(userId);
   }
 
   Future<void> updateFavoriteStoresTotals(String userId) async {

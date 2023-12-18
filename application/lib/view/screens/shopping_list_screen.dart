@@ -99,25 +99,40 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
   Widget _buildFavoriteStoresSection(ShoppingListScreenViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 5, left: 10, right: 10, top: 20),
-          child: Text(
-            TranslationEN.favoriteStores,
-            style: Styles.shoppingListSubtitle,
-          ),
-        ),
-        ...viewModel.getFavoriteStoresTotals.map((storeTotal) => ListTile(
-              title: Text(
-                storeTotal['storeName'],
-                style: Styles.shoppingListStoreName,
+      children: viewModel.getFavoriteStoresTotals.isNotEmpty
+          ? [
+              const Padding(
+                padding:
+                    EdgeInsets.only(bottom: 5, left: 10, right: 10, top: 20),
+                child: Text(
+                  TranslationEN.favoriteStores,
+                  style: Styles.shoppingListSubtitle,
+                ),
               ),
-              trailing: Text(
-                '${storeTotal['total']} ${TranslationEN.currencyHUF}',
-                style: Styles.shoppingListPrice,
+              ...viewModel.getFavoriteStoresTotals.map((storeTotal) => ListTile(
+                    title: Text(
+                      storeTotal['storeName'],
+                      style: Styles.shoppingListStoreName,
+                    ),
+                    trailing: storeTotal.containsKey('total') &&
+                            storeTotal['total'] != null
+                        ? Text(
+                            '${storeTotal['total']} ${TranslationEN.currencyHUF}',
+                            style: Styles.shoppingListPrice,
+                          )
+                        : const SizedBox.shrink(),
+                  )),
+            ]
+          : [
+              const Padding(
+                padding: EdgeInsets.all(20),
+                child: Text(
+                  TranslationEN.noFavoriteStores,
+                  style: Styles.shoppingListSubtitle,
+                  textAlign: TextAlign.center,
+                ),
               ),
-            )),
-      ],
+            ],
     );
   }
 
@@ -135,13 +150,16 @@ class _ShoppingListScreenState extends State<ShoppingListScreen> {
         ListTile(
           title: Text(
             viewModel.cheapestStoreTotal['storeName'] ??
-                TranslationEN.unknownStore,
+                TranslationEN.noStoreAvailable,
             style: Styles.shoppingListStoreName,
           ),
-          trailing: Text(
-            '${viewModel.cheapestStoreTotal['total'] ?? '0'} ${TranslationEN.currencyHUF}',
-            style: Styles.shoppingListPrice,
-          ),
+          trailing: viewModel.cheapestStoreTotal.containsKey('total') &&
+                  viewModel.cheapestStoreTotal['total'] != null
+              ? Text(
+                  '${viewModel.cheapestStoreTotal['total']} ${TranslationEN.currencyHUF}',
+                  style: Styles.shoppingListPrice,
+                )
+              : const SizedBox.shrink(),
         ),
       ],
     );
